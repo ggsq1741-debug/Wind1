@@ -365,7 +365,7 @@ LocalPlayer.CharacterAdded:Connect(updateChar)
 task.spawn(updateChar)
 Tabs.wj:Code{
     Title="\228\189\160\229\165\189",
-    Code="\231\186\184\233\163\158\230\156\186@you25801"
+    Code="QQ\229\148\174\229\144\142\49\49\50\53\53\49\52\50\54\49"
 }
 Tabs.wj:Input{
     Title="\232\182\133\231\186\167\229\191\171\232\183\145",
