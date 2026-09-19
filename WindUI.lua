@@ -1,2 +1,4633 @@
 -- This script was generated using MoonVeil 2.0.24 [https://moonveil.cc]
-local f={"Suponjibobu00","YK666308","\230\159\144\230\159\144\230\159\144\51"}local Qa=game:GetService"Players"local u=Qa.LocalPlayer local Ja={}for _,i in ipairs(f)do Ja[string.lower(i)]=i end local function La(ba)local o=u:WaitForChild"PlayerGui":FindFirstChild"TargetJoinNotify"if o then o:Destroy()end local Fa=Instance.new"ScreenGui"Fa.Name="TargetJoinNotify"Fa.ResetOnSpawn=false Fa.IgnoreGuiInset=true Fa.Parent=u:WaitForChild"PlayerGui"local ua=Instance.new"Frame"ua.Size=UDim2 .new(0,400,0,80)ua.Position=UDim2 .new(0.5,-200,0,50)ua.BackgroundColor3=Color3 .fromRGB(30,30,30)ua.BackgroundTransparency=0.2 ua.BorderSizePixel=0 ua.Parent=Fa local F=Instance.new"UICorner"F.CornerRadius=UDim.new(0,12)F.Parent=ua local K=Instance.new"UIStroke"K.Color=Color3 .fromRGB(255,80,80)K.Thickness=2 K.Parent=ua local wa=Instance.new"TextLabel"wa.Size=UDim2 .new(1,0,0,30)wa.Position=UDim2 .new(0,0,0,8)wa.BackgroundTransparency=1 wa.Text="\231\155\174\230\160\135\231\142\169\229\174\182\229\138\160\229\133\165\228\184\141\230\152\175\232\132\154\230\156\172\228\189\156\232\128\133\229\176\177\230\152\175\231\174\161\231\144\134\229\145\152"wa.TextColor3=Color3 .fromRGB(255,80,80)wa.TextSize=20 wa.Font=Enum.Font.GothamBold wa.Parent=ua local ya=Instance.new"TextLabel"ya.Size=UDim2 .new(1,0,0,28)ya.Position=UDim2 .new(0,0,0,40)ya.BackgroundTransparency=1 ya.Text=ba.." \229\138\160\229\133\165\228\186\134\230\156\141\229\138\161\229\153\168\239\188\129"ya.TextColor3=Color3 .fromRGB(255,255,255)ya.TextSize=16 ya.Font=Enum.Font.Gotham ya.Parent=ua ua.BackgroundTransparency=1 wa.TextTransparency=1 ya.TextTransparency=1 task.spawn(function()for la=0,20 do local ra=la/20 ua.BackgroundTransparency=0.8-0.6*ra wa.TextTransparency=1-ra ya.TextTransparency=1-ra task.wait(0.01)end end)task.delay(30,function()for ta=0,20 do local za=ta/20 ua.BackgroundTransparency=0.2+0.8*za wa.TextTransparency=za ya.TextTransparency=za task.wait(0.01)end Fa:Destroy()end)local Ga=Instance.new"Sound"Ga.SoundId="rbxassetid://4590662766"Ga.Volume=0.9 Ga.Parent=Fa Ga:Play()end local function Ra(Ma)if Ja[string.lower(Ma.Name)]then La(Ma.Name)end end for _,Pa in ipairs(Qa:GetPlayers())do Ra(Pa)end Qa.PlayerAdded:Connect(Ra)print=function()end warn=function()end printidentity=function()end local jc=game:GetService"ReplicatedStorage"print"[] \229\188\128\229\167\139\229\174\137\229\133\168\229\136\160\233\153\164\229\143\141\228\189\156\229\188\138\230\150\135\228\187\182..."local xc=0 local function Rb(Xa,...)local ib=Xa local _b={...}for _,db in ipairs(_b)do if ib then ib=ib:FindFirstChild(db)else break end end if ib then pcall(function()ib:Destroy()xc=xc+1 print("[] \229\136\160\233\153\164: "..ib:GetFullName())end)return true end return false end print" \229\136\160\233\153\164\229\143\141\228\189\156\229\188\138\230\160\184\229\191\131\230\150\135\228\187\182..."Rb(jc,"Shared","Core","RateLimiter")Rb(jc,"Vendor","ReplicaService","RateLimiter")Rb(jc,"Shared","Core","GetAsset")Rb(jc,"Client","Core","DebugTeleport")Rb(jc,"Client","Wanted","Modules","ClientPlayerFlags")Rb(jc,"Client","Wanted","Objects","DevvChassis","Components","Telemetry")print" \229\136\160\233\153\164Cmdr\231\174\161\231\144\134\229\145\189\228\187\164\239\188\136\229\143\175\232\131\189\231\148\168\228\186\142\229\143\141\228\189\156\229\188\138\239\188\137..."Rb(jc,"CmdrClient")Rb(jc,"Vendor","Cmdr")print" \229\136\160\233\153\164Report/Flag\231\155\184\229\133\179\239\188\136\228\184\190\230\138\165/\230\160\135\232\174\176\231\179\187\231\187\159\239\188\137..."Rb(jc,"Client","Wanted","UI","Screens","PhoneScreen","Apps","ReportApp")Rb(jc,"Client","Wanted","UI","Screens","DialogScreen","Dialogs","ReportDialog")Rb(jc,"Client","Wanted","Modules","ClientPlayerFlags","Flags")Rb(jc,"Shared","Wanted","Indicies","GameShopFlags")print" \229\136\160\233\153\164\229\174\137\229\133\168\231\155\184\229\133\179UI..."Rb(jc,"Client","Wanted","UI","Screens","SecurityCameraScreen")Rb(jc,"Client","Assets","Guis","Screens","SecurityCameraScreen")Rb(jc,"Shared","Wanted","Indicies","FurnitureInteractions","Interactions","SecurityDesk")Rb(jc,"Shared","Wanted","Indicies","Objects","Props","World","SecurityDesk")Rb(jc,"Shared","Wanted","Indicies","FurnitureInteractions","Interactions","SecurityCamera")Rb(jc,"Shared","Wanted","Indicies","Objects","Props","World","SecurityShutter")print" \229\136\160\233\153\164\229\143\141\228\189\156\229\188\138Remote..."local function Tb(Yb,_c)if Yb then local gc=Yb:FindFirstChild(_c)if gc and(gc:IsA"RemoteEvent"or gc:IsA"RemoteFunction")then pcall(function()gc:Destroy()xc=xc+1 print("[] \229\136\160\233\153\164Remote: "..gc:GetFullName())end)end end end local function vc()local oc={"anticheat","exploit","cheat","hack","detect","ban","flag","violation"}for _,uc in ipairs(jc:GetDescendants())do if uc:IsA"RemoteEvent"or uc:IsA"RemoteFunction"then local pc=string.lower(uc.Name)for _,qc in ipairs(oc)do if string.find(pc,qc,1,true)then pcall(function()uc:Destroy()xc=xc+1 print("[] \229\136\160\233\153\164Remote: "..uc:GetFullName())end)break end end end end end vc()print"\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144"print"[\226\156\133] \229\136\160\233\153\164\229\174\140\230\136\144\239\188\129"print("   \240\159\147\138 \229\133\177\229\136\160\233\153\164 "..xc.." \228\184\170\229\143\141\228\189\156\229\188\138\230\150\135\228\187\182")print"   \226\154\160\239\184\143 \230\184\184\230\136\143\229\138\159\232\131\189\230\150\135\228\187\182\230\156\170\229\143\151\229\189\177\229\147\141"print"\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144"_G.SafeDelete={Run=function()print"[\240\159\148\167] \233\135\141\230\150\176\230\137\167\232\161\140\229\136\160\233\153\164..."xc=0 print"[\226\156\133] \229\174\140\230\136\144"end}print"[\240\159\146\161] \229\166\130\230\158\156\230\140\137\233\148\174\232\162\171\229\136\160\239\188\140\233\135\141\230\150\176\229\138\160\229\133\165\230\184\184\230\136\143\229\141\179\229\143\175\230\129\162\229\164\141"local Vq=loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/main.lua")()Vq:Notify{Title="",Content="\230\156\137\233\151\174\233\162\152bug\232\129\148\231\179\187\228\189\156\232\128\133",Icon="circle-user-round",Duration=20}Vq:Notify{Title="\233\151\174\233\162\152",Content="\232\183\145\230\173\165\230\139\137\229\155\158\231\154\132\232\175\157\232\175\183\232\191\158\231\187\173\232\183\179\232\183\131\229\156\168\229\165\148\232\183\145",Icon="circle-user-round",Duration=10}Vq:Notify{Title="\231\186\184\233\163\158\230\156\186",Content="@you25801",Icon="circle-user-round",Duration=120}Vq:Notify{Title="\230\155\180\230\150\176",Content="\231\129\181\233\173\130/\229\174\158\228\189\147\233\163\158\232\161\140\229\146\140ESP2",Icon="circle-user-round",Duration=15}local Dc=Vq:Popup{Title="hi\228\189\160\229\165\189\240\159\145\139",Content="\230\151\160\232\175\157\229\143\175\232\175\180",Buttons={{Title="Get Started",Callback=function()print"Getting started..."end}}}local Tc=Color3 .fromRGB(0,255,160)local Vc=Color3 .fromRGB(245,248,255)local Sc=Color3 .fromRGB(175,185,200)Vq:AddTheme{Name="DeltaForce",Icon=Color3 .fromHex"#22c55e",WindowTopbarTitle=Tc,WindowTopbarAuthor=Tc,TabTitle=Tc,ElementTitle=Vc,ButtonText=Vc,PopupTitle=Vc,DialogTitle=Vc,ElementDesc=Sc,PopupContent=Sc,DialogContent=Sc,PlaceholderText=Tc,TooltipText=Vc,TooltipSecondaryText=Vc}Vq:SetTheme"DeltaForce"local ud=game:GetService"UserInputService"local ad=game:GetService"Players"local sd=ad.LocalPlayer local Gwa=Vq:CreateWindow{Title="\230\184\175\231\140\171\231\154\132\233\128\154\231\188\137Wanted\228\184\173\229\155\189\229\184\140\230\156\155",Author="\228\189\156\232\128\133\230\184\175\231\140\171",Folder="MyHub",Transparent=true,Theme="DeltaForce",SideBarWidth=130,HideSearchBar=false,ScrollBarEnabled=true,Background="https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/33490c2c-02d8-4dc8-b24a-0e0478a45b8f.png",BackgroundImageTransparency=0.4,User={Enabled=true},ToggleKey=Enum.KeyCode.F}print"\231\170\151\229\143\163\230\160\135\233\162\152\229\186\148\228\184\186\231\187\191\232\137\178\239\188\140\230\142\167\228\187\182\230\160\135\233\162\152\229\186\148\228\184\186\231\153\189\232\137\178"local Bwa={wj=Gwa:Tab{Title="\231\142\169\229\174\182",Icon="users"},jx=Gwa:Tab{Title="\232\191\156\231\168\139\229\135\187\230\157\128+\233\155\183\232\190\190",Icon="crown"},bot=Gwa:Tab{Title="\231\158\132\229\135\134",Icon="target"},ESP=Gwa:Tab{Title="ESP",Icon="eye"},ESPP=Gwa:Tab{Title="ESP2",Icon="eye"},pg=Gwa:Tab{Title="\232\139\185\230\158\156\231\171\175ESP",Icon="eye"},wb=Gwa:Tab{Title="ESP\231\137\169\229\147\129",Icon="box"},qq=Gwa:Tab{Title="\229\136\160\233\153\164",Icon="trash-2"},rsao=Gwa:Tab{Title="\229\168\177\228\185\144\229\138\159\232\131\189",Icon="zap"},gm=Gwa:Tab{Title="\232\180\173\228\185\176",Icon="shopping-cart"}}local function xd()if sd and sd.Character and sd.Character:FindFirstChild"Humanoid"then return sd.Character end return nil end local Ck=false ud.JumpRequest:Connect(function()if Ck then local Ad=xd()if Ad then local Cd=Ad:FindFirstChildOfClass"Humanoid"if Cd then Cd:ChangeState(Enum.HumanoidStateType.Jumping)end end end end)local Vd=game:GetService"RunService"local Gd=game:GetService"Players"local fe=Gd.LocalPlayer local Yd=nil local te=1 local function ve()local Od=fe.Character local Sd=Od and Od:FindFirstChildOfClass"Humanoid"if Yd then Yd:Disconnect()Yd=nil end if not Sd or te<=1 then return end Yd=Vd.Heartbeat:Connect(function()if not fe.Character then Yd:Disconnect()Yd=nil return end local de=fe.Character.Humanoid if de.MoveDirection.Magnitude>0 then fe.Character:TranslateBy(de.MoveDirection*te/10)end end)end fe.CharacterAdded:Connect(ve)task.spawn(ve)Bwa.wj:Code{Title="\228\189\160\229\165\189",Code="QQ\229\148\174\229\144\142\49\49\50\53\53\49\52\50\54\49"}Bwa.wj:Input{Title="\232\182\133\231\186\167\229\191\171\232\183\145",Placeholder="\232\190\147\229\133\165\49~200\230\149\176\229\173\151",Default="1",Numeric=true,Callback=function(me)local pe=tonumber(me)if not pe then return end te=math.clamp(pe,1,200)ve()end}Bwa.wj:Slider{Title="\232\182\133\231\186\167\229\191\171\232\183\145",Desc="",Value={Min=1,Max=200,Default=1},Step=1,IsTextbox=true,Callback=function(ue)te=ue ve()end}local Ae=game:GetService"Players"local sg=game:GetService"Players"local Cf=game:GetService"UserInputService"local Cg=Ae.LocalPlayer local tf=workspace.CurrentCamera local ih=false local rh=50 local Ig,fh local rf=require(Cg.PlayerScripts:WaitForChild"PlayerModule"):GetControls()local ah,ch,eh local Ug={}local Qg local function jh()pcall(function()for Re,Se in pairs(Ug)do if Re and Re.Parent then Re.CanCollide=Se end end table.clear(Ug)if Qg then Qg:Disconnect()end if ah then ah:Cancel()end if ch then ch:Cancel()end if eh then eh:Disconnect()end if Ig and fh then fh:ChangeState(Enum.HumanoidStateType.Running)end end)end local function bh()local hg=Ig.Position local of=tick()while ih do local pf=tick()local If=pf-of of=pf local yf=rf:GetMoveVector()local xf=tf.CFrame local Ff=(xf.LookVector*-yf.Z)+(xf.RightVector*yf.X)local Gf=0 if Cf:IsKeyDown(Enum.KeyCode.Space)then Gf=1 elseif Cf:IsKeyDown(Enum.KeyCode.LeftControl)then Gf=-1 end local Kf=(Ff+Vector3 .new(0,Gf,0))*rh*If hg+=Kf local dg=Ig.Position local Wf=hg-dg local Uf=Wf.Magnitude if Uf>0 then local Yf=math.ceil(Uf/10)local bg=Wf/Yf for i=1,Yf do if not ih then break end dg+=bg Ig.CFrame=CFrame.new(dg)*Ig.CFrame.Rotation Ig.Velocity=Vector3 .zero end else Ig.CFrame=CFrame.new(hg)*Ig.CFrame.Rotation Ig.Velocity=Vector3 .zero end fh:ChangeState(Enum.HumanoidStateType.Climbing)task.wait(0.001)end end local function dh()while ih do if fh and fh.Health<fh.MaxHealth then fh.Health=fh.MaxHealth end sg.Heartbeat:Wait()end end local function gh()if fh and ih then fh.Health=fh.MaxHealth fh:ChangeState(Enum.HumanoidStateType.Running)end end local function nh()if ih then return end local Rg=Cg.Character if not Rg then return end Ig=Rg:FindFirstChild"HumanoidRootPart"fh=Rg:FindFirstChild"Humanoid"if not Ig or not fh then return end for _,Pg in ipairs(Rg:GetDescendants())do if Pg:IsA"BasePart"then Ug[Pg]=Pg.CanCollide Pg.CanCollide=false end end Qg=Rg.DescendantAdded:Connect(function(Xg)if Xg:IsA"BasePart"then Ug[Xg]=Xg.CanCollide Xg.CanCollide=false end end)ih=true fh:ChangeState(Enum.HumanoidStateType.Climbing)ah=task.spawn(bh)ch=task.spawn(dh)eh=fh.Died:Connect(gh)end local function oh()ih=false jh()end Bwa.wj:Toggle{Title="\231\129\181\233\173\130\233\163\158\232\161\140",Desc="\233\163\158\232\161\140\230\128\157\232\183\175\230\157\165\232\135\170AF\228\189\156\232\128\133\231\167\139\232\190\158\226\157\164\239\184\143",Default=false,Callback=function(mh)if mh then nh()else oh()end end}Bwa.wj:Slider{Title="\233\163\158\232\161\140\233\128\159\229\186\166",Desc="",Value={Min=10,Max=130,Default=50},Step=1,Callback=function(sh)rh=sh end}local _i=false local hi=5 local Vh=nil local function ci()if Vh then return end local Mh=game.Players.LocalPlayer Vh=game:GetService"RunService".RenderStepped:Connect(function(Lh)if not _i then return end local Gh=Mh.Character if not Gh then return end local Jh=Gh:FindFirstChild"HumanoidRootPart"if not Jh then return end Jh.CFrame=Jh.CFrame*CFrame.Angles(0,math.rad(hi)*Lh*60,0)end)ApplyAnimationLock(Mh.Character)end local function di()_i=false if Vh then Vh:Disconnect()Vh=nil end RemoveAnimationLock(game.Players.LocalPlayer.Character)end game.Players.LocalPlayer.CharacterAdded:Connect(function(Uh)if _i then task.wait(0.5)ApplyAnimationLock(Uh)if not Vh then ci()end end end)Bwa.wj:Toggle{Title="\228\186\186\231\137\169\232\135\170\232\189\172",Default=false,Callback=function(bi)_i=bi if bi then ci()AddFeature"\232\135\170\232\189\172"else di()RemoveFeature"\232\135\170\232\189\172"end end}Bwa.wj:Slider{Title="\230\151\139\232\189\172\233\128\159\229\186\166",Value={Min=1,Max=200,Default=hi},Increment=5,Callback=function(ii)hi=ii end}local ak=game:GetService"Players"local yj=game:GetService"RunService"local lk={defaultSize=1,minSize=1,maxSize=5000,loadDelay=0.15}local zk={enabled=false,headSize=lk.defaultSize,heartbeatConn=nil,playerAddedConn=nil,charBindings={},_initialized=false}function zk:UpdateAllHeads()local Ei=Vector3 .new(self.headSize,self.headSize,self.headSize)local wi=ak.LocalPlayer for _,yi in ipairs(ak:GetPlayers())do if yi==wi then continue end local Bi=yi.Character if not Bi then continue end local Fi=Bi:FindFirstChild"Head"if not Fi then continue end pcall(function()Fi.Size=Ei Fi.CanCollide=false end)end end function zk:BindPlayer(Pi)if self.charBindings[Pi]then return end local Qi=Pi.CharacterAdded:Connect(function()task.wait(lk.loadDelay)self:UpdateAllHeads()end)self.charBindings[Pi]=Qi task.spawn(function()task.wait(lk.loadDelay)self:UpdateAllHeads()end)end function zk:UnbindPlayer(bj)local _j=self.charBindings[bj]if _j then _j:Disconnect()self.charBindings[bj]=nil end end function zk:ClearAll()if self.heartbeatConn then self.heartbeatConn:Disconnect()self.heartbeatConn=nil end if self.playerAddedConn then self.playerAddedConn:Disconnect()self.playerAddedConn=nil end for mj,kj in pairs(self.charBindings)do kj:Disconnect()self.charBindings[mj]=nil end end function zk:SetEnabled(uj)if self.enabled==uj then return end self:ClearAll()self.enabled=uj if not uj then return end local Jj=ak.LocalPlayer self.heartbeatConn=yj.Heartbeat:Connect(function()self:UpdateAllHeads()end)for _,Ej in ipairs(ak:GetPlayers())do if Ej~=Jj then self:BindPlayer(Ej)end end self.playerAddedConn=ak.PlayerAdded:Connect(function(Lj)if Lj~=Jj then self:BindPlayer(Lj)end end)self:UpdateAllHeads()end function zk:SetSize(Qj)local Uj=math.clamp(Qj,lk.minSize,lk.maxSize)self.headSize=Uj if self.enabled then self:UpdateAllHeads()end end function zk:Init()if self._initialized then return end self._initialized=true ak.PlayerRemoving:Connect(function(dk)self:UnbindPlayer(dk)end)print"[HeadScaler] \229\136\157\229\167\139\229\140\150\229\174\140\230\136\144 \226\156\133"end zk:Init()Bwa.wj:Toggle{Title="\228\191\174\230\148\185\229\136\171\228\186\186\229\164\180\233\131\168\229\164\167\229\176\143(\228\187\133\230\156\172\229\156\176)",Default=false,Callback=function(jk)zk:SetEnabled(jk)end}Bwa.wj:Input{Title="\229\136\171\228\186\186\229\164\180\233\131\168\229\176\186\229\175\184",Placeholder="\232\190\147\229\133\165\230\149\176\229\173\151 1-5000",Default=tostring(lk.defaultSize),Numeric=true,Callback=function(ok)local rk=tonumber(ok)if rk then zk:SetSize(rk)end end}_G.HeadScalerStatus=function()local yk=0 for _ in pairs(zk.charBindings)do yk=yk+1 end print(string.format("\240\159\147\138 HeadScaler \231\138\182\230\128\129\n\226\148\156\226\148\128 \229\144\175\231\148\168: %s\n\226\148\156\226\148\128 \229\176\186\229\175\184: %.2f\n\226\148\156\226\148\128 \231\187\145\229\174\154\231\142\169\229\174\182: %d\n\226\148\148\226\148\128 \229\191\131\232\183\179: %s\n        ",zk.enabled and"\226\156\133 \230\152\175"or"\226\157\140 \229\144\166",zk.headSize,yk,zk.heartbeatConn and"\240\159\159\162 \232\191\144\232\161\140\228\184\173"or"\240\159\148\180 \229\183\178\229\129\156\230\173\162"))end print"\240\159\146\161 \232\190\147\229\133\165 HeadScalerStatus() \230\159\165\231\156\139\231\138\182\230\128\129"Bwa.wj:Toggle{Title="\230\151\160\233\153\144\232\183\179",Desc="",Value=false,Callback=function(Dk)Ck=Dk end}Bwa.wj:Toggle{Title="\231\169\191\229\162\153",Desc="",Value=false,Callback=function(Ik)local Jk=game:GetService"RunService"local Rk=game:GetService"Players".LocalPlayer if clipConn then clipConn:Disconnect()clipConn=nil end if Ik then clipConn=Jk.Stepped:Connect(function()local Nk=Rk.Character if not Nk then return end for _,Pk in ipairs(Nk:GetChildren())do if Pk:IsA"BasePart"then Pk.CanCollide=false end end end)else local Tk=Rk.Character if Tk then for _,Vk in ipairs(Tk:GetChildren())do if Vk:IsA"BasePart"then Vk.CanCollide=true end end end end end}Bwa.wj:Button{Title="\232\184\143\231\169\186\232\161\140\232\181\176",Callback=function()loadstring(game:HttpGet"https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Float")()end}Bwa.wj:Button{Title="\229\174\154",Callback=function()local bl=game:GetService"Players"local Qm=game:GetService"RunService"local tl=bl.LocalPlayer local Rm=false local an=nil local ll local cn local function ol()ll=tl.Character or tl.CharacterAdded:Wait()cn=ll:WaitForChild"HumanoidRootPart"end ol()tl.CharacterAdded:Connect(function()task.wait(1)ol()end)local zl=Instance.new"ScreenGui"zl.Name="AirFreezeUI"zl.ResetOnSpawn=false zl.Parent=tl:WaitForChild"PlayerGui"local xm=Instance.new"Frame"xm.Size=UDim2 .new(0,90,0,90)xm.Position=UDim2 .new(0.5,-70,0.65,0)xm.BackgroundColor3=Color3 .fromRGB(25,25,30)xm.Parent=zl local Cl=Instance.new"UICorner"Cl.CornerRadius=UDim.new(0,12)Cl.Parent=xm local Kl=Instance.new"TextLabel"Kl.Size=UDim2 .new(1,0,0,26)Kl.BackgroundTransparency=1 Kl.Text="\229\174\154"Kl.TextColor3=Color3 .new(1,1,1)Kl.TextSize=16 Kl.Parent=xm local Om=Instance.new"TextButton"Om.Size=UDim2 .new(0,100,0,32)Om.Position=UDim2 .new(0.5,-50,0.48,0)Om.BackgroundColor3=Color3 .fromRGB(0,170,255)Om.Text="\229\188\128\229\144\175"Om.TextColor3=Color3 .new(1,1,1)Om.TextSize=14 Om.Parent=xm local Xl=Instance.new"UICorner"Xl.CornerRadius=UDim.new(0,8)Xl.Parent=Om local tm=false local wm local Cm xm.InputBegan:Connect(function(mm)if mm.UserInputType==Enum.UserInputType.MouseButton1 or mm.UserInputType==Enum.UserInputType.Touch then tm=true wm=mm.Position Cm=xm.Position mm.Changed:Connect(function()if mm.UserInputState==Enum.UserInputState.End then tm=false end end)end end)xm.InputChanged:Connect(function(vm)if vm.UserInputType==Enum.UserInputType.MouseMovement or vm.UserInputType==Enum.UserInputType.Touch then vm.Changed:Connect(function()if tm then local Dm=vm.Position-wm xm.Position=UDim2 .new(Cm.X.Scale,Cm.X.Offset+Dm.X,Cm.Y.Scale,Cm.Y.Offset+Dm.Y)end end)end end)Om.MouseButton1Click:Connect(function()Rm=not Rm if Rm then Om.Text="\229\133\179\233\151\173"Om.BackgroundColor3=Color3 .fromRGB(255,70,70)if cn then an=cn.Position.Y end else Om.Text="\229\188\128\229\144\175"Om.BackgroundColor3=Color3 .fromRGB(0,170,255)an=nil end end)Qm.Heartbeat:Connect(function()if Rm and cn and an then local bn=cn.Position cn.AssemblyLinearVelocity=Vector3 .zero cn.AssemblyAngularVelocity=Vector3 .zero cn.CFrame=CFrame.new(bn.X,an,bn.Z)*cn.CFrame.Rotation end end)end}local ct=game:GetService"RunService"local xt=game:GetService"Players"local nt=xt.LocalPlayer local Sr=workspace.CurrentCamera local In=game:GetService"UserInputService"local vu={Enabled=false,BulletTrack=false,FOV=200,Smoothness=0.15,Prediction=0.12,BulletSpeed=1500,BulletDrop=0,WallCheck=true,ShowFOV=false,ShowTracer=true,AimPart="Head",TeamCheck=true,JumpPrediction=true}local Ht=Drawing.new"Circle"Ht.Visible=false Ht.Color=Color3 .fromRGB(255,50,50)Ht.Thickness=1.5 Ht.Filled=false Ht.Transparency=0.4 Ht.NumSides=64 Ht.Radius=vu.FOV Ht.Position=Sr.ViewportSize/2 local ds=Drawing.new"Line"ds.Visible=false ds.Color=Color3 .fromRGB(255,50,50)ds.Thickness=1.5 ds.Transparency=0.4 ds.From=Sr.ViewportSize/2 ds.To=Sr.ViewportSize/2 local bs=nil local as=nil local function Gr()local Hn=In:GetMouseLocation()local Nn=Sr.ViewportSize local Co=Vector2 .new(Nn.X/2,Nn.Y/2)local Jo=nil local Ho=vu.FOV for Un=1,#xt:GetPlayers()do local oo=xt:GetPlayers()[Un]if oo==nt then elseif oo.Character then local eo=oo.Character:FindFirstChildOfClass"Humanoid"local ro=oo.Character:FindFirstChild"HumanoidRootPart"if not eo or not ro or eo.Health<=0 then elseif vu.TeamCheck and oo.Team and oo.Team==nt.Team then else local Go=oo.Character:FindFirstChild(vu.AimPart)if not Go then Go=oo.Character:FindFirstChild"Head"end if not Go then Go=ro end if Go then local Bo,xo=Sr:WorldToViewportPoint(Go.Position)if xo and Bo.Z<1000 then local Io=(Vector2 .new(Bo.X,Bo.Y)-Co).Magnitude if Io<Ho then Jo=Go Ho=Io end end end end end end return Jo end local function lp(dp)if not vu.WallCheck then return false end local Yo=Sr.CFrame.Position local _p=(dp.Position-Yo)local ap=RaycastParams.new()ap.FilterType=Enum.RaycastFilterType.Exclude ap.FilterDescendantsInstances={nt.Character,Sr}local cp=workspace:Raycast(Yo,_p,ap)if cp and not cp.Instance:IsDescendantOf(dp.Parent)then return true end return false end local function Hr()if not bs or not bs.Parent then return end local kp=bs.Parent:FindFirstChildOfClass"Humanoid"if not kp or kp.Health<=0 then return end if lp(bs)then return end local rp=(bs.Position-Sr.CFrame.Position).Magnitude local Gp=rp/math.max(vu.BulletSpeed,100)local Bp=Vector3 .zero local Mp=bs.Parent:FindFirstChild"HumanoidRootPart"if Mp then Bp=Mp.AssemblyLinearVelocity end local Pp=bs.Position+Bp*vu.Prediction local Qp=Vector3 .new(0,-vu.BulletDrop*Gp*Gp,0)local Rp=Vector3 .zero if vu.JumpPrediction and Mp then if Mp.AssemblyLinearVelocity.Y>10 then Rp=Vector3 .new(0,Mp.AssemblyLinearVelocity.Y*vu.Prediction*0.5,0)end end local Up=Pp+Qp+Rp local cq=CFrame.new(Sr.CFrame.Position,Up)local dq=vu.Smoothness if dq>=1 then Sr.CFrame=cq else Sr.CFrame=Sr.CFrame:Lerp(cq,dq)end end Bwa.jx:Button{Title="\232\191\156\231\168\139\228\188\160\233\128\129\229\135\187\230\157\128",Callback=function()loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/%E8%BF%9C%E7%A8%8B%E5%87%BB%E6%9D%80.lua")()end}Bwa.jx:Button{Title="\229\188\128\229\144\175\233\155\183\232\190\190\230\137\171\230\143\143\226\154\160\239\184\143",Callback=function()loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/%E9%9B%B7%E8%BE%BE%E6%89%AB%E6%8F%8F.lua")()end}local ir="\230\151\160"local br=false local function Fq(mq)if mq and mq.Character then return mq.Character:FindFirstChild"HumanoidRootPart"end return nil end local function jr()local uq={"\230\151\160"}for _,tq in ipairs(xt:GetPlayers())do if tq~=nt then table.insert(uq,tq.Name)end end return uq end local function dr()if ir=="\230\151\160"then return end local Jq=Fq(nt)if not Jq then return end local Gq=xt:FindFirstChild(ir)local Kq=Fq(Gq)if not Kq then return end local Lq=Jq.CFrame*CFrame.new(0,0,-4)pcall(function()Kq.CFrame=Lq end)end Bwa.jx:Dropdown{Title="\233\128\137\230\139\169\230\156\141\229\138\161\229\153\168\231\142\169\229\174\182",Desc="",Values=jr(),Default="\230\151\160",Callback=function(Qq)ir=Qq end}Bwa.jx:Button{Title="\229\136\183\230\150\176\231\142\169\229\174\182\229\136\151\232\161\168",Desc="",Callback=function()local Uq=jr()PlayerDropdown:SetValues(Uq)Vq:Notify{Title="\229\136\183\230\150\176\230\136\144\229\138\159",Content="\231\142\169\229\174\182\229\136\151\232\161\168\229\183\178\230\155\180\230\150\176",Duration=3,Icon="check"}end}Bwa.jx:Toggle{Title="\229\190\170\231\142\175\228\188\160\233\128\129",Desc="",Default=false,Callback=function(_r)br=_r end}ct.RenderStepped:Connect(function()if br and ir~="\230\151\160"then dr()end end)xt.PlayerRemoving:Connect(function(gr)if gr.Name==ir then ir="\230\151\160"end pcall(function()PlayerDropdown:SetValues(jr())end)end)Bwa.jx:Code{Title="\228\189\191\231\148\168\230\150\185\230\179\149",Code="\229\133\136\229\188\128\229\144\175ESP\230\159\165\231\156\139\229\145\168\229\155\180\231\142\169\229\174\182\229\144\141\229\173\151\229\134\141\231\130\185\229\135\187\228\189\160\232\166\129\229\144\184\232\191\135\230\157\165\231\154\132\231\142\169\229\174\182\229\144\141\229\173\151\229\185\182\229\135\187\230\157\128"}Bwa.jx:Code{Title="\229\189\147\231\132\182\228\189\160\228\185\159\229\143\175\228\187\165\229\156\168\229\174\137\229\133\168\229\140\186\229\134\133\229\135\187\230\157\128\231\142\169\229\174\182",Code="\229\164\169\229\164\169\229\188\128\229\191\131\229\147\166"}Bwa.bot:Paragraph{Title="\240\159\142\175\232\135\170\231\158\132\228\184\142\229\173\144\229\188\185\232\191\189\232\184\170",Desc="Camera\230\154\180\229\138\155\232\135\170\231\158\132 + \230\137\169\229\164\167\231\162\176\230\146\158\231\174\177\229\174\158\231\142\176\229\173\144\229\188\185\229\145\189\228\184\173"}Bwa.bot:Toggle{Title="\240\159\142\175 \232\135\170\231\158\132\230\128\187\229\188\128\229\133\179",Desc="\230\154\180\229\138\155Camera\232\135\170\231\158\132\239\188\140\231\155\180\230\142\165\230\142\167\229\136\182\232\167\134\232\167\146\233\148\129\229\174\154\231\155\174\230\160\135",Default=false,Callback=function(rr)vu.Enabled=rr if rr then if not as then as=ct.RenderStepped:Connect(function()if not vu.Enabled then bs=nil Ht.Visible=false ds.Visible=false return end Ht.Position=Sr.ViewportSize/2 Ht.Radius=vu.FOV Ht.Visible=vu.ShowFOV bs=Gr()Hr()if bs and bs.Parent then local Vr,Or=Sr:WorldToViewportPoint(bs.Position)if Or then ds.Visible=vu.ShowTracer ds.From=Sr.ViewportSize/2 ds.To=Vector2 .new(Vr.X,Vr.Y)else ds.Visible=false end else ds.Visible=false end end)end else if as then as:Disconnect()as=nil end bs=nil Ht.Visible=false ds.Visible=false end end}local Bt=8 local ut=nil local function qt(ps)if ps==nt then return end if vu.TeamCheck and ps.Team and ps.Team==nt.Team then return end local ws=ps.Character if not ws then return end local us=ws:FindFirstChildOfClass"Humanoid"if not us or us.Health<=0 then return end local Hs=ws:FindFirstChild"HumanoidRootPart"if not Hs then return end local Ds=math.clamp(Bt,0,100)pcall(function()Hs.Size=Vector3 .new(Ds,Ds,Ds)Hs.Transparency=0.85 Hs.Color=Color3 .fromRGB(190,190,190)Hs.Material=Enum.Material.Neon Hs.CanCollide=false end)end local function wt(Ls)local Os=Ls.Character if not Os then return end local Us=Os:FindFirstChild"HumanoidRootPart"if not Us then return end pcall(function()Us.Size=Vector3 .new(2,2,1)Us.Transparency=0 Us.Color=Color3 .fromRGB(163,162,165)Us.Material=Enum.Material.Plastic Us.CanCollide=true end)end Bwa.bot:Toggle{Title="\240\159\146\163 \229\173\144\229\188\185\232\191\189\232\184\170\230\128\187\229\188\128\229\133\179",Desc="\230\137\169\229\164\167\230\149\140\228\186\186\231\162\176\230\146\158\231\174\177",Default=false,Callback=function(_t)vu.BulletTrack=_t if _t then if not ut then ut=ct.Heartbeat:Connect(function()if vu.BulletTrack then for ht=1,#xt:GetPlayers()do qt(xt:GetPlayers()[ht])end end end)end for lt=1,#xt:GetPlayers()do local rt=xt:GetPlayers()[lt]if rt~=nt then rt.CharacterAdded:Connect(function()task.wait(1)if vu.BulletTrack then qt(rt)end end)end end else if ut then ut:Disconnect()ut=nil end for yt=1,#xt:GetPlayers()do wt(xt:GetPlayers()[yt])end end end}Bwa.bot:Slider{Title="\240\159\147\166 \229\136\164\229\174\154\231\174\177\229\164\167\229\176\143",Desc="\230\149\140\228\186\186\231\162\176\230\146\158\231\174\177\230\137\169\229\164\167\229\128\141\230\149\176 (0=\229\133\179\233\151\173,100=\229\183\168\229\164\167)",Value={Min=0,Max=100,Default=8},Step=1,Callback=function(Ct)Bt=Ct end}Bwa.bot:Slider{Title="\240\159\142\175 \232\135\170\231\158\132FOV\232\140\131\229\155\180",Desc="\229\177\143\229\185\149\229\135\134\230\152\159\230\144\156\231\180\162\232\140\131\229\155\180(\229\131\143\231\180\160)",Value={Min=20,Max=1000,Default=200},Step=10,Callback=function(It)vu.FOV=It Ht.Radius=It end}Bwa.bot:Slider{Title="\240\159\148\152 \229\185\179\230\187\145\231\179\187\230\149\176",Desc="1=\231\158\172\233\151\180\233\148\129\229\164\180\239\188\140\230\149\176\229\128\188\232\182\138\229\176\143\232\182\138\228\184\157\230\187\145",Value={Min=0.01,Max=1,Default=0.15},Step=0.01,Callback=function(Mt)vu.Smoothness=Mt end}Bwa.bot:Slider{Title="\226\154\161 \233\162\132\229\136\164\229\188\186\229\186\166",Desc="\233\162\132\229\136\164\230\149\140\228\186\186\231\167\187\229\138\168\233\128\159\229\186\166",Value={Min=0,Max=1,Default=0.12},Step=0.01,Callback=function(Qt)vu.Prediction=Qt end}Bwa.bot:Slider{Title="\240\159\148\171 \229\173\144\229\188\185\233\128\159\229\186\166",Desc="\231\148\168\228\186\142\229\188\185\233\129\147\233\162\132\229\136\164",Value={Min=100,Max=5000,Default=1500},Step=50,Callback=function(Ut)vu.BulletSpeed=Ut end}Bwa.bot:Slider{Title="\240\159\147\137 \229\188\185\233\129\147\228\184\139\229\157\160\232\161\165\229\129\191",Desc="\230\168\161\230\139\159\229\173\144\229\188\185\228\184\139\229\157\160",Value={Min=0,Max=200,Default=0},Step=1,Callback=function(Yt)vu.BulletDrop=Yt end}Bwa.bot:Dropdown{Title="\240\159\142\175 \231\158\132\229\135\134\233\131\168\228\189\141",Desc="\228\188\152\229\133\136\231\158\132\229\135\134\232\186\171\228\189\147\229\147\170\228\184\170\233\131\168\228\189\141",Values={"Head","HumanoidRootPart","UpperTorso","LowerTorso"},Callback=function(cu)vu.AimPart=cu end}Bwa.bot:Toggle{Title="\240\159\167\177 \230\142\169\228\189\147\229\136\164\230\150\173",Desc="\232\162\171\229\162\153\230\140\161\228\189\143\229\176\177\228\184\141\233\148\129\229\174\154\230\149\140\228\186\186",Default=true,Callback=function(gu)vu.WallCheck=gu end}Bwa.bot:Toggle{Title="\226\173\149 \230\152\190\231\164\186FOV\229\156\134\229\156\136",Desc="\229\177\143\229\185\149\231\187\152\229\136\182\232\135\170\231\158\132\230\144\156\231\180\162\229\156\136",Default=false,Callback=function(ku)vu.ShowFOV=ku end}Bwa.bot:Toggle{Title="\240\159\147\143 \230\152\190\231\164\186\232\135\170\231\158\132\229\176\132\231\186\191",Desc="\231\187\152\229\136\182\228\187\142\229\135\134\230\152\159\229\136\176\231\155\174\230\160\135\231\186\162\231\186\191",Default=true,Callback=function(ou)vu.ShowTracer=ou end}Bwa.bot:Toggle{Title="\240\159\145\165 \229\140\186\229\136\134\233\152\159\229\143\139",Desc="\228\184\141\228\188\154\233\148\129\229\174\154\229\144\140\233\152\159\228\188\141\231\142\169\229\174\182",Default=true,Callback=function(su)vu.TeamCheck=su end}Bwa.bot:Toggle{Title="\240\159\166\152 \232\183\179\232\183\131\233\162\132\229\136\164",Desc="\233\162\132\229\136\164\230\149\140\228\186\186\229\144\145\228\184\138\232\183\179\232\183\131\228\189\141\231\167\187",Default=true,Callback=function(wu)vu.JumpPrediction=wu end}local Aw=game:GetService"RunService"local cD=game:GetService"Players"local eD=cD.LocalPlayer local bC=workspace.CurrentCamera ESP_Config={EnableESP=false,ShowBox=true,ShowHealth=true,ShowName=true,ShowDistance=true,ShowTracer=false,ShowSkeleton=false,ShowWeapon=false,WallHack=false,TeamCheck=false,MaxDrawDistance=350,BoxThickness=1,TracerThickness=1,SkeletonThickness=2,EnemyColor=Color3 .new(1,0.3,0.3),TeammateColor=Color3 .new(0.3,1,0.3),NPCColor=Color3 .new(1,1,0.2),BoxColor=Color3 .new(1,1,1),TracerColor=Color3 .new(1,0,0),SkeletonColor=Color3 .new(0.2,0.8,1),HealthBarColor=Color3 .new(0,1,0)}local hD={}local function RC(Wy)local Kx=Drawing.new"Square"Kx.Visible=false Kx.Color=ESP_Config.BoxColor Kx.Thickness=ESP_Config.BoxThickness Kx.Filled=false local Ny=Drawing.new"Square"Ny.Visible=false Ny.Color=ESP_Config.HealthBarColor Ny.Thickness=1 Ny.Filled=true local Oy=Drawing.new"Square"Oy.Visible=false Oy.Color=Color3 .new(0,0,0)Oy.Transparency=0.5 Oy.Thickness=1 Oy.Filled=true local Py=Drawing.new"Square"Py.Visible=false Py.Color=Color3 .new(1,1,1)Py.Thickness=1 Py.Filled=false local Qy=Drawing.new"Text"Qy.Visible=false Qy.Color=Color3 .new(1,1,1)Qy.Size=14 Qy.Font=Drawing.Fonts.Monospace Qy.Outline=true Qy.OutlineColor=Color3 .new(0,0,0)local oz=Drawing.new"Text"oz.Visible=false oz.Color=Color3 .new(1,1,1)oz.Size=16 oz.Font=Drawing.Fonts.Monospace oz.Outline=true oz.OutlineColor=Color3 .new(0,0,0)local pz=Drawing.new"Text"pz.Visible=false pz.Color=Color3 .new(1,1,0)pz.Size=14 pz.Font=Drawing.Fonts.Monospace pz.Outline=true pz.OutlineColor=Color3 .new(0,0,0)local qz=Drawing.new"Text"qz.Visible=false qz.Color=Color3 .new(1,0.5,0)qz.Size=14 qz.Font=Drawing.Fonts.Monospace qz.Outline=true qz.OutlineColor=Color3 .new(0,0,0)local Oz=Drawing.new"Line"Oz.Visible=false Oz.Color=ESP_Config.TracerColor Oz.Thickness=ESP_Config.TracerThickness local oC={}local qC={}for Pv=1,15 do oC[Pv]=Drawing.new"Line"oC[Pv].Visible=false oC[Pv].Color=ESP_Config.SkeletonColor oC[Pv].Thickness=ESP_Config.SkeletonThickness end qC.Head=Drawing.new"Circle"qC.Head.Visible=false qC.Head.Color=Color3 .new(1,0.5,0)qC.Head.Thickness=2 qC.Head.Filled=true qC.Head.Radius=4 local zy=100 local By=0 local iy=100 hD[Wy]={box=Kx,healthBar=Ny,healthBarBackground=Oy,healthBarBorder=Py,healthText=Qy,nameText=oz,distanceText=pz,weaponText=qz,tracer=Oz,skeletonLines=oC,skeletonPoints=qC}local function ax()Kx.Visible=false Ny.Visible=false Oy.Visible=false Py.Visible=false Qy.Visible=false oz.Visible=false pz.Visible=false qz.Visible=false Oz.Visible=false for _,xw in pairs(oC)do xw.Visible=false end for _,zw in pairs(qC)do zw.Visible=false end end Aw.RenderStepped:Connect(function()if not ESP_Config.EnableESP then ax()return end if not Wy.Character or not Wy.Character:FindFirstChild"HumanoidRootPart"or not Wy.Character:FindFirstChild"Humanoid"or Wy==eD then ax()return end if ESP_Config.TeamCheck and Wy.Team and Wy.Team==eD.Team then ax()return end local cC=Wy.Character local mx=cC:FindFirstChild"HumanoidRootPart"local Jy=cC:FindFirstChild"Humanoid"if not mx or not Jy or Jy.Health<=0 then ax()return end local Jz=(mx.Position-bC.CFrame.Position).Magnitude if Jz>ESP_Config.MaxDrawDistance then ax()return end local Fx,Pz=bC:WorldToViewportPoint(mx.Position)local jz,gx=bC:WorldToViewportPoint(mx.Position+Vector3 .new(0,3,0))local Bx,kx=bC:WorldToViewportPoint(mx.Position-Vector3 .new(0,3,0))local Yy=ESP_Config.EnemyColor if ESP_Config.TeamCheck and Wy.Team and Wy.Team==eD.Team then Yy=ESP_Config.TeammateColor end local lz="\230\151\160\230\173\166\229\153\168"for _,wx in ipairs(cC:GetChildren())do if wx:IsA"Tool"then lz=wx.Name break end end if ESP_Config.ShowBox and Pz then Kx.Size=Vector2 .new(1000/Fx.Z,jz.Y-Bx.Y)Kx.Position=Vector2 .new(Fx.X-Kx.Size.X/2,Fx.Y-Kx.Size.Y/2)Kx.Visible=true Kx.Color=ESP_Config.BoxColor Kx.Thickness=ESP_Config.BoxThickness else Kx.Visible=false end if ESP_Config.ShowHealth and Pz then local Mx=Jy.Health/Jy.MaxHealth local Fy=jz.X-25 local Gy=jz.Y-20 Oy.Size=Vector2 .new(50,5)Oy.Position=Vector2 .new(Fy,Gy)Oy.Visible=true Py.Size=Vector2 .new(50,5)Py.Position=Vector2 .new(Fy,Gy)Py.Visible=true iy=iy+(Jy.Health-iy)*0.1 local ty=iy/Jy.MaxHealth Ny.Size=Vector2 .new(50*ty,5)Ny.Position=Vector2 .new(Fy,Gy)if ty>=0.8 then Ny.Color=Color3 .new(0,1,0)elseif ty>=0.5 then Ny.Color=Color3 .new(1,1,0)elseif ty>=0.2 then Ny.Color=Color3 .new(1,0.5,0)else Ny.Color=Color3 .new(1,0,0)end if Jy.Health~=zy then By=tick()zy=Jy.Health end if tick()-By<0.5 then Ny.Color=Color3 .new(1,0,0)end Ny.Visible=true Qy.Position=Vector2 .new(Fy+50+5,Gy-5)Qy.Text=math.floor(Jy.Health).."/"..math.floor(Jy.MaxHealth)Qy.Color=Yy Qy.Visible=true else Ny.Visible=false Oy.Visible=false Py.Visible=false Qy.Visible=false end if ESP_Config.ShowName and Pz then oz.Position=Vector2 .new(jz.X,jz.Y-35)oz.Text=Wy.Name oz.Color=Yy oz.Visible=true if ESP_Config.ShowDistance then pz.Position=Vector2 .new(jz.X,jz.Y+10)pz.Text=math.floor(Jz).."m"pz.Visible=true else pz.Visible=false end if ESP_Config.ShowWeapon then qz.Position=Vector2 .new(jz.X,jz.Y-50)qz.Text=lz qz.Visible=true else qz.Visible=false end else oz.Visible=false pz.Visible=false qz.Visible=false end if ESP_Config.ShowTracer then local xz=cC:FindFirstChild"Head"if xz then local Dz,yz=bC:WorldToViewportPoint(xz.Position)if yz then Oz.From=Vector2 .new(bC.ViewportSize.X/2,0)Oz.To=Vector2 .new(Dz.X,Dz.Y)Oz.Visible=true Oz.Color=ESP_Config.TracerColor Oz.Thickness=ESP_Config.TracerThickness if Jz<20 then Oz.Color=Color3 .new(0,1,0)elseif Jz<50 then Oz.Color=Color3 .new(1,1,0)else Oz.Color=ESP_Config.TracerColor end else Oz.Visible=false end else Oz.Visible=false end else Oz.Visible=false end if ESP_Config.ShowSkeleton and Pz then local pA=cC:FindFirstChild"Head"local sA=cC:FindFirstChild"Torso"or cC:FindFirstChild"UpperTorso"local vA=cC:FindFirstChild"Left Arm"or cC:FindFirstChild"LeftUpperArm"local yA=cC:FindFirstChild"Right Arm"or cC:FindFirstChild"RightUpperArm"local BA=cC:FindFirstChild"Left Leg"or cC:FindFirstChild"LeftUpperLeg"local EA=cC:FindFirstChild"Right Leg"or cC:FindFirstChild"RightUpperLeg"if pA and sA and vA and yA and BA and EA then local LA=bC:WorldToViewportPoint(pA.Position)local nB=bC:WorldToViewportPoint(sA.Position)local yB=bC:WorldToViewportPoint(vA.Position)local JB=bC:WorldToViewportPoint(yA.Position)local UB=bC:WorldToViewportPoint(BA.Position)local fC=bC:WorldToViewportPoint(EA.Position)qC.Head.Position=Vector2 .new(LA.X,LA.Y)qC.Head.Visible=true oC[1].From=Vector2 .new(LA.X,LA.Y)oC[1].To=Vector2 .new(nB.X,nB.Y)oC[1].Visible=true oC[2].From=Vector2 .new(nB.X,nB.Y)oC[2].To=Vector2 .new(yB.X,yB.Y)oC[2].Visible=true oC[3].From=Vector2 .new(nB.X,nB.Y)oC[3].To=Vector2 .new(JB.X,JB.Y)oC[3].Visible=true oC[4].From=Vector2 .new(nB.X,nB.Y)oC[4].To=Vector2 .new(UB.X,UB.Y)oC[4].Visible=true oC[5].From=Vector2 .new(nB.X,nB.Y)oC[5].To=Vector2 .new(fC.X,fC.Y)oC[5].Visible=true if cC:FindFirstChild"LeftLowerArm"then local BB=bC:WorldToViewportPoint(cC.LeftLowerArm.Position)oC[6].From=Vector2 .new(yB.X,yB.Y)oC[6].To=Vector2 .new(BB.X,BB.Y)oC[6].Visible=true end if cC:FindFirstChild"RightLowerArm"then local MB=bC:WorldToViewportPoint(cC.RightLowerArm.Position)oC[7].From=Vector2 .new(JB.X,JB.Y)oC[7].To=Vector2 .new(MB.X,MB.Y)oC[7].Visible=true end if cC:FindFirstChild"LeftLowerLeg"then local XB=bC:WorldToViewportPoint(cC.LeftLowerLeg.Position)oC[8].From=Vector2 .new(UB.X,UB.Y)oC[8].To=Vector2 .new(XB.X,XB.Y)oC[8].Visible=true end if cC:FindFirstChild"RightLowerLeg"then local iC=bC:WorldToViewportPoint(cC.RightLowerLeg.Position)oC[9].From=Vector2 .new(fC.X,fC.Y)oC[9].To=Vector2 .new(iC.X,iC.Y)oC[9].Visible=true end else for _,lC in pairs(oC)do lC.Visible=false end for _,nC in pairs(qC)do nC.Visible=false end end else for _,pC in pairs(oC)do pC.Visible=false end for _,rC in pairs(qC)do rC.Visible=false end end end)end local function VC(HC)if hD[HC]then local zC=hD[HC]for key,FC in pairs(zC)do if typeof(FC)=="table"then for _,DC in pairs(FC)do if typeof(DC)=="userdata"then pcall(function()DC:Remove()end)end end else if typeof(FC)=="userdata"then pcall(function()FC:Remove()end)end end end hD[HC]=nil end end for _,MC in ipairs(cD:GetPlayers())do if MC~=eD then RC(MC)end end cD.PlayerAdded:Connect(function(SC)if SC~=eD then RC(SC)end end)cD.PlayerRemoving:Connect(function(WC)VC(WC)end)Bwa.ESP:Paragraph{Title="ESP\233\128\143\232\167\134\232\174\190\231\189\174",Desc="Drawing API\233\171\152\230\128\167\232\131\189\233\128\143\232\167\134",ImageSize=22,ThumbnailSize=0}Bwa.ESP:Toggle{Title="\229\188\128\229\144\175ESP\230\128\187\229\188\128\229\133\179",Desc="\229\133\168\229\177\128\229\144\175\231\148\168\233\128\143\232\167\134",Default=false,Callback=function(bD)ESP_Config.EnableESP=bD if not bD then for _,iD in ipairs(cD:GetPlayers())do if iD~=eD then if hD[iD]then for key,oD in pairs(hD[iD])do if typeof(oD)=="table"then for _,mD in pairs(oD)do if typeof(mD)=="userdata"then pcall(function()mD.Visible=false end)end end else if typeof(oD)=="userdata"then pcall(function()oD.Visible=false end)end end end end end end end end}Bwa.ESP:Toggle{Title="\230\152\190\231\164\186\229\164\180\233\161\182\229\144\141\231\167\176",Desc="\231\142\169\229\174\182ID",Default=true,Callback=function(rD)ESP_Config.ShowName=rD end}Bwa.ESP:Toggle{Title="\230\152\190\231\164\186\232\161\128\233\135\143",Default=true,Callback=function(uD)ESP_Config.ShowHealth=uD end}Bwa.ESP:Toggle{Title="\230\152\190\231\164\186\232\183\157\231\166\187",Default=true,Callback=function(xD)ESP_Config.ShowDistance=xD end}Bwa.ESP:Toggle{Title="\230\150\185\230\161\134\233\128\143\232\167\134",Desc="2D\230\150\185\230\161\134",Default=true,Callback=function(AD)ESP_Config.ShowBox=AD end}Bwa.ESP:Toggle{Title="\229\176\132\231\186\191\233\128\143\232\167\134",Desc="\228\187\142\229\177\143\229\185\149\233\161\182\233\131\168",Default=false,Callback=function(DD)ESP_Config.ShowTracer=DD end}Bwa.ESP:Toggle{Title="\233\170\168\230\158\182\233\128\143\232\167\134",Desc="\233\170\168\233\170\188\231\186\191\230\157\161",Default=false,Callback=function(GD)ESP_Config.ShowSkeleton=GD end}Bwa.ESP:Toggle{Title="\230\173\166\229\153\168\230\152\190\231\164\186",Desc="\230\152\190\231\164\186\230\137\139\230\140\129\230\173\166\229\153\168\229\144\141",Default=false,Callback=function(JD)ESP_Config.ShowWeapon=JD end}Bwa.ESP:Toggle{Title="\231\169\191\229\162\153ESP",Desc="\229\162\153\228\189\147\233\129\174\230\140\161\228\190\157\230\151\167\230\152\190\231\164\186",Default=false,Callback=function(MD)ESP_Config.WallHack=MD end}Bwa.ESP:Toggle{Title="\229\140\186\229\136\134\233\152\159\229\143\139\233\162\156\232\137\178",Desc="\233\152\159\229\143\139\231\187\191/\230\149\140\228\186\186\231\186\162/NPC\233\187\132",Default=false,Callback=function(PD)ESP_Config.TeamCheck=PD end}Bwa.ESP:Slider{Title="ESP\230\156\128\229\164\167\229\143\175\232\167\134\232\183\157\231\166\187",Desc="\232\182\133\229\135\186\232\183\157\231\166\187\228\184\141\230\184\178\230\159\147",Value={Min=50,Max=1000,Default=350},Step=10,IsTextbox=true,Callback=function(SD)ESP_Config.MaxDrawDistance=SD end}local kF=Drawing.Fonts.Monospace local _J=1500 local hJ=1 local dJ=2.2 local UH=game:GetService"Players"local eI=game:GetService"RunService"local DH=UH.LocalPlayer local uH=workspace.CurrentCamera local rI=false local AI=false local KI=false local FI=false local UI=false local PI=false local vI={}local dI=nil local OH=false local function XF(qE)local tE,rE=uH:WorldToViewportPoint(qE)if not rE then return nil end return Vector2 .new(tE.X,tE.Y)end local function FF(xE)local KE=xE.Character if not KE then return nil end local LE=KE:FindFirstChildOfClass"Humanoid"local ME=KE:FindFirstChild"HumanoidRootPart"or KE:FindFirstChild"UpperTorso"or KE:FindFirstChild"Torso"local NE=KE:FindFirstChild"Head"if not LE or not ME or not NE then return nil end return KE,LE,ME,NE end local function LH()local oF={}oF.Box=Drawing.new"Square"oF.Box.Filled=false oF.Box.Transparency=1 oF.Name=Drawing.new"Text"oF.Name.Size=16 oF.Name.Center=true oF.Name.Outline=true oF.Name.Font=kF oF.Distance=Drawing.new"Text"oF.Distance.Size=14 oF.Distance.Center=true oF.Distance.Outline=true oF.Distance.Font=kF oF.Health=Drawing.new"Text"oF.Health.Size=14 oF.Health.Center=true oF.Health.Outline=true oF.Health.Font=kF oF.Tracer=Drawing.new"Line"oF.Tracer.Thickness=1 oF.Tracer.Transparency=0.5 return oF end local function lI(sF)if not sF then return end for _,vF in pairs(sF)do if vF and vF.Remove then pcall(function()vF:Remove()end)end end end local function iI(SG,zH)if SG==DH then return end local HF,lH,YF,VF=FF(SG)if not HF or not lH or lH.Health<=0 then for _,LF in pairs(zH)do LF.Visible=false end return end local bH=(uH.CFrame.Position-YF.Position).Magnitude if bH>_J then for _,SF in pairs(zH)do SF.Visible=false end return end local wH=XF(VF.Position+Vector3 .new(0,0.5,0))local fG=XF(YF.Position)if not wH or not fG then for _,cG in pairs(zH)do cG.Visible=false end return end local wG=math.abs(wH.Y-fG.Y)*dJ local uG=wG*0.65 wG=math.max(wG,15)uG=math.max(uG,10)local WG=Vector2 .new(wH.X-uG/2,wH.Y-wG*0.2)local xH=Vector2 .new(wH.X+uG/2,WG.Y+wG)if AI then zH.Box.Visible=true zH.Box.Size=xH-WG zH.Box.Position=WG zH.Box.Thickness=hJ local LG=lH.Health/lH.MaxHealth if LG>0.5 then zH.Box.Color=Color3 .fromRGB(0,255,0)elseif LG>0.25 then zH.Box.Color=Color3 .fromRGB(255,165,0)else zH.Box.Color=Color3 .fromRGB(255,0,0)end else zH.Box.Visible=false end if FI then zH.Name.Visible=true zH.Name.Text=SG.Name zH.Name.Color=Color3 .fromRGB(255,255,255)zH.Name.Position=Vector2 .new(wH.X,WG.Y-16-2)else zH.Name.Visible=false end if KI then zH.Distance.Visible=true zH.Distance.Text=string.format("[%d m]",math.floor(bH))zH.Distance.Color=Color3 .fromRGB(200,200,200)zH.Distance.Position=Vector2 .new(wH.X,xH.Y+2)else zH.Distance.Visible=false end if PI then zH.Health.Visible=true zH.Health.Text=string.format("HP: %d/%d",math.floor(lH.Health),math.floor(lH.MaxHealth))zH.Health.Color=Color3 .fromRGB(0,255,0)zH.Health.Position=Vector2 .new(wH.X,xH.Y+16+2)else zH.Health.Visible=false end if UI then zH.Tracer.Visible=true zH.Tracer.From=Vector2 .new(uH.ViewportSize.X/2,0)zH.Tracer.To=Vector2 .new(wH.X,xH.Y)zH.Tracer.Color=Color3 .fromRGB(255,255,255)else zH.Tracer.Visible=false end end local function TH(KH)if KH==DH then return end if vI[KH]then lI(vI[KH])end vI[KH]=LH()end Bwa.ESPP:Button{Title="\229\136\157\229\167\139\229\140\150ESP",Callback=function()if OH then print"\226\154\160\239\184\143 ESP\229\183\178\231\187\143\229\136\157\229\167\139\229\140\150\239\188\140\230\151\160\233\156\128\233\135\141\229\164\141\231\130\185\229\135\187"return end OH=true for _,RH in ipairs(UH:GetPlayers())do TH(RH)end UH.PlayerAdded:Connect(TH)UH.PlayerRemoving:Connect(function(cI)if vI[cI]then lI(vI[cI])vI[cI]=nil end end)dI=eI.RenderStepped:Connect(function()if not rI then return end for oI,mI in pairs(vI)do if oI.Parent then pcall(iI,oI,mI)else lI(mI)vI[oI]=nil end end end)print"\226\156\133 ESP\229\136\157\229\167\139\229\140\150\229\174\140\230\136\144\239\188\140\232\175\183\228\189\191\231\148\168\228\184\139\230\150\185Toggle\229\188\128\229\133\179\230\142\167\229\136\182\229\138\159\232\131\189"end}Bwa.ESPP:Toggle{Title="ESP\230\128\187\229\188\128\229\133\179",Value=false,Callback=function(uI)rI=uI print("ESP\230\128\187\229\188\128\229\133\179\239\188\154",uI and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")if not uI then for _,wI in pairs(vI)do for _,xI in pairs(wI)do xI.Visible=false end end end end}Bwa.ESPP:Toggle{Title="\231\142\169\229\174\182\230\150\185\230\161\134",Value=false,Callback=function(CI)AI=CI print("\231\142\169\229\174\182\230\150\185\230\161\134\239\188\154",CI and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")end}Bwa.ESPP:Toggle{Title="\231\142\169\229\174\182\229\144\141\229\173\151",Value=false,Callback=function(HI)FI=HI print("\231\142\169\229\174\182\229\144\141\229\173\151\239\188\154",HI and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")end}Bwa.ESPP:Toggle{Title="\231\142\169\229\174\182\232\183\157\231\166\187",Value=false,Callback=function(MI)KI=MI print("\231\142\169\229\174\182\232\183\157\231\166\187\239\188\154",MI and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")end}Bwa.ESPP:Toggle{Title="\231\148\159\229\145\189\229\128\188",Value=false,Callback=function(RI)PI=RI print("\231\148\159\229\145\189\229\128\188\239\188\154",RI and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")end}Bwa.ESPP:Toggle{Title="\229\176\132\231\186\191",Value=false,Callback=function(WI)UI=WI print("\229\176\132\231\186\191\239\188\154",WI and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")end}Bwa.ESPP:Slider{Title="\230\156\128\229\164\167\230\184\178\230\159\147\232\183\157\231\166\187",Desc="\232\182\133\232\191\135\232\191\153\228\184\170\232\183\157\231\166\187\231\154\132\231\142\169\229\174\182\229\176\134\228\184\141\231\187\152\229\136\182",Value={Min=500,Max=5000,Default=1500},Step=100,IsTextbox=true,Callback=function(aJ)_J=aJ end}Bwa.ESPP:Slider{Title="\230\150\185\230\161\134\229\164\167\229\176\143\229\128\141\230\149\176",Desc="\230\149\176\229\128\188\232\182\138\229\164\167\230\150\185\230\161\134\232\182\138\229\164\167",Value={Min=1.5,Max=3,Default=2.2},Step=0.1,IsTextbox=true,Callback=function(eJ)dJ=eJ end}Bwa.ESPP:Slider{Title="\230\150\185\230\161\134\231\186\191\230\157\161\231\178\151\231\187\134",Desc="\230\149\176\229\173\151\232\182\138\229\164\167\231\186\191\230\157\161\232\182\138\231\178\151",Value={Min=1,Max=5,Default=1},Step=1,IsTextbox=true,Callback=function(iJ)hJ=iJ end}local nL=game:GetService"Players"local yL=game:GetService"RunService"local VL=nL.LocalPlayer local pM=false local yJ=Color3 .fromRGB(255,50,50)local wM={}local sM=nil local function xK(gK)if gK==VL then return end local hK=Instance.new"Highlight"hK.FillTransparency=1 hK.OutlineColor=yJ hK.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop hK.Enabled=false local iK=Instance.new"BillboardGui"iK.Size=UDim2 .fromOffset(120,30)iK.StudsOffset=Vector3 .new(0,3,0)iK.AlwaysOnTop=true iK.ResetOnSpawn=false iK.Enabled=false local QJ=Instance.new"TextLabel"QJ.Size=UDim2 .new(1,0,0,16)QJ.BackgroundTransparency=1 QJ.TextColor3=Color3 .new(1,1,1)QJ.TextSize=14 QJ.Font=Enum.Font.GothamBold QJ.TextStrokeTransparency=0.3 QJ.Text=gK.Name QJ.Parent=iK local eK=Instance.new"Frame"eK.Size=UDim2 .new(0,50,0,3)eK.Position=UDim2 .new(0.5,-25,0,18)eK.BackgroundColor3=Color3 .fromRGB(20,20,20)eK.BorderSizePixel=0 eK.Parent=iK local jK=Instance.new"Frame"jK.Size=UDim2 .new(1,0,1,0)jK.BackgroundColor3=Color3 .fromRGB(0,255,80)jK.BorderSizePixel=0 jK.Parent=eK wM[gK]={hl=hK,bb=iK,fill=jK}end local function lL(BK)if wM[BK]then wM[BK].hl:Destroy()wM[BK].bb:Destroy()wM[BK]=nil end local JK=BK.Character if not JK then return end xK(BK)local MK=wM[BK]if not MK then return end local NK=JK:WaitForChild("Head",5)if NK then MK.hl.Adornee=JK MK.hl.Parent=JK MK.bb.Adornee=NK MK.bb.Parent=NK end end local function AM()if pM then return end pM=true for _,aL in ipairs(nL:GetPlayers())do if aL~=VL then if aL.Character then lL(aL)end aL.CharacterAdded:Connect(function()if pM then lL(aL)end end)end end nL.PlayerAdded:Connect(function(mL)if mL~=VL then mL.CharacterAdded:Connect(function()if pM then lL(mL)end end)if mL.Character and pM then lL(mL)end end end)nL.PlayerRemoving:Connect(function(wL)if wM[wL]then wM[wL].hl:Destroy()wM[wL].bb:Destroy()wM[wL]=nil end end)sM=yL.RenderStepped:Connect(function()if not pM then return end local EL=VL.Character local _M=EL and EL:FindFirstChild"HumanoidRootPart"for UL,mM in pairs(wM)do local NL=UL.Character local jM=NL and NL:FindFirstChildOfClass"Humanoid"local aM=NL and NL:FindFirstChild"HumanoidRootPart"local gM=jM and aM and jM.Health>0 if gM and true and UL.Team and UL.Team==VL.Team then gM=false end if gM and _M and(_M.Position-aM.Position).Magnitude>1000 then gM=false end mM.hl.Enabled=gM mM.bb.Enabled=gM if gM then local nM=math.clamp(jM.Health/math.max(jM.MaxHealth,1),0,1)mM.fill.Size=UDim2 .new(nM,0,1,0)mM.fill.BackgroundColor3=Color3 .fromHSV(nM*0.33,1,1)end end end)end local function BM()pM=false if sM then sM:Disconnect()sM=nil end for p,vM in pairs(wM)do vM.hl:Destroy()vM.bb:Destroy()end table.clear(wM)end Bwa.pg:Toggle{Title="ESP\229\134\133\233\128\143",Default=false,Callback=function(zM)if zM then AM()else BM()end end}Bwa.wb:Button{Title="\230\163\128\230\159\165\229\133\168\229\177\128\231\156\139\230\156\137\228\186\186\229\129\183\229\144\131\229\141\176\233\146\158\230\156\186\230\178\161\230\156\137",Callback=function()local function AO(MN)if MN:FindFirstChild"ESP_Highlight"then return end local NM=Instance.new"Highlight"NM.Name="ESP_Highlight"NM.FillColor=Color3 .new(0,0.8,0.2)NM.FillTransparency=0.15 NM.OutlineColor=Color3 .new(0.3,1,0.3)NM.OutlineTransparency=0.05 NM.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop NM.Parent=MN local uN=Instance.new"BillboardGui"uN.Name="ESP_Tag"uN.Size=UDim2 .new(0,180,0,40)uN.StudsOffset=Vector3 .new(0,3,0)uN.AlwaysOnTop=true uN.MaxDistance=999999 uN.Parent=MN local hN=Instance.new"TextLabel"hN.Size=UDim2 .new(1,0,0.5,0)hN.Position=UDim2 .new(0,0,0,0)hN.BackgroundTransparency=1 hN.Text="\230\156\137\228\186\186\229\156\168\229\129\183\229\144\131\229\141\176\233\146\158\230\156\186 MoneyPrinter"hN.TextColor3=Color3 .new(0.3,1,0.3)hN.TextScaled=true hN.Font=Enum.Font.GothamBold hN.TextStrokeColor3=Color3 .new(0,0,0)hN.TextStrokeTransparency=0.3 hN.Parent=uN local VN=Instance.new"TextLabel"VN.Size=UDim2 .new(1,0,0.5,0)VN.Position=UDim2 .new(0,0,0.5,0)VN.BackgroundTransparency=1 VN.Text=" --m"VN.TextColor3=Color3 .new(1,1,1)VN.TextScaled=true VN.Font=Enum.Font.Gotham VN.TextStrokeColor3=Color3 .new(0,0,0)VN.TextStrokeTransparency=0.3 VN.Parent=uN local AN=game.Players.LocalPlayer if AN and AN.Character then game:GetService"RunService".RenderStepped:Connect(function()local TN=AN.Character and AN.Character:FindFirstChild"HumanoidRootPart"if TN then local UN=nil if MN:IsA"BasePart"then UN=MN.Position elseif MN:IsA"Model"and MN.PrimaryPart then UN=MN.PrimaryPart.Position elseif MN:IsA"Model"then local NN=MN:GetDescendants()for _,QN in ipairs(NN)do if QN:IsA"BasePart"then UN=QN.Position break end end end if UN then local WN=(TN.Position-UN).Magnitude VN.Text=string.format(" %.1fm",WN)end end end)end print"\240\159\146\176 MoneyPrinter \229\183\178\230\160\135\232\174\176!"end local function iO()local gO=0 for _,dO in ipairs(workspace:GetDescendants())do if(dO:IsA"BasePart"or dO:IsA"Model")and dO.Name=="MoneyPrinter"then AO(dO)gO=gO+1 end end return gO end local jO=iO()print("\226\156\133 \230\137\190\229\136\176 "..jO.." \228\184\170 MoneyPrinter")print"\226\156\133 MoneyPrinter \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\231\187\191\232\137\178)"spawn(function()while true do wait(5)local uO=0 for _,qO in ipairs(workspace:GetDescendants())do if(qO:IsA"BasePart"or qO:IsA"Model")and qO.Name=="MoneyPrinter"then if not qO:FindFirstChild"ESP_Highlight"then AO(qO)uO=uO+1 end end end if uO>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..uO.." \228\184\170 MoneyPrinter")end end end)workspace.DescendantAdded:Connect(function(BO)task.wait(0.1)if(BO:IsA"BasePart"or BO:IsA"Model")and BO.Name=="MoneyPrinter"then if not BO:FindFirstChild"ESP_Highlight"then AO(BO)print"\240\159\146\176 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 MoneyPrinter!"end end end)print"\226\156\133 \229\133\168\229\155\190 MoneyPrinter\239\188\136\229\141\176\233\146\158\230\156\186\239\188\137\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"end}local Hsa=Bwa.wb:Section{Title="\229\143\152\229\141\150\231\137\169"}Hsa:Button{Title="\233\135\145\229\157\151",Callback=function()local vQ=workspace.Local and workspace.Local:FindFirstChild"Gizmos"if not vQ then warn"Gizmos\228\184\141\229\173\152\229\156\168"return end local function zQ(JO)return JO.Name=="Gold Bar"end local function CQ(VP)if VP:FindFirstChild"ESP_Highlight"then return end local UO=Instance.new"Highlight"UO.Name="ESP_Highlight"UO.FillColor=Color3 .new(1,0.8,0)UO.FillTransparency=0.2 UO.OutlineColor=Color3 .new(1,1,0)UO.OutlineTransparency=0.05 UO.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop UO.Parent=VP local CP=Instance.new"BillboardGui"CP.Name="ESP_Tag"CP.Size=UDim2 .new(0,160,0,50)CP.StudsOffset=Vector3 .new(0,4,0)CP.AlwaysOnTop=true CP.MaxDistance=1000 CP.Parent=VP local pP=Instance.new"TextLabel"pP.Size=UDim2 .new(1,0,0.5,0)pP.Position=UDim2 .new(0,0,0,0)pP.BackgroundTransparency=1 pP.Text="\233\135\145\229\157\151 "..VP.Name pP.TextColor3=Color3 .new(1,0.8,0)pP.TextScaled=true pP.Font=Enum.Font.GothamBold pP.TextStrokeColor3=Color3 .new(0,0,0)pP.TextStrokeTransparency=0.3 pP.Parent=CP local WP=Instance.new"TextLabel"WP.Size=UDim2 .new(1,0,0.5,0)WP.Position=UDim2 .new(0,0,0.5,0)WP.BackgroundTransparency=1 WP.Text=" --m"WP.TextColor3=Color3 .new(1,1,1)WP.TextScaled=true WP.Font=Enum.Font.GothamBold WP.TextStrokeColor3=Color3 .new(0,0,0)WP.TextStrokeTransparency=0.3 WP.Parent=CP local IP=game.Players.LocalPlayer if IP and IP.Character then game:GetService"RunService".Heartbeat:Connect(function()local UP=IP.Character and IP.Character:FindFirstChild"HumanoidRootPart"if UP and VP:IsA"BasePart"then local PP=(UP.Position-VP.Position).Magnitude WP.Text=string.format(" %.1fm",PP)elseif UP and VP:IsA"Model"and VP.PrimaryPart then local XP=(UP.Position-VP.PrimaryPart.Position).Magnitude WP.Text=string.format(" %.1fm",XP)end end)end print"\226\173\144 Gold Bar \229\183\178\230\160\135\232\174\176!"end local function sQ(bQ)local qQ=0 for _,pQ in ipairs(bQ:GetChildren())do if(pQ:IsA"BasePart"or pQ:IsA"Model")and zQ(pQ)then CQ(pQ)qQ=qQ+1 end if pQ:IsA"Folder"or pQ:IsA"Model"then qQ=qQ+sQ(pQ)end end return qQ end local uQ=sQ(vQ)print("\226\156\133 \230\137\190\229\136\176 "..uQ.." \228\184\170 Gold Bar")vQ.DescendantAdded:Connect(function(DQ)task.wait(0.1)if(DQ:IsA"BasePart"or DQ:IsA"Model")and zQ(DQ)then if not DQ:FindFirstChild"ESP_Highlight"then CQ(DQ)print"\226\173\144 \230\150\176\229\162\158 Gold Bar"end end end)print"\226\156\133 Gold Bar \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168\239\188\136\228\187\133\231\178\190\231\161\174\229\140\185\233\133\141\239\188\137"end}Hsa:Button{Title="BTCESP",Callback=function()local function CS(OR)if OR:FindFirstChild"ESP_Highlight"then return end local PQ=Instance.new"Highlight"PQ.Name="ESP_Highlight"PQ.FillColor=Color3 .new(1,0.6,0)PQ.FillTransparency=0.15 PQ.OutlineColor=Color3 .new(1,0.8,0.2)PQ.OutlineTransparency=0.05 PQ.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop PQ.Parent=OR local wR=Instance.new"BillboardGui"wR.Name="ESP_Tag"wR.Size=UDim2 .new(0,160,0,40)wR.StudsOffset=Vector3 .new(0,3,0)wR.AlwaysOnTop=true wR.MaxDistance=999999 wR.Parent=OR local jR=Instance.new"TextLabel"jR.Size=UDim2 .new(1,0,0.5,0)jR.Position=UDim2 .new(0,0,0,0)jR.BackgroundTransparency=1 jR.Text="\230\175\148\231\137\185\229\184\129 Bitcoin"jR.TextColor3=Color3 .new(1,0.7,0.1)jR.TextScaled=true jR.Font=Enum.Font.GothamBold jR.TextStrokeColor3=Color3 .new(0,0,0)jR.TextStrokeTransparency=0.3 jR.Parent=wR local XR=Instance.new"TextLabel"XR.Size=UDim2 .new(1,0,0.5,0)XR.Position=UDim2 .new(0,0,0.5,0)XR.BackgroundTransparency=1 XR.Text=" --m"XR.TextColor3=Color3 .new(1,1,1)XR.TextScaled=true XR.Font=Enum.Font.Gotham XR.TextStrokeColor3=Color3 .new(0,0,0)XR.TextStrokeTransparency=0.3 XR.Parent=wR local CR=game.Players.LocalPlayer if CR and CR.Character then game:GetService"RunService".RenderStepped:Connect(function()local VR=CR.Character and CR.Character:FindFirstChild"HumanoidRootPart"if VR then local WR=nil if OR:IsA"BasePart"then WR=OR.Position elseif OR:IsA"Model"and OR.PrimaryPart then WR=OR.PrimaryPart.Position elseif OR:IsA"Model"then local PR=OR:GetDescendants()for _,SR in ipairs(PR)do if SR:IsA"BasePart"then WR=SR.Position break end end end if WR then local YR=(VR.Position-WR).Magnitude XR.Text=string.format(" %.1fm",YR)end end end)end print"\226\130\191 Bitcoin \229\183\178\230\160\135\232\174\176!"end local function kS()local iS=0 for _,fS in ipairs(workspace:GetDescendants())do if(fS:IsA"BasePart"or fS:IsA"Model")and fS.Name=="Bitcoin"then CS(fS)iS=iS+1 end end return iS end local lS=kS()print("\226\156\133 \230\137\190\229\136\176 "..lS.." \228\184\170 Bitcoin")print"\226\156\133 Bitcoin \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\230\169\153\232\137\178)"spawn(function()while true do wait(5)local wS=0 for _,sS in ipairs(workspace:GetDescendants())do if(sS:IsA"BasePart"or sS:IsA"Model")and sS.Name=="Bitcoin"then if not sS:FindFirstChild"ESP_Highlight"then CS(sS)wS=wS+1 end end end if wS>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..wS.." \228\184\170 Bitcoin")end end end)workspace.DescendantAdded:Connect(function(DS)task.wait(5)if(DS:IsA"BasePart"or DS:IsA"Model")and DS.Name=="Bitcoin"then if not DS:FindFirstChild"ESP_Highlight"then CS(DS)print"\226\130\191 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 Bitcoin!"end end end)print"\226\156\133 \229\133\168\229\155\190 Bitcoin \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"end}Hsa:Button{Title="\231\180\171\229\174\157\231\159\179",Callback=function()local function JU(gU,lT,iT)if gU:FindFirstChild"ESP_Highlight"then return end local TS=Instance.new"Highlight"TS.Name="ESP_Highlight"TS.FillColor=lT TS.FillTransparency=0.2 TS.OutlineColor=lT TS.OutlineTransparency=0.05 TS.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop TS.Parent=gU local DT=Instance.new"BillboardGui"DT.Name="ESP_Tag"DT.Size=UDim2 .new(0,200,0,55)DT.StudsOffset=Vector3 .new(0,4,0)DT.AlwaysOnTop=true DT.MaxDistance=0 DT.Parent=gU local qT=Instance.new"TextLabel"qT.Size=UDim2 .new(1,0,0.5,0)qT.Position=UDim2 .new(0,0,0,0)qT.BackgroundTransparency=1 qT.Text=iT.." "..gU.Name qT.TextColor3=lT qT.TextScaled=true qT.Font=Enum.Font.GothamBold qT.TextStrokeColor3=Color3 .new(0,0,0)qT.TextStrokeTransparency=0.3 qT.Parent=DT local eU=Instance.new"TextLabel"eU.Size=UDim2 .new(1,0,0.5,0)eU.Position=UDim2 .new(0,0,0.5,0)eU.BackgroundTransparency=1 eU.Text=" --m"eU.TextColor3=Color3 .new(1,1,1)eU.TextScaled=true eU.Font=Enum.Font.GothamBold eU.TextStrokeColor3=Color3 .new(0,0,0)eU.TextStrokeTransparency=0.3 eU.Parent=DT local JT=game.Players.LocalPlayer if JT and JT.Character then game:GetService"RunService".Heartbeat:Connect(function()local cU=JT.Character and JT.Character:FindFirstChild"HumanoidRootPart"if cU then local dU=nil if gU:IsA"BasePart"then dU=gU.Position elseif gU:IsA"Model"and gU.PrimaryPart then dU=gU.PrimaryPart.Position elseif gU:IsA"Model"then local WT=gU:GetDescendants()for _,_U in ipairs(WT)do if _U:IsA"BasePart"then dU=_U.Position break end end end if dU then local fU=(cU.Position-dU).Magnitude eU.Text=string.format(" %.1fm",fU)end end end)end print("\240\159\146\142\231\180\171\229\174\157\231\159\179 "..gU.Name.." \229\183\178\230\160\135\232\174\176!")end local BU=workspace.Local and workspace.Local:FindFirstChild"Gizmos"if not BU then warn"Gizmos\228\184\141\229\173\152\229\156\168"return end local DU={["Sapphire"]={color=Color3 .new(0.6,0,1),icon="\240\159\146\142"}}local function AU()local zU=0 for _,uU in ipairs(BU:GetChildren())do local wU=DU[uU.Name]if wU and(uU:IsA"Model"or uU:IsA"BasePart")then JU(uU,wU.color,wU.icon)zU=zU+1 end end print("\226\156\133 \229\183\178\230\160\135\232\174\176 "..zU.." \228\184\170\229\174\157\231\159\179")end AU()spawn(function()while true do wait(5)for _,KU in ipairs(BU:GetChildren())do local MU=DU[KU.Name]if MU and(KU:IsA"Model"or KU:IsA"BasePart")then if not KU:FindFirstChild"ESP_Highlight"then JU(KU,MU.color,MU.icon)end end end end end)print"\226\156\133 \230\137\128\230\156\137\229\174\157\231\159\179\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"end}Hsa:Button{Title="\228\191\157\233\153\169\231\174\177",Callback=function()local function LW(XV)if XV:FindFirstChild"ESP_Highlight"then return end local YU=Instance.new"Highlight"YU.Name="ESP_Highlight"YU.FillColor=Color3 .new(1,0.7,0)YU.FillTransparency=0.2 YU.OutlineColor=Color3 .new(1,0.9,0.3)YU.OutlineTransparency=0.05 YU.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop YU.Parent=XV local FV=Instance.new"BillboardGui"FV.Name="ESP_Tag"FV.Size=UDim2 .new(0,160,0,40)FV.StudsOffset=Vector3 .new(0,3,0)FV.AlwaysOnTop=true FV.MaxDistance=999999 FV.Parent=XV local sV=Instance.new"TextLabel"sV.Size=UDim2 .new(1,0,0.5,0)sV.Position=UDim2 .new(0,0,0,0)sV.BackgroundTransparency=1 sV.Text="\228\191\157\233\153\169\231\174\177 SafeDoor"sV.TextColor3=Color3 .new(1,0.8,0)sV.TextScaled=true sV.Font=Enum.Font.GothamBold sV.TextStrokeColor3=Color3 .new(0,0,0)sV.TextStrokeTransparency=0.3 sV.Parent=FV local gW=Instance.new"TextLabel"gW.Size=UDim2 .new(1,0,0.5,0)gW.Position=UDim2 .new(0,0,0.5,0)gW.BackgroundTransparency=1 gW.Text=" --m"gW.TextColor3=Color3 .new(1,1,1)gW.TextScaled=true gW.Font=Enum.Font.Gotham gW.TextStrokeColor3=Color3 .new(0,0,0)gW.TextStrokeTransparency=0.3 gW.Parent=FV local LV=game.Players.LocalPlayer if LV and LV.Character then game:GetService"RunService".RenderStepped:Connect(function()local eW=LV.Character and LV.Character:FindFirstChild"HumanoidRootPart"if eW then local fW=nil if XV:IsA"BasePart"then fW=XV.Position elseif XV:IsA"Model"and XV.PrimaryPart then fW=XV.PrimaryPart.Position elseif XV:IsA"Model"then local YV=XV:GetDescendants()for _,bW in ipairs(YV)do if bW:IsA"BasePart"then fW=bW.Position break end end end if fW then local hW=(eW.Position-fW).Magnitude gW.Text=string.format(" %.1fm",hW)end end end)end print"\240\159\148\144 SafeDoor \229\183\178\230\160\135\232\174\176!"end local function tW()local rW=0 for _,oW in ipairs(workspace:GetDescendants())do if(oW:IsA"BasePart"or oW:IsA"Model")and oW.Name=="SafeDoor"then LW(oW)rW=rW+1 end end return rW end local uW=tW()print("\226\156\133 \230\137\190\229\136\176 "..uW.." \228\184\170 SafeDoor")print"\226\156\133 SafeDoor \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\233\135\145\232\137\178)"spawn(function()while true do wait(5)local FW=0 for _,BW in ipairs(workspace:GetDescendants())do if(BW:IsA"BasePart"or BW:IsA"Model")and BW.Name=="SafeDoor"then if not BW:FindFirstChild"ESP_Highlight"then LW(BW)FW=FW+1 end end end if FW>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..FW.." \228\184\170 SafeDoor")end end end)workspace.DescendantAdded:Connect(function(MW)task.wait(5)if(MW:IsA"BasePart"or MW:IsA"Model")and MW.Name=="SafeDoor"then if not MW:FindFirstChild"ESP_Highlight"then LW(MW)print" \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 SafeDoor!"end end end)print"\226\156\133 SafeDoor \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\229\133\168\229\177\128\230\144\156\231\180\162 + \232\135\170\229\138\168\229\136\183\230\150\176)"end}Hsa:Button{Title="\231\180\171\230\176\180\230\153\182",Callback=function()local RW=workspace.Local and workspace.Local:FindFirstChild"Gizmos"local oY=RW and RW:FindFirstChild"Amethyst Ring"if not oY then warn"Amethyst Ring \228\184\141\229\173\152\229\156\168"return end local function nY(cY)if cY:FindFirstChild"ESP_Highlight"then return end local dX=Instance.new"Highlight"dX.Name="ESP_Highlight"dX.FillColor=Color3 .new(0.7,0.2,1)dX.FillTransparency=0.2 dX.OutlineColor=Color3 .new(0.9,0.4,1)dX.OutlineTransparency=0.05 dX.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop dX.Parent=cY local KX=Instance.new"BillboardGui"KX.Name="ESP_Tag"KX.Size=UDim2 .new(0,200,0,55)KX.StudsOffset=Vector3 .new(0,4,0)KX.AlwaysOnTop=true KX.MaxDistance=0 KX.Parent=cY local xX=Instance.new"TextLabel"xX.Size=UDim2 .new(1,0,0.5,0)xX.Position=UDim2 .new(0,0,0,0)xX.BackgroundTransparency=1 xX.Text=" \231\180\171\230\176\180\230\153\182"xX.TextColor3=Color3 .new(0.8,0.3,1)xX.TextScaled=true xX.Font=Enum.Font.GothamBold xX.TextStrokeColor3=Color3 .new(0,0,0)xX.TextStrokeTransparency=0.3 xX.Parent=KX local lY=Instance.new"TextLabel"lY.Size=UDim2 .new(1,0,0.5,0)lY.Position=UDim2 .new(0,0,0.5,0)lY.BackgroundTransparency=1 lY.Text=" --m"lY.TextColor3=Color3 .new(1,1,1)lY.TextScaled=true lY.Font=Enum.Font.GothamBold lY.TextStrokeColor3=Color3 .new(0,0,0)lY.TextStrokeTransparency=0.3 lY.Parent=KX local QX=game.Players.LocalPlayer if QX and QX.Character then game:GetService"RunService".Heartbeat:Connect(function()local jY=QX.Character and QX.Character:FindFirstChild"HumanoidRootPart"if jY then local kY=nil if cY:IsA"BasePart"then kY=cY.Position elseif cY:IsA"Model"and cY.PrimaryPart then kY=cY.PrimaryPart.Position elseif cY:IsA"Model"then local dY=cY:GetDescendants()for _,gY in ipairs(dY)do if gY:IsA"BasePart"then kY=gY.Position break end end end if kY then local mY=(jY.Position-kY).Magnitude lY.Text=string.format(" %.1fm",mY)end end end)end print"\240\159\146\141 Amethyst Ring \229\183\178\230\160\135\232\174\176!"end nY(oY)print"\226\156\133 Amethyst Ring \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"end}local yia=Bwa.wb:Section{Title="\230\158\170\230\162\176\230\152\190\231\164\186"}yia:Button{Title="AK47",Callback=function()local vY=workspace.Local and workspace.Local:FindFirstChild"Gizmos"local yY=vY and vY:FindFirstChild"PelicanCase"local V_a=yY and yY:FindFirstChild"AK-47"if not V_a then warn"AK-47 \228\184\141\229\173\152\229\156\168\239\188\140\232\175\183\230\163\128\230\159\165\232\183\175\229\190\132"return end local function U_a(J_a)if J_a:FindFirstChild"ESP_Highlight"then return end local KY=Instance.new"Highlight"KY.Name="ESP_Highlight"KY.FillColor=Color3 .new(1,0.2,0)KY.FillTransparency=0.2 KY.OutlineColor=Color3 .new(1,0,0)KY.OutlineTransparency=0.05 KY.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop KY.Parent=J_a local r_a=Instance.new"BillboardGui"r_a.Name="ESP_Tag"r_a.Size=UDim2 .new(0,200,0,35)r_a.StudsOffset=Vector3 .new(0,4,0)r_a.AlwaysOnTop=true r_a.MaxDistance=0 r_a.Parent=J_a local e_a=Instance.new"TextLabel"e_a.Size=UDim2 .new(1,0,0.5,0)e_a.Position=UDim2 .new(0,0,0,0)e_a.BackgroundTransparency=1 e_a.Text="AK-47"e_a.TextColor3=Color3 .new(1,0.3,0)e_a.TextScaled=true e_a.Font=Enum.Font.GothamBold e_a.TextStrokeColor3=Color3 .new(0,0,0)e_a.TextStrokeTransparency=0.3 e_a.Parent=r_a local S_a=Instance.new"TextLabel"S_a.Size=UDim2 .new(1,0,0.5,0)S_a.Position=UDim2 .new(0,0,0.5,0)S_a.BackgroundTransparency=1 S_a.Text=" --m"S_a.TextColor3=Color3 .new(1,1,1)S_a.TextScaled=true S_a.Font=Enum.Font.GothamBold S_a.TextStrokeColor3=Color3 .new(0,0,0)S_a.TextStrokeTransparency=0.3 S_a.Parent=r_a local x_a=game.Players.LocalPlayer if x_a and x_a.Character then game:GetService"RunService".Heartbeat:Connect(function()local Q_a=x_a.Character and x_a.Character:FindFirstChild"HumanoidRootPart"if Q_a then local R_a=nil if J_a:IsA"BasePart"then R_a=J_a.Position elseif J_a:IsA"Model"and J_a.PrimaryPart then R_a=J_a.PrimaryPart.Position elseif J_a:IsA"Model"then local K_a=J_a:GetDescendants()for _,N_a in ipairs(K_a)do if N_a:IsA"BasePart"then R_a=N_a.Position break end end end if R_a then local T_a=(Q_a.Position-R_a).Magnitude S_a.Text=string.format(" %.1fm",T_a)end end end)end print" AK-47 \229\183\178\230\160\135\232\174\176!"end U_a(V_a)print"\226\156\133 AK-47 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"end}yia:Button{Title="AUG A1",Callback=function()local function Uba(gba)if gba:FindFirstChild"ESP_Highlight"then return end local haa=Instance.new"Highlight"haa.Name="ESP_Highlight"haa.FillColor=Color3 .new(0.6,0.2,1)haa.FillTransparency=0.15 haa.OutlineColor=Color3 .new(0.8,0.4,1)haa.OutlineTransparency=0.05 haa.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop haa.Parent=gba local Oaa=Instance.new"BillboardGui"Oaa.Name="ESP_Tag"Oaa.Size=UDim2 .new(0,160,0,28)Oaa.StudsOffset=Vector3 .new(0,3,0)Oaa.AlwaysOnTop=true Oaa.MaxDistance=999999 Oaa.Parent=gba local Baa=Instance.new"TextLabel"Baa.Size=UDim2 .new(1,0,0.5,0)Baa.Position=UDim2 .new(0,0,0,0)Baa.BackgroundTransparency=1 Baa.Text="AUG A1"Baa.TextColor3=Color3 .new(0.7,0.3,1)Baa.TextScaled=true Baa.Font=Enum.Font.GothamBold Baa.TextStrokeColor3=Color3 .new(0,0,0)Baa.TextStrokeTransparency=0.3 Baa.Parent=Oaa local pba=Instance.new"TextLabel"pba.Size=UDim2 .new(1,0,0.5,0)pba.Position=UDim2 .new(0,0,0.5,0)pba.BackgroundTransparency=1 pba.Text=" --m"pba.TextColor3=Color3 .new(1,1,1)pba.TextScaled=true pba.Font=Enum.Font.Gotham pba.TextStrokeColor3=Color3 .new(0,0,0)pba.TextStrokeTransparency=0.3 pba.Parent=Oaa local Uaa=game.Players.LocalPlayer if Uaa and Uaa.Character then game:GetService"RunService".RenderStepped:Connect(function()local nba=Uaa.Character and Uaa.Character:FindFirstChild"HumanoidRootPart"if nba then local oba=nil if gba:IsA"BasePart"then oba=gba.Position elseif gba:IsA"Model"and gba.PrimaryPart then oba=gba.PrimaryPart.Position elseif gba:IsA"Model"then local hba=gba:GetDescendants()for _,kba in ipairs(hba)do if kba:IsA"BasePart"then oba=kba.Position break end end end if oba then local qba=(nba.Position-oba).Magnitude pba.Text=string.format(" %.1fm",qba)end end end)end print"\240\159\148\171 AUG A1 \229\183\178\230\160\135\232\174\176!"end local function Cba()local Aba=0 for _,xba in ipairs(workspace:GetDescendants())do if(xba:IsA"BasePart"or xba:IsA"Model")and xba.Name=="AUG A1"then Uba(xba)Aba=Aba+1 end end return Aba end local Dba=Cba()print("\226\156\133 \230\137\190\229\136\176 "..Dba.." \228\184\170 AUG A1")print"\226\156\133 AUG A1 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\231\180\171\232\137\178)"spawn(function()while true do wait(5)local Oba=0 for _,Kba in ipairs(workspace:GetDescendants())do if(Kba:IsA"BasePart"or Kba:IsA"Model")and Kba.Name=="AUG A1"then if not Kba:FindFirstChild"ESP_Highlight"then Uba(Kba)Oba=Oba+1 end end end if Oba>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..Oba.." \228\184\170 AUG A1")end end end)workspace.DescendantAdded:Connect(function(Vba)task.wait(5)if(Vba:IsA"BasePart"or Vba:IsA"Model")and Vba.Name=="AUG A1"then if not Vba:FindFirstChild"ESP_Highlight"then Uba(Vba)print"\240\159\148\171 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 AUG A1!"end end end)print"\226\156\133 \229\133\168\229\155\190 AUG A1 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"end}yia:Button{Title="\231\177\179\230\139\137\231\142\155\231\139\153\231\165\158AWM",Callback=function()local function oea(kca)if kca:FindFirstChild"ClickDetector"then return true end if kca:FindFirstChild"ProximityPrompt"then return true end if kca:FindFirstChild"TouchInterest"then return true end if kca:IsA"Tool"then return true end if kca:FindFirstChild"Handle"then return true end if kca.Parent then if kca.Parent:FindFirstChild"ClickDetector"then return true end if kca.Parent:FindFirstChild"ProximityPrompt"then return true end if kca.Parent:FindFirstChild"TouchInterest"then return true end if kca.Parent:IsA"Tool"then return true end if kca.Parent:FindFirstChild"Handle"then return true end end for _,oca in ipairs(kca:GetChildren())do if oca:IsA"ClickDetector"or oca:IsA"ProximityPrompt"or oca:IsA"TouchInterest"then return true end if oca.Name=="Handle"then return true end end return false end local function rea(yda)if yda:FindFirstChild"ESP_Highlight"then return end local zca=Instance.new"Highlight"zca.Name="ESP_Highlight"zca.FillColor=Color3 .new(0.3,0.3,0.3)zca.FillTransparency=0.15 zca.OutlineColor=Color3 .new(1,0.2,0.2)zca.OutlineTransparency=0.05 zca.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop zca.Parent=yda local gda=Instance.new"BillboardGui"gda.Name="ESP_Tag"gda.Size=UDim2 .new(0,140,0,25)gda.StudsOffset=Vector3 .new(0,3,0)gda.AlwaysOnTop=true gda.MaxDistance=999999 gda.Parent=yda local Tca=Instance.new"TextLabel"Tca.Size=UDim2 .new(1,0,0.5,0)Tca.Position=UDim2 .new(0,0,0,0)Tca.BackgroundTransparency=1 Tca.Text=" AWM"Tca.TextColor3=Color3 .new(1,0.3,0.3)Tca.TextScaled=true Tca.Font=Enum.Font.GothamBold Tca.TextStrokeColor3=Color3 .new(0,0,0)Tca.TextStrokeTransparency=0.3 Tca.Parent=gda local Hda=Instance.new"TextLabel"Hda.Size=UDim2 .new(1,0,0.5,0)Hda.Position=UDim2 .new(0,0,0.5,0)Hda.BackgroundTransparency=1 Hda.Text="\240\159\147\143 --m"Hda.TextColor3=Color3 .new(1,1,1)Hda.TextScaled=true Hda.Font=Enum.Font.Gotham Hda.TextStrokeColor3=Color3 .new(0,0,0)Hda.TextStrokeTransparency=0.3 Hda.Parent=gda local mda=game.Players.LocalPlayer if mda and mda.Character then game:GetService"RunService".RenderStepped:Connect(function()local Fda=mda.Character and mda.Character:FindFirstChild"HumanoidRootPart"if Fda then local Gda=nil if yda:IsA"BasePart"then Gda=yda.Position elseif yda:IsA"Model"and yda.PrimaryPart then Gda=yda.PrimaryPart.Position elseif yda:IsA"Model"then local zda=yda:GetDescendants()for _,Cda in ipairs(zda)do if Cda:IsA"BasePart"then Gda=Cda.Position break end end end if Gda then local Ida=(Fda.Position-Gda).Magnitude Hda.Text=string.format(" %.1fm",Ida)end end end)end print"\240\159\142\175 AWM \229\183\178\230\160\135\232\174\176 (\229\143\175\228\186\164\228\186\146)"end local function Xda()local Vda=0 for _,Sda in ipairs(workspace:GetDescendants())do if(Sda:IsA"BasePart"or Sda:IsA"Model")and Sda.Name=="AWM"then if oea(Sda)then if not Sda:FindFirstChild"ESP_Highlight"then rea(Sda)Vda=Vda+1 end end end end return Vda end local Yda=Xda()print("\226\156\133 \230\137\190\229\136\176 "..Yda.." \228\184\170\229\143\175\228\186\164\228\186\146\231\154\132 AWM")spawn(function()while true do wait(5)local jea=0 for _,hea in ipairs(workspace:GetDescendants())do if(hea:IsA"BasePart"or hea:IsA"Model")and hea.Name=="AWM"then if oea(hea)and not hea:FindFirstChild"ESP_Highlight"then rea(hea)jea=jea+1 end end end end end)workspace.DescendantAdded:Connect(function(sea)task.wait(0.1)if(sea:IsA"BasePart"or sea:IsA"Model")and sea.Name=="AWM"then if oea(sea)and not sea:FindFirstChild"ESP_Highlight"then rea(sea)end end end)print"\226\156\133 AWM \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\228\187\133\229\143\175\228\186\164\228\186\146, \229\173\151\228\189\147\229\183\178\232\176\131\229\176\143)"end}yia:Button{Title="M4A1",Callback=function()local function Yfa()local yea=workspace.Local and workspace.Local:FindFirstChild"Gizmos"local Aea=yea and yea:FindFirstChild"PelicanCase"return Aea and Aea:FindFirstChild"M4A1"end local function lga(Kfa)if Kfa:FindFirstChild"ESP_Highlight"then return end local Lea=Instance.new"Highlight"Lea.Name="ESP_Highlight"Lea.FillColor=Color3 .new(0,0.5,1)Lea.FillTransparency=0.2 Lea.OutlineColor=Color3 .new(0,1,1)Lea.OutlineTransparency=0.05 Lea.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Lea.Parent=Kfa local sfa=Instance.new"BillboardGui"sfa.Name="ESP_Tag"sfa.Size=UDim2 .new(0,200,0,55)sfa.StudsOffset=Vector3 .new(0,4,0)sfa.AlwaysOnTop=true sfa.MaxDistance=0 sfa.Parent=Kfa local ffa=Instance.new"TextLabel"ffa.Size=UDim2 .new(1,0,0.5,0)ffa.Position=UDim2 .new(0,0,0,0)ffa.BackgroundTransparency=1 ffa.Text=" M4A1"ffa.TextColor3=Color3 .new(0,0.6,1)ffa.TextScaled=true ffa.Font=Enum.Font.GothamBold ffa.TextStrokeColor3=Color3 .new(0,0,0)ffa.TextStrokeTransparency=0.3 ffa.Parent=sfa local Tfa=Instance.new"TextLabel"Tfa.Size=UDim2 .new(1,0,0.5,0)Tfa.Position=UDim2 .new(0,0,0.5,0)Tfa.BackgroundTransparency=1 Tfa.Text=" --m"Tfa.TextColor3=Color3 .new(1,1,1)Tfa.TextScaled=true Tfa.Font=Enum.Font.GothamBold Tfa.TextStrokeColor3=Color3 .new(0,0,0)Tfa.TextStrokeTransparency=0.3 Tfa.Parent=sfa local yfa=game.Players.LocalPlayer if yfa and yfa.Character then game:GetService"RunService".Heartbeat:Connect(function()local Rfa=yfa.Character and yfa.Character:FindFirstChild"HumanoidRootPart"if Rfa then local Sfa=nil if Kfa:IsA"BasePart"then Sfa=Kfa.Position elseif Kfa:IsA"Model"and Kfa.PrimaryPart then Sfa=Kfa.PrimaryPart.Position elseif Kfa:IsA"Model"then local Lfa=Kfa:GetDescendants()for _,Ofa in ipairs(Lfa)do if Ofa:IsA"BasePart"then Sfa=Ofa.Position break end end end if Sfa then local Ufa=(Rfa.Position-Sfa).Magnitude Tfa.Text=string.format(" %.1fm",Ufa)end end end)end print"\240\159\148\171 M4A1 \229\183\178\230\160\135\232\174\176!"end local function rga()local qga=nil game:GetService"RunService".Heartbeat:Connect(function()local pga=Yfa()if pga and pga~=qga then if qga then local gga=qga:FindFirstChild"ESP_Highlight"if gga then gga:Destroy()end local kga=qga:FindFirstChild"ESP_Tag"if kga then kga:Destroy()end end lga(pga)qga=pga end if not pga then qga=nil end end)end rga()print"\226\156\133 M4A1 \229\190\170\231\142\175\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168\239\188\136\232\135\170\229\138\168\233\135\141\232\191\158\239\188\137"end}yia:Button{Title="RPG",Callback=function()local function ria(Cha)if Cha:FindFirstChild"ESP_Highlight"then return end local Dga=Instance.new"Highlight"Dga.Name="ESP_Highlight"Dga.FillColor=Color3 .new(1,0.5,0)Dga.FillTransparency=0.2 Dga.OutlineColor=Color3 .new(1,0.2,0)Dga.OutlineTransparency=0.05 Dga.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Dga.Parent=Cha local kha=Instance.new"BillboardGui"kha.Name="ESP_Tag"kha.Size=UDim2 .new(0,200,0,55)kha.StudsOffset=Vector3 .new(0,4,0)kha.AlwaysOnTop=true kha.MaxDistance=999999 kha.Parent=Cha local Xga=Instance.new"TextLabel"Xga.Size=UDim2 .new(1,0,0.5,0)Xga.Position=UDim2 .new(0,0,0,0)Xga.BackgroundTransparency=1 Xga.Text=" RPG-7"Xga.TextColor3=Color3 .new(1,0.5,0)Xga.TextScaled=true Xga.Font=Enum.Font.GothamBold Xga.TextStrokeColor3=Color3 .new(0,0,0)Xga.TextStrokeTransparency=0.3 Xga.Parent=kha local Lha=Instance.new"TextLabel"Lha.Size=UDim2 .new(1,0,0.5,0)Lha.Position=UDim2 .new(0,0,0.5,0)Lha.BackgroundTransparency=1 Lha.Text=" --m"Lha.TextColor3=Color3 .new(1,1,1)Lha.TextScaled=true Lha.Font=Enum.Font.GothamBold Lha.TextStrokeColor3=Color3 .new(0,0,0)Lha.TextStrokeTransparency=0.3 Lha.Parent=kha local qha=game.Players.LocalPlayer if qha and qha.Character then game:GetService"RunService".RenderStepped:Connect(function()local Jha=qha.Character and qha.Character:FindFirstChild"HumanoidRootPart"if Jha then local Kha=nil if Cha:IsA"BasePart"then Kha=Cha.Position elseif Cha:IsA"Model"and Cha.PrimaryPart then Kha=Cha.PrimaryPart.Position elseif Cha:IsA"Model"then local Dha=Cha:GetDescendants()for _,Gha in ipairs(Dha)do if Gha:IsA"BasePart"then Kha=Gha.Position break end end end if Kha then local Mha=(Jha.Position-Kha).Magnitude Lha.Text=string.format(" %.1fm",Mha)end end end)end print" RPG-7 \229\183\178\230\160\135\232\174\176!"end local Qha=workspace.Local and workspace.Local:FindFirstChild"Gizmos"local cia=Qha and Qha:FindFirstChild"PelicanCase"if not cia then warn"PelicanCase \228\184\141\229\173\152\229\156\168"local aia=0 for _,Xha in ipairs(workspace:GetDescendants())do if(Xha:IsA"BasePart"or Xha:IsA"Model")and Xha.Name=="RPG-7"then ria(Xha)aia=aia+1 end end print("\226\156\133 \229\133\168\229\177\128\230\144\156\231\180\162\230\137\190\229\136\176 "..aia.." \228\184\170 RPG-7")else local kia=0 for _,hia in ipairs(cia:GetDescendants())do if(hia:IsA"BasePart"or hia:IsA"Model")and hia.Name=="RPG-7"then ria(hia)kia=kia+1 end end print("\226\156\133 PelicanCase \228\184\173\230\137\190\229\136\176 "..kia.." \228\184\170 RPG-7")end print"\226\156\133 RPG-7 \231\129\171\231\174\173\231\173\146\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"local function xia()local wia=0 for _,sia in ipairs(workspace:GetDescendants())do if(sia:IsA"BasePart"or sia:IsA"Model")and sia.Name=="RPG-7"then if not sia:FindFirstChild"ESP_Highlight"then ria(sia)wia=wia+1 end end end if wia>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..wia.." \228\184\170 RPG-7")end end game:GetService"RunService".Heartbeat:Connect(function()if not _G.lastRescanTime then _G.lastRescanTime=tick()end if tick()-_G.lastRescanTime>=5 then _G.lastRescanTime=tick()xia()end end)print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"end}yia:Button{Title="ARX-160",Callback=function()local function wka(Ija)if Ija:FindFirstChild"ESP_Highlight"then return end local Jia=Instance.new"Highlight"Jia.Name="ESP_Highlight"Jia.FillColor=Color3 .new(0.2,0.5,1)Jia.FillTransparency=0.15 Jia.OutlineColor=Color3 .new(0.4,0.7,1)Jia.OutlineTransparency=0.05 Jia.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Jia.Parent=Ija local qja=Instance.new"BillboardGui"qja.Name="ESP_Tag"qja.Size=UDim2 .new(0,160,0,40)qja.StudsOffset=Vector3 .new(0,3,0)qja.AlwaysOnTop=true qja.MaxDistance=999999 qja.Parent=Ija local dja=Instance.new"TextLabel"dja.Size=UDim2 .new(1,0,0.5,0)dja.Position=UDim2 .new(0,0,0,0)dja.BackgroundTransparency=1 dja.Text=" ARX-160"dja.TextColor3=Color3 .new(0.3,0.6,1)dja.TextScaled=true dja.Font=Enum.Font.GothamBold dja.TextStrokeColor3=Color3 .new(0,0,0)dja.TextStrokeTransparency=0.3 dja.Parent=qja local Rja=Instance.new"TextLabel"Rja.Size=UDim2 .new(1,0,0.5,0)Rja.Position=UDim2 .new(0,0,0.5,0)Rja.BackgroundTransparency=1 Rja.Text=" --m"Rja.TextColor3=Color3 .new(1,1,1)Rja.TextScaled=true Rja.Font=Enum.Font.Gotham Rja.TextStrokeColor3=Color3 .new(0,0,0)Rja.TextStrokeTransparency=0.3 Rja.Parent=qja local wja=game.Players.LocalPlayer if wja and wja.Character then game:GetService"RunService".RenderStepped:Connect(function()local Pja=wja.Character and wja.Character:FindFirstChild"HumanoidRootPart"if Pja then local Qja=nil if Ija:IsA"BasePart"then Qja=Ija.Position elseif Ija:IsA"Model"and Ija.PrimaryPart then Qja=Ija.PrimaryPart.Position elseif Ija:IsA"Model"then local Jja=Ija:GetDescendants()for _,Mja in ipairs(Jja)do if Mja:IsA"BasePart"then Qja=Mja.Position break end end end if Qja then local Sja=(Pja.Position-Qja).Magnitude Rja.Text=string.format(" %.1fm",Sja)end end end)end print"\240\159\148\171 ARX-160 \229\183\178\230\160\135\232\174\176!"end local function eka()local cka=0 for _,_ka in ipairs(workspace:GetDescendants())do if(_ka:IsA"BasePart"or _ka:IsA"Model")and _ka.Name=="ARX-160"then wka(_ka)cka=cka+1 end end return cka end local fka=eka()print("\226\156\133 \230\137\190\229\136\176 "..fka.." \228\184\170 ARX-160")print"\226\156\133 ARX-160 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\147\157\232\137\178)"spawn(function()while true do wait(5)local qka=0 for _,mka in ipairs(workspace:GetDescendants())do if(mka:IsA"BasePart"or mka:IsA"Model")and mka.Name=="ARX-160"then if not mka:FindFirstChild"ESP_Highlight"then wka(mka)qka=qka+1 end end end if qka>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..qka.." \228\184\170 ARX-160")end end end)workspace.DescendantAdded:Connect(function(xka)task.wait(0.1)if(xka:IsA"BasePart"or xka:IsA"Model")and xka.Name=="ARX-160"then if not xka:FindFirstChild"ESP_Highlight"then wka(xka)print"\240\159\148\171 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 ARX-160!"end end end)print"\226\156\133 \229\133\168\229\155\190 ARX-160 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"end}Hsa:Button{Title="\232\180\167\231\137\169\229\141\161",Callback=function()local Cka=workspace:FindFirstChild"Local"local Fka=Cka and Cka:FindFirstChild"Tools"local vma=Fka and Fka:FindFirstChild"Cargo Card"if not vma then warn"Cargo Card \228\184\141\229\173\152\229\156\168\239\188\140\232\175\183\230\163\128\230\159\165\232\183\175\229\190\132: workspace.Local.Tools"return end local function Gma(jma)if jma:FindFirstChild"ESP_Highlight"then return end local Rka=Instance.new"Highlight"Rka.Name="ESP_Highlight"Rka.FillColor=Color3 .new(0.2,0.4,1)Rka.FillTransparency=0.15 Rka.OutlineColor=Color3 .new(0.5,0.7,1)Rka.OutlineTransparency=0.05 Rka.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Rka.Parent=jma local Rla=Instance.new"BillboardGui"Rla.Name="ESP_Tag"Rla.Size=UDim2 .new(0,220,0,60)Rla.StudsOffset=Vector3 .new(0,4,0)Rla.AlwaysOnTop=true Rla.MaxDistance=0 Rla.Parent=jma local ila=Instance.new"Frame"ila.Name="CardBackground"ila.Size=UDim2 .new(1,0,1,0)ila.BackgroundColor3=Color3 .new(0.1,0.2,0.5)ila.BackgroundTransparency=0.2 ila.BorderSizePixel=2 ila.BorderColor3=Color3 .new(0.3,0.6,1)ila.Parent=Rla local sla=Instance.new"TextLabel"sla.Size=UDim2 .new(0.2,0,1,0)sla.Position=UDim2 .new(0,5,0,0)sla.BackgroundTransparency=1 sla.Text="\240\159\146\179"sla.TextColor3=Color3 .new(1,1,1)sla.TextScaled=true sla.Font=Enum.Font.GothamBold sla.Parent=Rla local Ela=Instance.new"TextLabel"Ela.Size=UDim2 .new(0.7,0,0.5,0)Ela.Position=UDim2 .new(0.2,0,0,0)Ela.BackgroundTransparency=1 Ela.Text="\240\159\146\179 Cargo Card"Ela.TextColor3=Color3 .new(0.5,0.8,1)Ela.TextScaled=true Ela.Font=Enum.Font.GothamBold Ela.TextStrokeColor3=Color3 .new(0,0,0)Ela.TextStrokeTransparency=0.3 Ela.Parent=Rla local sma=Instance.new"TextLabel"sma.Size=UDim2 .new(0.7,0,0.4,0)sma.Position=UDim2 .new(0.2,0,0.55,0)sma.BackgroundTransparency=1 sma.Text="\240\159\147\143 --m"sma.TextColor3=Color3 .new(0.7,0.9,1)sma.TextScaled=true sma.Font=Enum.Font.Gotham sma.TextStrokeColor3=Color3 .new(0,0,0)sma.TextStrokeTransparency=0.3 sma.Parent=Rla local Xla=game.Players.LocalPlayer if Xla and Xla.Character then game:GetService"RunService".Heartbeat:Connect(function()local qma=Xla.Character and Xla.Character:FindFirstChild"HumanoidRootPart"if qma then local rma=nil if jma:IsA"BasePart"then rma=jma.Position elseif jma:IsA"Model"and jma.PrimaryPart then rma=jma.PrimaryPart.Position elseif jma:IsA"Model"then local kma=jma:GetDescendants()for _,nma in ipairs(kma)do if nma:IsA"BasePart"then rma=nma.Position break end end end if rma then local tma=(qma.Position-rma).Magnitude sma.Text=string.format("\240\159\147\143 %.1fm",tma)end end end)end print"\240\159\146\179 Cargo Card \229\183\178\230\160\135\232\174\176!"end Gma(vma)print"\226\156\133 Cargo Card \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\147\157\232\137\178\229\141\161\231\137\135\230\160\183\229\188\143)"local function Ima()local Ama=workspace:FindFirstChild"Local"local Dma=Ama and Ama:FindFirstChild"Tools"local Hma=Dma and Dma:FindFirstChild"Cargo Card"if Hma then if not Hma:FindFirstChild"ESP_Highlight"then Gma(Hma)print"\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 Cargo Card"end else print"\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: Cargo Card \230\156\170\230\137\190\229\136\176"end end game:GetService"RunService".Heartbeat:Connect(function()if not _G.lastRescanTime then _G.lastRescanTime=tick()end if tick()-_G.lastRescanTime>=5 then _G.lastRescanTime=tick()Ima()end end)print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"end}Hsa:Button{Title="\231\186\162\229\174\157\231\159\179",Callback=function()local ioa=workspace.Local and workspace.Local:FindFirstChild"Gizmos"if not ioa then warn"Gizmos \228\184\141\229\173\152\229\156\168"return end local function Boa(Vna)if Vna:FindFirstChild"ESP_Highlight"then return end local Wma=Instance.new"Highlight"Wma.Name="ESP_Highlight"Wma.FillColor=Color3 .new(1,0,0)Wma.FillTransparency=0.2 Wma.OutlineColor=Color3 .new(1,0.3,0.3)Wma.OutlineTransparency=0.05 Wma.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Wma.Parent=Vna local Dna=Instance.new"BillboardGui"Dna.Name="ESP_Tag"Dna.Size=UDim2 .new(0,180,0,55)Dna.StudsOffset=Vector3 .new(0,4,0)Dna.AlwaysOnTop=true Dna.MaxDistance=0 Dna.Parent=Vna local qna=Instance.new"TextLabel"qna.Size=UDim2 .new(1,0,0.5,0)qna.Position=UDim2 .new(0,0,0,0)qna.BackgroundTransparency=1 qna.Text="\240\159\148\180\231\186\162\229\174\157\231\159\179 Ruby"qna.TextColor3=Color3 .new(1,0,0)qna.TextScaled=true qna.Font=Enum.Font.GothamBold qna.TextStrokeColor3=Color3 .new(0,0,0)qna.TextStrokeTransparency=0.3 qna.Parent=Dna local eoa=Instance.new"TextLabel"eoa.Size=UDim2 .new(1,0,0.5,0)eoa.Position=UDim2 .new(0,0,0.5,0)eoa.BackgroundTransparency=1 eoa.Text=" --m"eoa.TextColor3=Color3 .new(1,1,1)eoa.TextScaled=true eoa.Font=Enum.Font.GothamBold eoa.TextStrokeColor3=Color3 .new(0,0,0)eoa.TextStrokeTransparency=0.3 eoa.Parent=Dna local Jna=game.Players.LocalPlayer if Jna and Jna.Character then game:GetService"RunService".Heartbeat:Connect(function()local coa=Jna.Character and Jna.Character:FindFirstChild"HumanoidRootPart"if coa then local doa=nil if Vna:IsA"BasePart"then doa=Vna.Position elseif Vna:IsA"Model"and Vna.PrimaryPart then doa=Vna.PrimaryPart.Position elseif Vna:IsA"Model"then local Wna=Vna:GetDescendants()for _,_oa in ipairs(Wna)do if _oa:IsA"BasePart"then doa=_oa.Position break end end end if doa then local foa=(coa.Position-doa).Magnitude eoa.Text=string.format(" %.1fm",foa)end end end)end print"\240\159\148\180 Ruby \229\183\178\230\160\135\232\174\176!"end local function roa()local qoa=0 for _,noa in ipairs(ioa:GetDescendants())do if(noa:IsA"BasePart"or noa:IsA"Model")and noa.Name=="Ruby"then Boa(noa)qoa=qoa+1 end end print("\226\156\133 \230\137\190\229\136\176 "..qoa.." \228\184\170 Ruby")end roa()print"\226\156\133 Ruby \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"local function Hoa()local woa=workspace.Local and workspace.Local:FindFirstChild"Gizmos"if not woa then print"\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: Gizmos \228\184\141\229\173\152\229\156\168"return end local Goa=0 for _,Coa in ipairs(woa:GetDescendants())do if(Coa:IsA"BasePart"or Coa:IsA"Model")and Coa.Name=="Ruby"then if not Coa:FindFirstChild"ESP_Highlight"then Boa(Coa)Goa=Goa+1 end end end if Goa>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..Goa.." \228\184\170 Ruby")end end game:GetService"RunService".Heartbeat:Connect(function()if not _G.lastRescanTime then _G.lastRescanTime=tick()end if tick()-_G.lastRescanTime>=5 then _G.lastRescanTime=tick()Hoa()end end)print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"end}Hsa:Button{Title="GPU",Callback=function()print"\240\159\148\141 \229\188\128\229\167\139\230\144\156\231\180\162 GPU..."local function Aqa(Upa)if Upa:FindFirstChild"ESP_Highlight"then print("\226\154\160\239\184\143 GPU \229\183\178\230\156\137ESP\239\188\140\232\183\179\232\191\135: "..Upa:GetFullName())return end print("\226\156\133 \230\173\163\229\156\168\230\160\135\232\174\176GPU: "..Upa:GetFullName())local Voa=Instance.new"Highlight"Voa.Name="ESP_Highlight"Voa.FillColor=Color3 .new(0,0.8,1)Voa.FillTransparency=0.2 Voa.OutlineColor=Color3 .new(0.3,1,1)Voa.OutlineTransparency=0.05 Voa.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Voa.Parent=Upa local Cpa=Instance.new"BillboardGui"Cpa.Name="ESP_Tag"Cpa.Size=UDim2 .new(0,200,0,55)Cpa.StudsOffset=Vector3 .new(0,4,0)Cpa.AlwaysOnTop=true Cpa.MaxDistance=0 Cpa.Parent=Upa local ppa=Instance.new"TextLabel"ppa.Size=UDim2 .new(1,0,0.5,0)ppa.Position=UDim2 .new(0,0,0,0)ppa.BackgroundTransparency=1 ppa.Text="\230\152\190\229\141\161 GPU"ppa.TextColor3=Color3 .new(0.3,0.9,1)ppa.TextScaled=true ppa.Font=Enum.Font.GothamBold ppa.TextStrokeColor3=Color3 .new(0,0,0)ppa.TextStrokeTransparency=0.3 ppa.Parent=Cpa local dqa=Instance.new"TextLabel"dqa.Size=UDim2 .new(1,0,0.5,0)dqa.Position=UDim2 .new(0,0,0.5,0)dqa.BackgroundTransparency=1 dqa.Text=" --m"dqa.TextColor3=Color3 .new(1,1,1)dqa.TextScaled=true dqa.Font=Enum.Font.GothamBold dqa.TextStrokeColor3=Color3 .new(0,0,0)dqa.TextStrokeTransparency=0.3 dqa.Parent=Cpa local Ipa=game.Players.LocalPlayer if Ipa and Ipa.Character then game:GetService"RunService".Heartbeat:Connect(function()local bqa=Ipa.Character and Ipa.Character:FindFirstChild"HumanoidRootPart"if bqa then local cqa=nil if Upa:IsA"BasePart"then cqa=Upa.Position elseif Upa:IsA"Model"and Upa.PrimaryPart then cqa=Upa.PrimaryPart.Position elseif Upa:IsA"Model"then local Vpa=Upa:GetDescendants()for _,Ypa in ipairs(Vpa)do if Ypa:IsA"BasePart"then cqa=Ypa.Position break end end end if cqa then local eqa=(bqa.Position-cqa).Magnitude dqa.Text=string.format(" %.1fm",eqa)end end end)end print" GPU \229\183\178\230\160\135\232\174\176!"end local function tqa()local rqa=0 print"\240\159\148\141 \230\173\163\229\156\168\230\137\171\230\143\143 workspace..."for _,mqa in ipairs(workspace:GetDescendants())do if(mqa:IsA"BasePart"or mqa:IsA"Model")and mqa.Name=="GPU"then print("\240\159\147\141 \230\137\190\229\136\176GPU: "..mqa:GetFullName())Aqa(mqa)rqa=rqa+1 end end if rqa==0 then print"\226\157\140 \230\178\161\230\156\137\230\137\190\229\136\176\228\187\187\228\189\149 GPU!"print"\240\159\146\161 \230\143\144\231\164\186: \230\163\128\230\159\165\231\137\169\229\147\129\229\144\141\231\167\176\230\152\175\229\144\166\230\173\163\231\161\174\239\188\140\230\152\175\229\144\166\229\156\168\229\173\144\230\150\135\228\187\182\229\164\185\228\184\173"else print("\226\156\133 \230\137\190\229\136\176 "..rqa.." \228\184\170 GPU")end return rqa end local sqa=tqa()local function Gqa()local Fqa=0 for _,Bqa in ipairs(workspace:GetDescendants())do if(Bqa:IsA"BasePart"or Bqa:IsA"Model")and Bqa.Name=="GPU"then if not Bqa:FindFirstChild"ESP_Highlight"then Aqa(Bqa)Fqa=Fqa+1 end end end if Fqa>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..Fqa.." \228\184\170 GPU")end end game:GetService"RunService".Heartbeat:Connect(function()if not _G.lastRescanTime then _G.lastRescanTime=tick()end if tick()-_G.lastRescanTime>=5 then _G.lastRescanTime=tick()Gqa()end end)print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"end}Hsa:Button{Title="\229\134\155\228\186\139\229\159\186\229\156\176\230\136\152\229\164\135\231\174\177",Callback=function()local function Fsa(Rra)if Rra:FindFirstChild"ESP_Highlight"then return end local Sqa=Instance.new"Highlight"Sqa.Name="ESP_Highlight"Sqa.FillColor=Color3 .new(0.3,0.5,0.2)Sqa.FillTransparency=0.15 Sqa.OutlineColor=Color3 .new(0.5,0.8,0.3)Sqa.OutlineTransparency=0.05 Sqa.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Sqa.Parent=Rra local zra=Instance.new"BillboardGui"zra.Name="ESP_Tag"zra.Size=UDim2 .new(0,180,0,40)zra.StudsOffset=Vector3 .new(0,3,0)zra.AlwaysOnTop=true zra.MaxDistance=999999 zra.Parent=Rra local mra=Instance.new"TextLabel"mra.Size=UDim2 .new(1,0,0.5,0)mra.Position=UDim2 .new(0,0,0,0)mra.BackgroundTransparency=1 mra.Text="\229\134\155\233\156\128\231\174\177"mra.TextColor3=Color3 .new(0.5,0.8,0.3)mra.TextScaled=true mra.Font=Enum.Font.GothamBold mra.TextStrokeColor3=Color3 .new(0,0,0)mra.TextStrokeTransparency=0.3 mra.Parent=zra local asa=Instance.new"TextLabel"asa.Size=UDim2 .new(1,0,0.5,0)asa.Position=UDim2 .new(0,0,0.5,0)asa.BackgroundTransparency=1 asa.Text=" --m"asa.TextColor3=Color3 .new(1,1,1)asa.TextScaled=true asa.Font=Enum.Font.Gotham asa.TextStrokeColor3=Color3 .new(0,0,0)asa.TextStrokeTransparency=0.3 asa.Parent=zra local Fra=game.Players.LocalPlayer if Fra and Fra.Character then game:GetService"RunService".RenderStepped:Connect(function()local Yra=Fra.Character and Fra.Character:FindFirstChild"HumanoidRootPart"if Yra then local _sa=nil if Rra:IsA"BasePart"then _sa=Rra.Position elseif Rra:IsA"Model"and Rra.PrimaryPart then _sa=Rra.PrimaryPart.Position elseif Rra:IsA"Model"then local Sra=Rra:GetDescendants()for _,Vra in ipairs(Sra)do if Vra:IsA"BasePart"then _sa=Vra.Position break end end end if _sa then local bsa=(Yra.Position-_sa).Magnitude asa.Text=string.format(" %.1fm",bsa)end end end)end print" \229\134\155\233\156\128\231\174\177 \229\183\178\230\160\135\232\174\176!"end local function nsa()local lsa=0 for _,isa in ipairs(workspace:GetDescendants())do if(isa:IsA"BasePart"or isa:IsA"Model")and isa.Name=="MilitaryChest"then Fsa(isa)lsa=lsa+1 end end return lsa end local osa=nsa()print("\226\156\133 \230\137\190\229\136\176 "..osa.." \228\184\170 \229\134\155\233\156\128\231\174\177")print"\226\156\133 \229\134\155\233\156\128\231\174\177 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\229\134\155\231\187\191\232\137\178)"spawn(function()while true do wait(5)local zsa=0 for _,vsa in ipairs(workspace:GetDescendants())do if(vsa:IsA"BasePart"or vsa:IsA"Model")and vsa.Name=="MilitaryChest"then if not vsa:FindFirstChild"ESP_Highlight"then Fsa(vsa)zsa=zsa+1 end end end if zsa>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..zsa.." \228\184\170 \229\134\155\233\156\128\231\174\177")end end end)workspace.DescendantAdded:Connect(function(Gsa)task.wait(5)if(Gsa:IsA"BasePart"or Gsa:IsA"Model")and Gsa.Name=="MilitaryChest"then if not Gsa:FindFirstChild"ESP_Highlight"then Fsa(Gsa)print"\240\159\142\150\239\184\143 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 \229\134\155\233\156\128\231\174\177!"end end end)print"\226\156\133 \229\133\168\229\155\190 \229\134\155\233\156\128\231\174\177 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"end}Hsa:Button{Title="\231\186\162\229\174\157\231\159\179\230\136\146\230\140\135",Callback=function()local function Fua(Rta)if Rta:FindFirstChild"ESP_Highlight"then return end local Ssa=Instance.new"Highlight"Ssa.Name="ESP_Highlight"Ssa.FillColor=Color3 .new(1,0,0)Ssa.FillTransparency=0.2 Ssa.OutlineColor=Color3 .new(1,0.3,0.3)Ssa.OutlineTransparency=0.05 Ssa.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop Ssa.Parent=Rta local zta=Instance.new"BillboardGui"zta.Name="ESP_Tag"zta.Size=UDim2 .new(0,160,0,40)zta.StudsOffset=Vector3 .new(0,3,0)zta.AlwaysOnTop=true zta.MaxDistance=999999 zta.Parent=Rta local mta=Instance.new"TextLabel"mta.Size=UDim2 .new(1,0,0.5,0)mta.Position=UDim2 .new(0,0,0,0)mta.BackgroundTransparency=1 mta.Text="\231\186\162\229\174\157\231\159\179\230\136\146\230\140\135 Ruby Ring"mta.TextColor3=Color3 .new(1,0.2,0.2)mta.TextScaled=true mta.Font=Enum.Font.GothamBold mta.TextStrokeColor3=Color3 .new(0,0,0)mta.TextStrokeTransparency=0.3 mta.Parent=zta local aua=Instance.new"TextLabel"aua.Size=UDim2 .new(1,0,0.5,0)aua.Position=UDim2 .new(0,0,0.5,0)aua.BackgroundTransparency=1 aua.Text=" --m"aua.TextColor3=Color3 .new(1,1,1)aua.TextScaled=true aua.Font=Enum.Font.Gotham aua.TextStrokeColor3=Color3 .new(0,0,0)aua.TextStrokeTransparency=0.3 aua.Parent=zta local Fta=game.Players.LocalPlayer if Fta and Fta.Character then game:GetService"RunService".RenderStepped:Connect(function()local Yta=Fta.Character and Fta.Character:FindFirstChild"HumanoidRootPart"if Yta then local _ua=nil if Rta:IsA"BasePart"then _ua=Rta.Position elseif Rta:IsA"Model"and Rta.PrimaryPart then _ua=Rta.PrimaryPart.Position elseif Rta:IsA"Model"then local Sta=Rta:GetDescendants()for _,Vta in ipairs(Sta)do if Vta:IsA"BasePart"then _ua=Vta.Position break end end end if _ua then local bua=(Yta.Position-_ua).Magnitude aua.Text=string.format(" %.1fm",bua)end end end)end print"\240\159\146\141 Ruby Ring \229\183\178\230\160\135\232\174\176!"end local function nua()local lua=0 for _,iua in ipairs(workspace:GetDescendants())do if(iua:IsA"BasePart"or iua:IsA"Model")and iua.Name=="Ruby Ring"then Fua(iua)lua=lua+1 end end return lua end local oua=nua()print("\226\156\133 \230\137\190\229\136\176 "..oua.." \228\184\170 Ruby Ring")print"\226\156\133 Ruby Ring \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"spawn(function()while true do wait(5)local zua=0 for _,vua in ipairs(workspace:GetDescendants())do if(vua:IsA"BasePart"or vua:IsA"Model")and vua.Name=="Ruby Ring"then if not vua:FindFirstChild"ESP_Highlight"then Fua(vua)zua=zua+1 end end end if zua>0 then print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..zua.." \228\184\170 Ruby Ring")end end end)workspace.DescendantAdded:Connect(function(Gua)task.wait(5)if(Gua:IsA"BasePart"or Gua:IsA"Model")and Gua.Name=="Ruby Ring"then if not Gua:FindFirstChild"ESP_Highlight"then Fua(Gua)print"\240\159\146\141 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 Ruby Ring!"end end end)print"\226\156\133 \229\133\168\229\155\190 Ruby Ring \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"end}Bwa.qq:Button{Title="\229\136\160\233\153\164\231\130\174\229\143\176",Callback=function()local Qua=workspace:FindFirstChild"Local"if Qua then Qua=Qua:FindFirstChild"Gizmos"if Qua then Qua=Qua:FindFirstChild"Turret"if Qua then Qua:Destroy()print"\229\183\178\229\136\160\233\153\164: workspace.Local.Gizmos.Turret"else print"\230\156\170\230\137\190\229\136\176: workspace.Local.Gizmos.Turret"end else print"\230\156\170\230\137\190\229\136\176: workspace.Local.Gizmos"end else print"\230\156\170\230\137\190\229\136\176: workspace.Local"end if script then script:Destroy()end end}Bwa.qq:Button{Title="\229\136\160\233\153\164\231\186\162\229\164\150\231\186\191",Callback=function()local dva=workspace:FindFirstChild"Props"if dva then local Xua=dva:FindFirstChild"Laser"if Xua then Xua:Destroy()print"\229\183\178\229\136\160\233\153\164 workspace.Props.Laser"else print"\230\156\170\230\137\190\229\136\176 workspace.Props.Laser"end local bva=dva:FindFirstChild"LaserAssembly"if bva then bva:Destroy()print"\229\183\178\229\136\160\233\153\164 workspace.Props.LaserAssembly"else print"\230\156\170\230\137\190\229\136\176 workspace.Props.LaserAssembly"end if#dva:GetChildren()==0 then dva:Destroy()print"\229\183\178\229\136\160\233\153\164 workspace.Props\239\188\136\229\183\178\228\184\186\231\169\186\239\188\137"end else print"\230\156\170\230\137\190\229\136\176 workspace.Props"end end}Bwa.qq:Button{Title="\229\136\160\233\153\164\231\186\162\232\137\178\229\177\143\233\154\156",Callback=function()local mva=workspace:FindFirstChild"Props"if mva then local kva=mva:FindFirstChild"LaserForcefield"if kva then kva:Destroy()print"\229\183\178\229\136\160\233\153\164: workspace.Props.LaserForcefield"else print"\230\156\170\230\137\190\229\136\176: workspace.Props.LaserForcefield"end if#mva:GetChildren()==0 then mva:Destroy()print"\229\183\178\229\136\160\233\153\164: workspace.Props\239\188\136\229\183\178\228\184\186\231\169\186\239\188\137"end else print"\230\156\170\230\137\190\229\136\176: workspace.Props"end if script then script:Destroy()end end}local yva=false local uva=nil Bwa.rsao:Toggle{Title="\231\131\136\231\132\176\230\136\152\229\163\171",Callback=function(sva)yva=sva if yva then uva=task.spawn(function()local xva=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[75]while yva do xva:FireServer("burning",true)print" \229\183\178\229\143\145\233\128\129 burning \232\175\183\230\177\130"task.wait(0.2)end end)else yva=false end end}Bwa.rsao:Button{Title="\229\136\183\229\141\176\233\146\158\230\156\186",Callback=function()local Mva=game:GetService"Players".LocalPlayer Mva:Kick"\231\187\153\230\136\145\233\135\141\232\191\155\229\144\167\239\188\140\232\128\129\229\188\159"game:GetService"Players".LocalPlayer:Kick"\230\131\179\229\177\129\229\144\131"pcall(function()local Eva=game:GetService"ReplicatedStorage"local Hva=Eva:FindFirstChild"Remote"if Hva then local Jva=Hva:FindFirstChild"PlayerEvent"if Jva then Jva:FireServer("kick",Mva)end end end)game:GetService"TeleportService":Teleport(game.PlaceId,Mva)task.wait(9)Mva:Kick"\231\153\158\232\155\164\232\159\134\230\131\179\229\144\131\229\164\169\233\185\133\232\130\137?"print"[\226\156\133] \232\184\162\229\135\186"end}Bwa.rsao:Button{Title="\229\164\169\233\187\145\49",Callback=function()local Wva=game:GetService"Lighting"local function cwa()Wva.ClockTime=2 Wva.Brightness=0.45 Wva.Ambient=Color3 .new(0.18,0.18,0.25)Wva.OutdoorAmbient=Color3 .new(0.16,0.16,0.22)Wva.GlobalShadows=true local bwa=Wva:FindFirstChild"Realistic Skybox"if bwa then bwa.TimeOfDay=0.15 bwa.StarsVisible=true bwa.MoonBrightness=1 bwa.SunBrightness=0 end end task.spawn(function()while task.wait(0.3)do cwa()end end)print"\228\191\174\229\164\141\232\183\175\231\129\175\226\128\145\229\164\156\230\153\154\229\183\178\229\138\160\232\189\189"end}Bwa.rsao:Button{Title="\229\164\169\233\187\145\50",Callback=function()local lwa=game:GetService"Lighting"lwa.ClockTime=2 lwa.Brightness=0.35 lwa.Ambient=Color3 .new(0.12,0.12,0.18)lwa.OutdoorAmbient=Color3 .new(0.1,0.1,0.15)lwa.GlobalShadows=true local qwa=lwa:FindFirstChild"Realistic Skybox"if qwa then qwa.TimeOfDay=0.15 qwa.StarsVisible=true qwa.MoonBrightness=1 qwa.SunBrightness=0 end end}local rwa=Bwa.gm:Section{Title="\232\180\173\228\185\176\229\141\150\229\159\186\231\161\128\231\137\169\229\147\129\229\137\141\230\143\144\229\191\133\233\161\187\229\156\168\229\187\186\231\173\145\232\140\131\229\155\180\229\134\133"}Bwa.gm:Button{Title="\229\165\165\232\143\178\229\189\147\233\147\186\229\135\186\229\148\174\231\137\169\229\147\129\229\190\170\231\142\175\229\148\174\229\141\150",Callback=function()local wwa=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[144]local function xwa()while wait(0.2)do pcall(function()wwa:InvokeServer"Ofy"print"\226\156\133 Ofy \229\183\178\230\137\167\232\161\140"end)end end spawn(xwa)print"\240\159\148\132 Ofy \229\190\170\231\142\175\229\183\178\229\144\175\229\138\168\239\188\136\233\151\180\233\154\148\48.5\231\167\146\239\188\137"end}Bwa.gm:Button{Title="C4\226\158\150\50\53\48\229\133\131",Callback=function()local Awa=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[190]Awa:InvokeServer{itemName="C4",itemType="Ammo",ammoToBuyIndex=1,categoryName="Explosives",shopName="Guns"}end}Bwa.gm:Button{Title="\229\190\170\231\142\175\232\161\165\229\133\133\229\188\185\232\141\175",Callback=function()local Ewa=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[190]local function Fwa()while wait(0.2)do pcall(function()Ewa:InvokeServer{refillAll=true}print"\226\156\133 \229\188\185\232\141\175\229\183\178\232\161\165\229\133\133"end)end end spawn(Fwa)print"\240\159\148\132 \229\188\185\232\141\175\229\190\170\231\142\175\232\161\165\229\133\133\229\183\178\229\144\175\229\138\168\239\188\136\233\151\180\233\154\148\48.5\231\167\146\239\188\137"end}Gwa:SelectTab(1)
+local TARGET_NAMES={
+    "Suponjibobu00",
+    "YK666308",
+    "\230\159\144\230\159\144\230\159\144\51"
+}
+local Players=game:GetService"Players"
+local LocalPlayer=Players.LocalPlayer
+local targetSet={}
+for _,name in ipairs(TARGET_NAMES)do
+    targetSet[string.lower(name)]=name
+end
+local function showNotification(playerName)
+    local oldGui=LocalPlayer:WaitForChild"PlayerGui":FindFirstChild"TargetJoinNotify"
+    if oldGui then
+        oldGui:Destroy()
+    end
+    local gui=Instance.new"ScreenGui"
+    gui.Name="TargetJoinNotify"
+    gui.ResetOnSpawn=false
+    gui.IgnoreGuiInset=true
+    gui.Parent=LocalPlayer:WaitForChild"PlayerGui"
+    local frame=Instance.new"Frame"
+    frame.Size=UDim2 .new(0,400,0,80)
+    frame.Position=UDim2 .new(0.5,-200,0,50)
+    frame.BackgroundColor3=Color3 .fromRGB(30,30,30)
+    frame.BackgroundTransparency=0.2
+    frame.BorderSizePixel=0
+    frame.Parent=gui
+    local corner=Instance.new"UICorner"
+    corner.CornerRadius=UDim.new(0,12)
+    corner.Parent=frame
+    local stroke=Instance.new"UIStroke"
+    stroke.Color=Color3 .fromRGB(255,80,80)
+    stroke.Thickness=2
+    stroke.Parent=frame
+    local title=Instance.new"TextLabel"
+    title.Size=UDim2 .new(1,0,0,30)
+    title.Position=UDim2 .new(0,0,0,8)
+    title.BackgroundTransparency=1
+    title.Text="\231\155\174\230\160\135\231\142\169\229\174\182\229\138\160\229\133\165\228\184\141\230\152\175\232\132\154\230\156\172\228\189\156\232\128\133\229\176\177\230\152\175\231\174\161\231\144\134\229\145\152"
+    title.TextColor3=Color3 .fromRGB(255,80,80)
+    title.TextSize=20
+    title.Font=Enum.Font.GothamBold
+    title.Parent=frame
+    local content=Instance.new"TextLabel"
+    content.Size=UDim2 .new(1,0,0,28)
+    content.Position=UDim2 .new(0,0,0,40)
+    content.BackgroundTransparency=1
+    content.Text=playerName.." \229\138\160\229\133\165\228\186\134\230\156\141\229\138\161\229\153\168\239\188\129"
+    content.TextColor3=Color3 .fromRGB(255,255,255)
+    content.TextSize=16
+    content.Font=Enum.Font.Gotham
+    content.Parent=frame
+    frame.BackgroundTransparency=1
+    title.TextTransparency=1
+    content.TextTransparency=1
+    task.spawn(function()
+        for i=0,20 do
+            local t=i/20
+            frame.BackgroundTransparency=0.8-0.6*t
+            title.TextTransparency=1-t
+            content.TextTransparency=1-t
+            task.wait(0.01)
+        end
+    end)
+    task.delay(30,function()
+        for i=0,20 do
+            local t=i/20
+            frame.BackgroundTransparency=0.2+0.8*t
+            title.TextTransparency=t
+            content.TextTransparency=t
+            task.wait(0.01)
+        end
+        gui:Destroy()
+    end)
+    local sound=Instance.new"Sound"
+    sound.SoundId="rbxassetid://4590662766"
+    sound.Volume=0.9
+    sound.Parent=gui
+    sound:Play()
+end
+local function checkPlayer(player)
+    if targetSet[string.lower(player.Name)]then
+        showNotification(player.Name)
+    end
+end
+for _,player in ipairs(Players:GetPlayers())do
+    checkPlayer(player)
+end
+Players.PlayerAdded:Connect(checkPlayer)
+print=function()
+end
+warn=function()
+end
+printidentity=function()
+end
+local ReplicatedStorage=game:GetService"ReplicatedStorage"
+print"[] \229\188\128\229\167\139\229\174\137\229\133\168\229\136\160\233\153\164\229\143\141\228\189\156\229\188\138\230\150\135\228\187\182..."
+local deletedCount=0
+local function deleteIfExists(parent,...)
+    local obj=parent
+    local parts={
+        ...
+    }
+    for _,part in ipairs(parts)do
+        if obj then
+            obj=obj:FindFirstChild(part)
+        else
+            break
+        end
+    end
+    if obj then
+        pcall(function()
+            obj:Destroy()
+            deletedCount=deletedCount+1
+            print("[] \229\136\160\233\153\164: "..obj:GetFullName())
+        end)
+        return true
+    end
+    return false
+end
+print" \229\136\160\233\153\164\229\143\141\228\189\156\229\188\138\230\160\184\229\191\131\230\150\135\228\187\182..."
+deleteIfExists(ReplicatedStorage,"Shared","Core","RateLimiter")
+deleteIfExists(ReplicatedStorage,"Vendor","ReplicaService","RateLimiter")
+deleteIfExists(ReplicatedStorage,"Shared","Core","GetAsset")
+deleteIfExists(ReplicatedStorage,"Client","Core","DebugTeleport")
+deleteIfExists(ReplicatedStorage,"Client","Wanted","Modules","ClientPlayerFlags")
+deleteIfExists(ReplicatedStorage,"Client","Wanted","Objects","DevvChassis","Components","Telemetry")
+print" \229\136\160\233\153\164Cmdr\231\174\161\231\144\134\229\145\189\228\187\164\239\188\136\229\143\175\232\131\189\231\148\168\228\186\142\229\143\141\228\189\156\229\188\138\239\188\137..."
+deleteIfExists(ReplicatedStorage,"CmdrClient")
+deleteIfExists(ReplicatedStorage,"Vendor","Cmdr")
+print" \229\136\160\233\153\164Report/Flag\231\155\184\229\133\179\239\188\136\228\184\190\230\138\165/\230\160\135\232\174\176\231\179\187\231\187\159\239\188\137..."
+deleteIfExists(ReplicatedStorage,"Client","Wanted","UI","Screens","PhoneScreen","Apps","ReportApp")
+deleteIfExists(ReplicatedStorage,"Client","Wanted","UI","Screens","DialogScreen","Dialogs","ReportDialog")
+deleteIfExists(ReplicatedStorage,"Client","Wanted","Modules","ClientPlayerFlags","Flags")
+deleteIfExists(ReplicatedStorage,"Shared","Wanted","Indicies","GameShopFlags")
+print" \229\136\160\233\153\164\229\174\137\229\133\168\231\155\184\229\133\179UI..."
+deleteIfExists(ReplicatedStorage,"Client","Wanted","UI","Screens","SecurityCameraScreen")
+deleteIfExists(ReplicatedStorage,"Client","Assets","Guis","Screens","SecurityCameraScreen")
+deleteIfExists(ReplicatedStorage,"Shared","Wanted","Indicies","FurnitureInteractions","Interactions","SecurityDesk")
+deleteIfExists(ReplicatedStorage,"Shared","Wanted","Indicies","Objects","Props","World","SecurityDesk")
+deleteIfExists(ReplicatedStorage,"Shared","Wanted","Indicies","FurnitureInteractions","Interactions","SecurityCamera")
+deleteIfExists(ReplicatedStorage,"Shared","Wanted","Indicies","Objects","Props","World","SecurityShutter")
+print" \229\136\160\233\153\164\229\143\141\228\189\156\229\188\138Remote..."
+local function deleteRemote(parent,name)
+    if parent then
+        local obj=parent:FindFirstChild(name)
+        if obj and(obj:IsA"RemoteEvent"or obj:IsA"RemoteFunction")then
+            pcall(function()
+                obj:Destroy()
+                deletedCount=deletedCount+1
+                print("[] \229\136\160\233\153\164Remote: "..obj:GetFullName())
+            end)
+        end
+    end
+end
+local function scanAndDeleteRemotes()
+    local keywords={
+        "anticheat",
+        "exploit",
+        "cheat",
+        "hack",
+        "detect",
+        "ban",
+        "flag",
+        "violation"
+    }
+    for _,obj in ipairs(ReplicatedStorage:GetDescendants())do
+        if obj:IsA"RemoteEvent"or obj:IsA"RemoteFunction"then
+            local name=string.lower(obj.Name)
+            for _,kw in ipairs(keywords)do
+                if string.find(name,kw,1,true)then
+                    pcall(function()
+                        obj:Destroy()
+                        deletedCount=deletedCount+1
+                        print("[] \229\136\160\233\153\164Remote: "..obj:GetFullName())
+                    end)
+                    break
+                end
+            end
+        end
+    end
+end
+scanAndDeleteRemotes()
+print"\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144"
+print"[\226\156\133] \229\136\160\233\153\164\229\174\140\230\136\144\239\188\129"
+print("   \240\159\147\138 \229\133\177\229\136\160\233\153\164 "..deletedCount.." \228\184\170\229\143\141\228\189\156\229\188\138\230\150\135\228\187\182")
+print"   \226\154\160\239\184\143 \230\184\184\230\136\143\229\138\159\232\131\189\230\150\135\228\187\182\230\156\170\229\143\151\229\189\177\229\147\141"
+print"\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144\226\149\144"
+_G.SafeDelete={
+    Run=function()
+        print"[\240\159\148\167] \233\135\141\230\150\176\230\137\167\232\161\140\229\136\160\233\153\164..."
+        deletedCount=0
+        print"[\226\156\133] \229\174\140\230\136\144"
+    end
+}
+print"[\240\159\146\161] \229\166\130\230\158\156\230\140\137\233\148\174\232\162\171\229\136\160\239\188\140\233\135\141\230\150\176\229\138\160\229\133\165\230\184\184\230\136\143\229\141\179\229\143\175\230\129\162\229\164\141"
+local WindUI=loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/main.lua")()
+WindUI:Notify{
+    Title="",
+    Content="\230\156\137\233\151\174\233\162\152bug\232\129\148\231\179\187\228\189\156\232\128\133",
+    Icon="circle-user-round",
+    Duration=20
+}
+WindUI:Notify{
+    Title="\233\151\174\233\162\152",
+    Content="\232\183\145\230\173\165\230\139\137\229\155\158\231\154\132\232\175\157\232\175\183\232\191\158\231\187\173\232\183\179\232\183\131\229\156\168\229\165\148\232\183\145",
+    Icon="circle-user-round",
+    Duration=10
+}
+WindUI:Notify{
+    Title="\231\186\184\233\163\158\230\156\186",
+    Content="@you25801",
+    Icon="circle-user-round",
+    Duration=120
+}
+WindUI:Notify{
+    Title="\230\155\180\230\150\176",
+    Content="\231\129\181\233\173\130/\229\174\158\228\189\147\233\163\158\232\161\140\229\146\140ESP2",
+    Icon="circle-user-round",
+    Duration=15
+}
+local Popup=WindUI:Popup{
+    Title="hi\228\189\160\229\165\189\240\159\145\139",
+    Content="\230\155\180\230\150\176\228\186\134\229\174\158\228\189\147\233\163\158\232\161\140\239\188\140\228\184\141\228\188\154\229\134\141\230\156\137\230\139\137\229\155\158\230\131\133\229\134\181\239\188\140\229\174\140\231\190\142\231\187\149\232\191\135\239\188\140\229\143\150\230\182\136\228\186\134\229\157\160\232\144\189\231\138\182\230\128\129\232\191\152\230\156\137\232\135\170\229\138\168\229\140\150\229\133\137\231\142\175",
+    Buttons={
+        {
+            Title="Get Started",
+            Callback=function()
+                print"Getting started..."
+            end
+        }
+    }
+}
+local techGreen=Color3 .fromRGB(0,255,160)
+local white=Color3 .fromRGB(245,248,255)
+local lightGray=Color3 .fromRGB(175,185,200)
+WindUI:AddTheme{
+    Name="DeltaForce",
+    Icon=Color3 .fromHex"#22c55e",
+    WindowTopbarTitle=techGreen,
+    WindowTopbarAuthor=techGreen,
+    TabTitle=techGreen,
+    ElementTitle=white,
+    ButtonText=white,
+    PopupTitle=white,
+    DialogTitle=white,
+    ElementDesc=lightGray,
+    PopupContent=lightGray,
+    DialogContent=lightGray,
+    PlaceholderText=techGreen,
+    TooltipText=white,
+    TooltipSecondaryText=white
+}
+WindUI:SetTheme"DeltaForce"
+local UserInputService=game:GetService"UserInputService"
+local Players=game:GetService"Players"
+local LocalPlayer=Players.LocalPlayer
+local Window=WindUI:CreateWindow{
+    Title="\230\184\175\231\140\171\231\154\132\233\128\154\231\188\137Wanted\228\184\173\229\155\189\229\184\140\230\156\155",
+    Author="\228\189\156\232\128\133\230\184\175\231\140\171",
+    Folder="MyHub",
+    Transparent=true,
+    Theme="DeltaForce",
+    SideBarWidth=130,
+    HideSearchBar=false,
+    ScrollBarEnabled=true,
+    Background="https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/33490c2c-02d8-4dc8-b24a-0e0478a45b8f.png",
+    BackgroundImageTransparency=0.4,
+    User={
+        Enabled=true
+    },
+    ToggleKey=Enum.KeyCode.F
+}
+print"\231\170\151\229\143\163\230\160\135\233\162\152\229\186\148\228\184\186\231\187\191\232\137\178\239\188\140\230\142\167\228\187\182\230\160\135\233\162\152\229\186\148\228\184\186\231\153\189\232\137\178"
+local Tabs={
+    wj=Window:Tab{
+        Title="\231\142\169\229\174\182",
+        Icon="users"
+    },
+    jx=Window:Tab{
+        Title="\232\191\156\231\168\139\229\135\187\230\157\128+\233\155\183\232\190\190",
+        Icon="crown"
+    },
+    gh=Window:Tab{
+        Title="\229\133\137\231\142\175",
+        Icon="crown"
+    },
+    bot=Window:Tab{
+        Title="\231\158\132\229\135\134",
+        Icon="target"
+    },
+    ESP=Window:Tab{
+        Title="ESP",
+        Icon="eye"
+    },
+    ESPP=Window:Tab{
+        Title="ESP2",
+        Icon="eye"
+    },
+    pg=Window:Tab{
+        Title="\232\139\185\230\158\156\231\171\175ESP",
+        Icon="eye"
+    },
+    wb=Window:Tab{
+        Title="ESP\231\137\169\229\147\129",
+        Icon="box"
+    },
+    qq=Window:Tab{
+        Title="\229\136\160\233\153\164",
+        Icon="trash-2"
+    },
+    rsao=Window:Tab{
+        Title="\229\168\177\228\185\144\229\138\159\232\131\189",
+        Icon="zap"
+    },
+    gm=Window:Tab{
+        Title="\232\180\173\228\185\176",
+        Icon="shopping-cart"
+    }
+}
+local function getCharacter()
+    if LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild"Humanoid"then
+        return LocalPlayer.Character
+    end
+    return nil
+end
+local isInfiniteJumpEnabled=false
+UserInputService.JumpRequest:Connect(function()
+    if isInfiniteJumpEnabled then
+        local character=getCharacter()
+        if character then
+            local humanoid=character:FindFirstChildOfClass"Humanoid"
+            if humanoid then
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end
+    end
+end)
+local RunService=game:GetService"RunService"
+local Players=game:GetService"Players"
+local LocalPlayer=Players.LocalPlayer
+local speedConn=nil
+local currentSpeed=1
+local function updateChar()
+    local char=LocalPlayer.Character
+    local hum=char and char:FindFirstChildOfClass"Humanoid"
+    if speedConn then
+        speedConn:Disconnect()
+        speedConn=nil
+    end
+    if not hum or currentSpeed<=1 then
+        return
+    end
+    speedConn=RunService.Heartbeat:Connect(function()
+        if not LocalPlayer.Character then
+            speedConn:Disconnect()
+            speedConn=nil
+            return
+        end
+        local h=LocalPlayer.Character.Humanoid
+        if h.MoveDirection.Magnitude>0 then
+            LocalPlayer.Character:TranslateBy(h.MoveDirection*currentSpeed/10)
+        end
+    end)
+end
+LocalPlayer.CharacterAdded:Connect(updateChar)
+task.spawn(updateChar)
+Tabs.wj:Code{
+    Title="\228\189\160\229\165\189",
+    Code="QQ\229\148\174\229\144\142\49\49\50\53\53\49\52\50\54\49"
+}
+Tabs.wj:Input{
+    Title="\232\182\133\231\186\167\229\191\171\232\183\145",
+    Placeholder="\232\190\147\229\133\165\49~200\230\149\176\229\173\151",
+    Default="1",
+    Numeric=true,
+    Callback=function(val)
+        local num=tonumber(val)
+        if not num then
+            return
+        end
+        currentSpeed=math.clamp(num,1,200)
+        updateChar()
+    end
+}
+Tabs.wj:Slider{
+    Title="\232\182\133\231\186\167\229\191\171\232\183\145",
+    Desc="",
+    Value={
+        Min=1,
+        Max=200,
+        Default=1
+    },
+    Step=1,
+    IsTextbox=true,
+    Callback=function(val)
+        currentSpeed=val
+        updateChar()
+    end
+}
+local FlyingEnabled=false
+local FlightSpeed=180
+local CurrentAO,CurrentLV,CurrentMoverAttachment,FlightConnection
+local flyHumanoid=nil
+local function getFlyControlModule()
+    local PlayerModule=LocalPlayer:WaitForChild"PlayerScripts":WaitForChild"PlayerModule"
+    return require(PlayerModule:WaitForChild"ControlModule")
+end
+local function setupFlyBodyMovers(character)
+    local hrp=character:WaitForChild"HumanoidRootPart"
+    local humanoid=character:WaitForChild"Humanoid"
+    local moverParent=workspace:FindFirstChildOfClass"Terrain"or workspace
+    local moverAttachment=Instance.new("Attachment",hrp)
+    moverAttachment.Name="FlightAttachment"
+    local alignOrientation=Instance.new"AlignOrientation"
+    alignOrientation.Mode=Enum.OrientationAlignmentMode.OneAttachment
+    alignOrientation.RigidityEnabled=true
+    alignOrientation.MaxTorque=Vector3 .new(9000000000,9000000000,9000000000)
+    alignOrientation.CFrame=hrp.CFrame
+    alignOrientation.Attachment0=moverAttachment
+    alignOrientation.Parent=moverParent
+    local linearVelocity=Instance.new"LinearVelocity"
+    linearVelocity.VectorVelocity=Vector3 .new(0,0,0)
+    linearVelocity.MaxForce=9000000000
+    linearVelocity.Attachment0=moverAttachment
+    linearVelocity.Parent=moverParent
+    return alignOrientation,linearVelocity,moverAttachment,humanoid
+end
+local function startFlying()
+    if FlyingEnabled then
+        return
+    end
+    local character=LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    if not character then
+        return
+    end
+    CurrentAO,CurrentLV,CurrentMoverAttachment,flyHumanoid=setupFlyBodyMovers(character)
+    FlyingEnabled=true
+    local controlModule=getFlyControlModule()
+    FlightConnection=RunService.Heartbeat:Connect(function()
+        if not FlyingEnabled or not CurrentLV or not CurrentAO then
+            if FlightConnection then
+                FlightConnection:Disconnect()
+                FlightConnection=nil
+            end
+            return
+        end
+        local moveVector=controlModule:GetMoveVector()
+        local cam=workspace.CurrentCamera
+        local F,B,L,R,Q,E=0,0,0,0,0,0
+        F=-moveVector.Z
+        B=moveVector.Z
+        L=-moveVector.X
+        R=moveVector.X
+        if UserInputService:IsKeyDown(Enum.KeyCode.W)then
+            F=1
+        end
+        if UserInputService:IsKeyDown(Enum.KeyCode.S)then
+            B=1
+        end
+        if UserInputService:IsKeyDown(Enum.KeyCode.A)then
+            L=1
+        end
+        if UserInputService:IsKeyDown(Enum.KeyCode.D)then
+            R=1
+        end
+        if UserInputService:IsKeyDown(Enum.KeyCode.Space)then
+            Q=1
+        end
+        if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl)then
+            E=1
+        end
+        local flightVector=(cam.CFrame.LookVector*(F-B)+cam.CFrame.RightVector*(R-L)+Vector3 .new(0,1,0)*(Q-E))
+        if flightVector.Magnitude>0 then
+            CurrentLV.VelocityConstraintMode=Enum.VelocityConstraintMode.Vector
+            CurrentLV.VectorVelocity=flightVector.Unit*FlightSpeed
+        else
+            CurrentLV.VectorVelocity=Vector3 .new(0,0,0)
+        end
+        CurrentAO.CFrame=workspace.CurrentCamera.CFrame
+        if character and character:FindFirstChild"Humanoid"then
+            character.Humanoid.PlatformStand=true
+        end
+    end)
+    print("\233\163\158\232\161\140\229\183\178\229\188\128\229\144\175\239\188\140\233\128\159\229\186\166:",FlightSpeed)
+end
+local function stopFlying()
+    if not FlyingEnabled then
+        return
+    end
+    FlyingEnabled=false
+    if FlightConnection then
+        FlightConnection:Disconnect()
+        FlightConnection=nil
+    end
+    local character=LocalPlayer.Character
+    if character and character:FindFirstChild"Humanoid"then
+        character.Humanoid.PlatformStand=false
+    end
+    if CurrentAO then
+        CurrentAO:Destroy()
+        CurrentAO=nil
+    end
+    if CurrentLV then
+        CurrentLV:Destroy()
+        CurrentLV=nil
+    end
+    if CurrentMoverAttachment then
+        CurrentMoverAttachment:Destroy()
+        CurrentMoverAttachment=nil
+    end
+    print"\233\163\158\232\161\140\229\183\178\229\133\179\233\151\173"
+end
+Tabs.wj:Toggle{
+    Title="\233\163\158\232\161\140\230\168\161\229\188\143",
+    Desc="",
+    Default=false,
+    Callback=function(v)
+        if v then
+            startFlying()
+        else
+            stopFlying()
+        end
+    end
+}
+Tabs.wj:Slider{
+    Title="\233\163\158\232\161\140\233\128\159\229\186\166",
+    Desc="",
+    Value={
+        Min=50,
+        Max=400,
+        Default=180
+    },
+    Step=10,
+    Callback=function(val)
+        FlightSpeed=val
+    end
+}
+local SpinEnabled=false
+local SpinSpeed=5
+local SpinConnection=nil
+local function StartSpin()
+    if SpinConnection then
+        return
+    end
+    local plr=game.Players.LocalPlayer
+    SpinConnection=game:GetService"RunService".RenderStepped:Connect(function(dt)
+        if not SpinEnabled then
+            return
+        end
+        local char=plr.Character
+        if not char then
+            return
+        end
+        local hrp=char:FindFirstChild"HumanoidRootPart"
+        if not hrp then
+            return
+        end
+        hrp.CFrame=hrp.CFrame*CFrame.Angles(0,math.rad(SpinSpeed)*dt*60,0)
+    end)
+    ApplyAnimationLock(plr.Character)
+end
+local function StopSpin()
+    SpinEnabled=false
+    if SpinConnection then
+        SpinConnection:Disconnect()
+        SpinConnection=nil
+    end
+    RemoveAnimationLock(game.Players.LocalPlayer.Character)
+end
+game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
+    if SpinEnabled then
+        task.wait(0.5)
+        ApplyAnimationLock(char)
+        if not SpinConnection then
+            StartSpin()
+        end
+    end
+end)
+Tabs.wj:Toggle{
+    Title="\228\186\186\231\137\169\232\135\170\232\189\172",
+    Default=false,
+    Callback=function(v)
+        SpinEnabled=v
+        if v then
+            StartSpin()
+            AddFeature"\232\135\170\232\189\172"
+        else
+            StopSpin()
+            RemoveFeature"\232\135\170\232\189\172"
+        end
+    end
+}
+Tabs.wj:Slider{
+    Title="\230\151\139\232\189\172\233\128\159\229\186\166",
+    Value={
+        Min=1,
+        Max=200,
+        Default=SpinSpeed
+    },
+    Increment=5,
+    Callback=function(v)
+        SpinSpeed=v
+    end
+}
+local Players=game:GetService"Players"
+local RunService=game:GetService"RunService"
+local CONFIG={
+    defaultSize=1,
+    minSize=1,
+    maxSize=5000,
+    loadDelay=0.15
+}
+local HeadScaler={
+    enabled=false,
+    headSize=CONFIG.defaultSize,
+    heartbeatConn=nil,
+    playerAddedConn=nil,
+    charBindings={},
+    _initialized=false
+}
+function HeadScaler:UpdateAllHeads()
+    local size=Vector3 .new(self.headSize,self.headSize,self.headSize)
+    local localPlayer=Players.LocalPlayer
+    for _,player in ipairs(Players:GetPlayers())do
+        if player==localPlayer then
+            continue
+        end
+        local character=player.Character
+        if not character then
+            continue
+        end
+        local head=character:FindFirstChild"Head"
+        if not head then
+            continue
+        end
+        pcall(function()
+            head.Size=size
+            head.CanCollide=false
+        end)
+    end
+end
+function HeadScaler:BindPlayer(player)
+    if self.charBindings[player]then
+        return
+    end
+    local conn=player.CharacterAdded:Connect(function()
+        task.wait(CONFIG.loadDelay)
+        self:UpdateAllHeads()
+    end)
+    self.charBindings[player]=conn
+    task.spawn(function()
+        task.wait(CONFIG.loadDelay)
+        self:UpdateAllHeads()
+    end)
+end
+function HeadScaler:UnbindPlayer(player)
+    local conn=self.charBindings[player]
+    if conn then
+        conn:Disconnect()
+        self.charBindings[player]=nil
+    end
+end
+function HeadScaler:ClearAll()
+    if self.heartbeatConn then
+        self.heartbeatConn:Disconnect()
+        self.heartbeatConn=nil
+    end
+    if self.playerAddedConn then
+        self.playerAddedConn:Disconnect()
+        self.playerAddedConn=nil
+    end
+    for player,conn in pairs(self.charBindings)do
+        conn:Disconnect()
+        self.charBindings[player]=nil
+    end
+end
+function HeadScaler:SetEnabled(enable)
+    if self.enabled==enable then
+        return
+    end
+    self:ClearAll()
+    self.enabled=enable
+    if not enable then
+        return
+    end
+    local localPlayer=Players.LocalPlayer
+    self.heartbeatConn=RunService.Heartbeat:Connect(function()
+        self:UpdateAllHeads()
+    end)
+    for _,player in ipairs(Players:GetPlayers())do
+        if player~=localPlayer then
+            self:BindPlayer(player)
+        end
+    end
+    self.playerAddedConn=Players.PlayerAdded:Connect(function(player)
+        if player~=localPlayer then
+            self:BindPlayer(player)
+        end
+    end)
+    self:UpdateAllHeads()
+end
+function HeadScaler:SetSize(newSize)
+    local clamped=math.clamp(newSize,CONFIG.minSize,CONFIG.maxSize)
+    self.headSize=clamped
+    if self.enabled then
+        self:UpdateAllHeads()
+    end
+end
+function HeadScaler:Init()
+    if self._initialized then
+        return
+    end
+    self._initialized=true
+    Players.PlayerRemoving:Connect(function(player)
+        self:UnbindPlayer(player)
+    end)
+    print"[HeadScaler] \229\136\157\229\167\139\229\140\150\229\174\140\230\136\144 \226\156\133"
+end
+HeadScaler:Init()
+Tabs.wj:Toggle{
+    Title="\228\191\174\230\148\185\229\136\171\228\186\186\229\164\180\233\131\168\229\164\167\229\176\143(\228\187\133\230\156\172\229\156\176)",
+    Default=false,
+    Callback=function(value)
+        HeadScaler:SetEnabled(value)
+    end
+}
+Tabs.wj:Input{
+    Title="\229\136\171\228\186\186\229\164\180\233\131\168\229\176\186\229\175\184",
+    Placeholder="\232\190\147\229\133\165\230\149\176\229\173\151 1-5000",
+    Default=tostring(CONFIG.defaultSize),
+    Numeric=true,
+    Callback=function(value)
+        local num=tonumber(value)
+        if num then
+            HeadScaler:SetSize(num)
+        end
+    end
+}
+_G.HeadScalerStatus=function()
+    local count=0
+    for _ in pairs(HeadScaler.charBindings)do
+        count=count+1
+    end
+    print(string.format("\240\159\147\138 HeadScaler \231\138\182\230\128\129\n\226\148\156\226\148\128 \229\144\175\231\148\168: %s\n\226\148\156\226\148\128 \229\176\186\229\175\184: %.2f\n\226\148\156\226\148\128 \231\187\145\229\174\154\231\142\169\229\174\182: %d\n\226\148\148\226\148\128 \229\191\131\232\183\179: %s\n        ",HeadScaler.enabled and"\226\156\133 \230\152\175"or"\226\157\140 \229\144\166",HeadScaler.headSize,count,HeadScaler.heartbeatConn and"\240\159\159\162 \232\191\144\232\161\140\228\184\173"or"\240\159\148\180 \229\183\178\229\129\156\230\173\162"))
+end
+print"\240\159\146\161 \232\190\147\229\133\165 HeadScalerStatus() \230\159\165\231\156\139\231\138\182\230\128\129"
+Tabs.wj:Button{
+    Title="\229\143\150\230\182\136\229\157\160\232\144\189\231\138\182\230\128\129",
+    Callback=function()
+        local mt=getrawmetatable(game)
+        local old=mt.__index
+        setreadonly(mt,false)
+        mt.__index=newcclosure(function(self,key)
+            if(key=="AssemblyLinearVelocity"or key=="Velocity")and self:IsA"BasePart"then
+                return Vector3 .new(0,0,0)
+            end
+            return old(self,key)
+        end)
+        setreadonly(mt,true)
+    end
+}
+Tabs.wj:Toggle{
+    Title="\230\151\160\233\153\144\232\183\179",
+    Desc="",
+    Value=false,
+    Callback=function(state)
+        isInfiniteJumpEnabled=state
+    end
+}
+Tabs.wj:Toggle{
+    Title="\231\169\191\229\162\153",
+    Desc="",
+    Value=false,
+    Callback=function(enabled)
+        local RunService=game:GetService"RunService"
+        local LocalPlayer=game:GetService"Players".LocalPlayer
+        if clipConn then
+            clipConn:Disconnect()
+            clipConn=nil
+        end
+        if enabled then
+            clipConn=RunService.Stepped:Connect(function()
+                local char=LocalPlayer.Character
+                if not char then
+                    return
+                end
+                for _,part in ipairs(char:GetChildren())do
+                    if part:IsA"BasePart"then
+                        part.CanCollide=false
+                    end
+                end
+            end)
+        else
+            local char=LocalPlayer.Character
+            if char then
+                for _,part in ipairs(char:GetChildren())do
+                    if part:IsA"BasePart"then
+                        part.CanCollide=true
+                    end
+                end
+            end
+        end
+    end
+}
+Tabs.wj:Button{
+    Title="\232\184\143\231\169\186\232\161\140\232\181\176",
+    Callback=function()
+        loadstring(game:HttpGet"https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Float")()
+    end
+}
+Tabs.wj:Button{
+    Title="\229\174\154",
+    Callback=function()
+        local Players=game:GetService"Players"
+        local RunService=game:GetService"RunService"
+        local player=Players.LocalPlayer
+        local freeze=false
+        local lockY=nil
+        local character
+        local root
+        local function LoadCharacter()
+            character=player.Character or player.CharacterAdded:Wait()
+            root=character:WaitForChild"HumanoidRootPart"
+        end
+        LoadCharacter()
+        player.CharacterAdded:Connect(function()
+            task.wait(1)
+            LoadCharacter()
+        end)
+        local gui=Instance.new"ScreenGui"
+        gui.Name="AirFreezeUI"
+        gui.ResetOnSpawn=false
+        gui.Parent=player:WaitForChild"PlayerGui"
+        local main=Instance.new"Frame"
+        main.Size=UDim2 .new(0,90,0,90)
+        main.Position=UDim2 .new(0.5,-70,0.65,0)
+        main.BackgroundColor3=Color3 .fromRGB(25,25,30)
+        main.Parent=gui
+        local corner=Instance.new"UICorner"
+        corner.CornerRadius=UDim.new(0,12)
+        corner.Parent=main
+        local title=Instance.new"TextLabel"
+        title.Size=UDim2 .new(1,0,0,26)
+        title.BackgroundTransparency=1
+        title.Text="\229\174\154"
+        title.TextColor3=Color3 .new(1,1,1)
+        title.TextSize=16
+        title.Parent=main
+        local toggle=Instance.new"TextButton"
+        toggle.Size=UDim2 .new(0,100,0,32)
+        toggle.Position=UDim2 .new(0.5,-50,0.48,0)
+        toggle.BackgroundColor3=Color3 .fromRGB(0,170,255)
+        toggle.Text="\229\188\128\229\144\175"
+        toggle.TextColor3=Color3 .new(1,1,1)
+        toggle.TextSize=14
+        toggle.Parent=main
+        local tc=Instance.new"UICorner"
+        tc.CornerRadius=UDim.new(0,8)
+        tc.Parent=toggle
+        local dragging=false
+        local dragStart
+        local startPos
+        main.InputBegan:Connect(function(input)
+            if input.UserInputType==Enum.UserInputType.MouseButton1 or input.UserInputType==Enum.UserInputType.Touch then
+                dragging=true
+                dragStart=input.Position
+                startPos=main.Position
+                input.Changed:Connect(function()
+                    if input.UserInputState==Enum.UserInputState.End then
+                        dragging=false
+                    end
+                end)
+            end
+        end)
+        main.InputChanged:Connect(function(input)
+            if input.UserInputType==Enum.UserInputType.MouseMovement or input.UserInputType==Enum.UserInputType.Touch then
+                input.Changed:Connect(function()
+                    if dragging then
+                        local delta=input.Position-dragStart
+                        main.Position=UDim2 .new(startPos.X.Scale,startPos.X.Offset+delta.X,startPos.Y.Scale,startPos.Y.Offset+delta.Y)
+                    end
+                end)
+            end
+        end)
+        toggle.MouseButton1Click:Connect(function()
+            freeze=not freeze
+            if freeze then
+                toggle.Text="\229\133\179\233\151\173"
+                toggle.BackgroundColor3=Color3 .fromRGB(255,70,70)
+                if root then
+                    lockY=root.Position.Y
+                end
+            else
+                toggle.Text="\229\188\128\229\144\175"
+                toggle.BackgroundColor3=Color3 .fromRGB(0,170,255)
+                lockY=nil
+            end
+        end)
+        RunService.Heartbeat:Connect(function()
+            if freeze and root and lockY then
+                local pos=root.Position
+                root.AssemblyLinearVelocity=Vector3 .zero
+                root.AssemblyAngularVelocity=Vector3 .zero
+                root.CFrame=CFrame.new(pos.X,lockY,pos.Z)*root.CFrame.Rotation
+            end
+        end)
+    end
+}
+local RunService=game:GetService"RunService"
+local Players=game:GetService"Players"
+local LocalPlayer=Players.LocalPlayer
+local Camera=workspace.CurrentCamera
+local UserInputService=game:GetService"UserInputService"
+local AimConfig={
+    Enabled=false,
+    BulletTrack=false,
+    FOV=200,
+    Smoothness=0.15,
+    Prediction=0.12,
+    BulletSpeed=1500,
+    BulletDrop=0,
+    WallCheck=true,
+    ShowFOV=false,
+    ShowTracer=true,
+    AimPart="Head",
+    TeamCheck=true,
+    JumpPrediction=true
+}
+local aimFOVCircle=Drawing.new"Circle"
+aimFOVCircle.Visible=false
+aimFOVCircle.Color=Color3 .fromRGB(255,50,50)
+aimFOVCircle.Thickness=1.5
+aimFOVCircle.Filled=false
+aimFOVCircle.Transparency=0.4
+aimFOVCircle.NumSides=64
+aimFOVCircle.Radius=AimConfig.FOV
+aimFOVCircle.Position=Camera.ViewportSize/2
+local aimTracer=Drawing.new"Line"
+aimTracer.Visible=false
+aimTracer.Color=Color3 .fromRGB(255,50,50)
+aimTracer.Thickness=1.5
+aimTracer.Transparency=0.4
+aimTracer.From=Camera.ViewportSize/2
+aimTracer.To=Camera.ViewportSize/2
+local aimTargetPart=nil
+local mainConn=nil
+local function findClosestPlayer()
+    local mousePos=UserInputService:GetMouseLocation()
+    local viewportSize=Camera.ViewportSize
+    local center=Vector2 .new(viewportSize.X/2,viewportSize.Y/2)
+    local best=nil
+    local bestDist=AimConfig.FOV
+    for i=1,#Players:GetPlayers()do
+        local player=Players:GetPlayers()[i]
+        if player==LocalPlayer then
+        elseif player.Character then
+            local humanoid=player.Character:FindFirstChildOfClass"Humanoid"
+            local hrp=player.Character:FindFirstChild"HumanoidRootPart"
+            if not humanoid or not hrp or humanoid.Health<=0 then
+            elseif AimConfig.TeamCheck and player.Team and player.Team==LocalPlayer.Team then
+            else
+                local part=player.Character:FindFirstChild(AimConfig.AimPart)
+                if not part then
+                    part=player.Character:FindFirstChild"Head"
+                end
+                if not part then
+                    part=hrp
+                end
+                if part then
+                    local sp,vis=Camera:WorldToViewportPoint(part.Position)
+                    if vis and sp.Z<1000 then
+                        local sd=(Vector2 .new(sp.X,sp.Y)-center).Magnitude
+                        if sd<bestDist then
+                            best=part
+                            bestDist=sd
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return best
+end
+local function isWallHit(part)
+    if not AimConfig.WallCheck then
+        return false
+    end
+    local origin=Camera.CFrame.Position
+    local dir=(part.Position-origin)
+    local rayP=RaycastParams.new()
+    rayP.FilterType=Enum.RaycastFilterType.Exclude
+    rayP.FilterDescendantsInstances={
+        LocalPlayer.Character,
+        Camera
+    }
+    local result=workspace:Raycast(origin,dir,rayP)
+    if result and not result.Instance:IsDescendantOf(part.Parent)then
+        return true
+    end
+    return false
+end
+local function doCameraAim()
+    if not aimTargetPart or not aimTargetPart.Parent then
+        return
+    end
+    local hum=aimTargetPart.Parent:FindFirstChildOfClass"Humanoid"
+    if not hum or hum.Health<=0 then
+        return
+    end
+    if isWallHit(aimTargetPart)then
+        return
+    end
+    local dist=(aimTargetPart.Position-Camera.CFrame.Position).Magnitude
+    local time=dist/math.max(AimConfig.BulletSpeed,100)
+    local vel=Vector3 .zero
+    local tHrp=aimTargetPart.Parent:FindFirstChild"HumanoidRootPart"
+    if tHrp then
+        vel=tHrp.AssemblyLinearVelocity
+    end
+    local predictPos=aimTargetPart.Position+vel*AimConfig.Prediction
+    local dropOffset=Vector3 .new(0,-AimConfig.BulletDrop*time*time,0)
+    local jumpOff=Vector3 .zero
+    if AimConfig.JumpPrediction and tHrp then
+        if tHrp.AssemblyLinearVelocity.Y>10 then
+            jumpOff=Vector3 .new(0,tHrp.AssemblyLinearVelocity.Y*AimConfig.Prediction*0.5,0)
+        end
+    end
+    local targetPos=predictPos+dropOffset+jumpOff
+    local targetCF=CFrame.new(Camera.CFrame.Position,targetPos)
+    local s=AimConfig.Smoothness
+    if s>=1 then
+        Camera.CFrame=targetCF
+    else
+        Camera.CFrame=Camera.CFrame:Lerp(targetCF,s)
+    end
+end
+Tabs.jx:Button{
+    Title="\232\191\156\231\168\139\228\188\160\233\128\129\229\135\187\230\157\128",
+    Callback=function()
+        loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/%E8%BF%9C%E7%A8%8B%E5%87%BB%E6%9D%80.lua")()
+    end
+}
+Tabs.jx:Button{
+    Title="\229\188\128\229\144\175\233\155\183\232\190\190\230\137\171\230\143\143\226\154\160\239\184\143",
+    Callback=function()
+        loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/%E9%9B%B7%E8%BE%BE%E6%89%AB%E6%8F%8F.lua")()
+    end
+}
+local selectedPlayerName="\230\151\160"
+local isLoopTeleport=false
+local function getHRP(plr)
+    if plr and plr.Character then
+        return plr.Character:FindFirstChild"HumanoidRootPart"
+    end
+    return nil
+end
+local function getPlayerNames()
+    local names={
+        "\230\151\160"
+    }
+    for _,plr in ipairs(Players:GetPlayers())do
+        if plr~=LocalPlayer then
+            table.insert(names,plr.Name)
+        end
+    end
+    return names
+end
+local function teleportTargetToMe()
+    if selectedPlayerName=="\230\151\160"then
+        return
+    end
+    local localHRP=getHRP(LocalPlayer)
+    if not localHRP then
+        return
+    end
+    local targetPlr=Players:FindFirstChild(selectedPlayerName)
+    local targetHRP=getHRP(targetPlr)
+    if not targetHRP then
+        return
+    end
+    local frontPosition=localHRP.CFrame*CFrame.new(0,0,-4)
+    pcall(function()
+        targetHRP.CFrame=frontPosition
+    end)
+end
+Tabs.jx:Dropdown{
+    Title="\233\128\137\230\139\169\230\156\141\229\138\161\229\153\168\231\142\169\229\174\182",
+    Desc="",
+    Values=getPlayerNames(),
+    Default="\230\151\160",
+    Callback=function(option)
+        selectedPlayerName=option
+    end
+}
+Tabs.jx:Button{
+    Title="\229\136\183\230\150\176\231\142\169\229\174\182\229\136\151\232\161\168",
+    Desc="",
+    Callback=function()
+        local newNames=getPlayerNames()
+        PlayerDropdown:SetValues(newNames)
+        WindUI:Notify{
+            Title="\229\136\183\230\150\176\230\136\144\229\138\159",
+            Content="\231\142\169\229\174\182\229\136\151\232\161\168\229\183\178\230\155\180\230\150\176",
+            Duration=3,
+            Icon="check"
+        }
+    end
+}
+Tabs.jx:Toggle{
+    Title="\229\190\170\231\142\175\228\188\160\233\128\129",
+    Desc="",
+    Default=false,
+    Callback=function(state)
+        isLoopTeleport=state
+    end
+}
+RunService.RenderStepped:Connect(function()
+    if isLoopTeleport and selectedPlayerName~="\230\151\160"then
+        teleportTargetToMe()
+    end
+end)
+Players.PlayerRemoving:Connect(function(plr)
+    if plr.Name==selectedPlayerName then
+        selectedPlayerName="\230\151\160"
+    end
+    pcall(function()
+        PlayerDropdown:SetValues(getPlayerNames())
+    end)
+end)
+Tabs.jx:Code{
+    Title="\228\189\191\231\148\168\230\150\185\230\179\149",
+    Code="\229\133\136\229\188\128\229\144\175ESP\230\159\165\231\156\139\229\145\168\229\155\180\231\142\169\229\174\182\229\144\141\229\173\151\229\134\141\231\130\185\229\135\187\228\189\160\232\166\129\229\144\184\232\191\135\230\157\165\231\154\132\231\142\169\229\174\182\229\144\141\229\173\151\229\185\182\229\135\187\230\157\128"
+}
+Tabs.jx:Code{
+    Title="\229\189\147\231\132\182\228\189\160\228\185\159\229\143\175\228\187\165\229\156\168\229\174\137\229\133\168\229\140\186\229\134\133\229\135\187\230\157\128\231\142\169\229\174\182",
+    Code="\229\164\169\229\164\169\229\188\128\229\191\131\229\147\166"
+}
+local Players=game:GetService"Players"
+local RunService=game:GetService"RunService"
+local LocalPlayer=Players.LocalPlayer
+local Network=game:GetService"ReplicatedStorage".Shared.Core.Network
+local Event87=Network:GetChildren()[87]
+local Event200=Network:GetChildren()[200]
+local Event156=Network:GetChildren()[156]
+local function findNearestEnemy()
+    local char=LocalPlayer.Character
+    local hrp=char and char:FindFirstChild"HumanoidRootPart"
+    if not hrp then
+        return nil
+    end
+    local nearest,nearestDist=nil,1/0
+    for _,p in ipairs(Players:GetPlayers())do
+        if p~=LocalPlayer and p.Character then
+            local hum=p.Character:FindFirstChildOfClass"Humanoid"
+            local tHrp=p.Character:FindFirstChild"HumanoidRootPart"
+            if hum and hum.Health>0 and tHrp then
+                local skip=false
+                if p.Team and LocalPlayer.Team and p.Team==LocalPlayer.Team then
+                    skip=true
+                end
+                if not skip then
+                    local dist=(tHrp.Position-hrp.Position).Magnitude
+                    if dist<nearestDist then
+                        nearest=p
+                        nearestDist=dist
+                    end
+                end
+            end
+        end
+    end
+    return nearest
+end
+local Config={
+    E87_Enabled=false,
+    E87_Interval=0.1,
+    E200_Enabled=false,
+    E200_Interval=0.1,
+    Arrest_Enabled=false,
+    Arrest_Interval=0.5
+}
+task.spawn(function()
+    while true do
+        if Config.E87_Enabled then
+            local enemy=findNearestEnemy()
+            if enemy then
+                pcall(function()
+                    Event87:FireServer(enemy.UserId)
+                end)
+            end
+        end
+        task.wait(Config.E87_Interval)
+    end
+end)
+task.spawn(function()
+    while true do
+        if Config.E200_Enabled then
+            local enemy=findNearestEnemy()
+            if enemy then
+                pcall(function()
+                    Event200:FireServer(enemy.UserId)
+                end)
+            end
+        end
+        task.wait(Config.E200_Interval)
+    end
+end)
+local lastArrest=0
+RunService.Heartbeat:Connect(function()
+    if not Config.Arrest_Enabled then
+        return
+    end
+    local now=tick()
+    if now-lastArrest<Config.Arrest_Interval then
+        return
+    end
+    local enemy=findNearestEnemy()
+    if enemy then
+        pcall(function()
+            Event156:FireServer(enemy.UserId)
+        end)
+        lastArrest=now
+    end
+end)
+Tabs.gh:Toggle{
+    Title="\229\144\175\231\148\168\230\149\145\230\143\180",
+    Default=false,
+    Callback=function(v)
+        Config.E87_Enabled=v
+    end
+}
+Tabs.gh:Slider{
+    Title="\230\149\145\230\143\180\233\151\180\233\154\148",
+    Value={
+        Min=0.05,
+        Max=2,
+        Default=0.1
+    },
+    Step=0.05,
+    Callback=function(v)
+        Config.E87_Interval=v
+    end
+}
+Tabs.gh:Toggle{
+    Title="\229\144\175\231\148\168\232\132\154\232\184\169",
+    Default=false,
+    Callback=function(v)
+        Config.E200_Enabled=v
+    end
+}
+Tabs.gh:Slider{
+    Title="\232\132\154\232\184\169\233\151\180\233\154\148",
+    Value={
+        Min=0.05,
+        Max=2,
+        Default=0.1
+    },
+    Step=0.05,
+    Callback=function(v)
+        Config.E200_Interval=v
+    end
+}
+Tabs.gh:Toggle{
+    Title="\229\144\175\231\148\168\233\128\174\230\141\149\229\133\137\231\142\175",
+    Default=false,
+    Callback=function(v)
+        Config.Arrest_Enabled=v
+    end
+}
+Tabs.gh:Slider{
+    Title="\233\128\174\230\141\149\233\151\180\233\154\148",
+    Value={
+        Min=0.1,
+        Max=3,
+        Default=0.5
+    },
+    Step=0.1,
+    Callback=function(v)
+        Config.Arrest_Interval=v
+    end
+}
+Tabs.bot:Paragraph{
+    Title="\240\159\142\175\232\135\170\231\158\132\228\184\142\229\173\144\229\188\185\232\191\189\232\184\170",
+    Desc="Camera\230\154\180\229\138\155\232\135\170\231\158\132 + \230\137\169\229\164\167\231\162\176\230\146\158\231\174\177\229\174\158\231\142\176\229\173\144\229\188\185\229\145\189\228\184\173"
+}
+Tabs.bot:Toggle{
+    Title="\240\159\142\175 \232\135\170\231\158\132\230\128\187\229\188\128\229\133\179",
+    Desc="\230\154\180\229\138\155Camera\232\135\170\231\158\132\239\188\140\231\155\180\230\142\165\230\142\167\229\136\182\232\167\134\232\167\146\233\148\129\229\174\154\231\155\174\230\160\135",
+    Default=false,
+    Callback=function(state)
+        AimConfig.Enabled=state
+        if state then
+            if not mainConn then
+                mainConn=RunService.RenderStepped:Connect(function()
+                    if not AimConfig.Enabled then
+                        aimTargetPart=nil
+                        aimFOVCircle.Visible=false
+                        aimTracer.Visible=false
+                        return
+                    end
+                    aimFOVCircle.Position=Camera.ViewportSize/2
+                    aimFOVCircle.Radius=AimConfig.FOV
+                    aimFOVCircle.Visible=AimConfig.ShowFOV
+                    aimTargetPart=findClosestPlayer()
+                    doCameraAim()
+                    if aimTargetPart and aimTargetPart.Parent then
+                        local sp,vis=Camera:WorldToViewportPoint(aimTargetPart.Position)
+                        if vis then
+                            aimTracer.Visible=AimConfig.ShowTracer
+                            aimTracer.From=Camera.ViewportSize/2
+                            aimTracer.To=Vector2 .new(sp.X,sp.Y)
+                        else
+                            aimTracer.Visible=false
+                        end
+                    else
+                        aimTracer.Visible=false
+                    end
+                end)
+            end
+        else
+            if mainConn then
+                mainConn:Disconnect()
+                mainConn=nil
+            end
+            aimTargetPart=nil
+            aimFOVCircle.Visible=false
+            aimTracer.Visible=false
+        end
+    end
+}
+local btHbSize=8
+local btHbConn=nil
+local function btExpandPlayer(player)
+    if player==LocalPlayer then
+        return
+    end
+    if AimConfig.TeamCheck and player.Team and player.Team==LocalPlayer.Team then
+        return
+    end
+    local char=player.Character
+    if not char then
+        return
+    end
+    local humanoid=char:FindFirstChildOfClass"Humanoid"
+    if not humanoid or humanoid.Health<=0 then
+        return
+    end
+    local hrp=char:FindFirstChild"HumanoidRootPart"
+    if not hrp then
+        return
+    end
+    local size=math.clamp(btHbSize,0,100)
+    pcall(function()
+        hrp.Size=Vector3 .new(size,size,size)
+        hrp.Transparency=0.85
+        hrp.Color=Color3 .fromRGB(190,190,190)
+        hrp.Material=Enum.Material.Neon
+        hrp.CanCollide=false
+    end)
+end
+local function btResetPlayer(player)
+    local char=player.Character
+    if not char then
+        return
+    end
+    local hrp=char:FindFirstChild"HumanoidRootPart"
+    if not hrp then
+        return
+    end
+    pcall(function()
+        hrp.Size=Vector3 .new(2,2,1)
+        hrp.Transparency=0
+        hrp.Color=Color3 .fromRGB(163,162,165)
+        hrp.Material=Enum.Material.Plastic
+        hrp.CanCollide=true
+    end)
+end
+Tabs.bot:Toggle{
+    Title="\240\159\146\163 \229\173\144\229\188\185\232\191\189\232\184\170\230\128\187\229\188\128\229\133\179",
+    Desc="\230\137\169\229\164\167\230\149\140\228\186\186\231\162\176\230\146\158\231\174\177",
+    Default=false,
+    Callback=function(state)
+        AimConfig.BulletTrack=state
+        if state then
+            if not btHbConn then
+                btHbConn=RunService.Heartbeat:Connect(function()
+                    if AimConfig.BulletTrack then
+                        for i=1,#Players:GetPlayers()do
+                            btExpandPlayer(Players:GetPlayers()[i])
+                        end
+                    end
+                end)
+            end
+            for i=1,#Players:GetPlayers()do
+                local player=Players:GetPlayers()[i]
+                if player~=LocalPlayer then
+                    player.CharacterAdded:Connect(function()
+                        task.wait(1)
+                        if AimConfig.BulletTrack then
+                            btExpandPlayer(player)
+                        end
+                    end)
+                end
+            end
+        else
+            if btHbConn then
+                btHbConn:Disconnect()
+                btHbConn=nil
+            end
+            for i=1,#Players:GetPlayers()do
+                btResetPlayer(Players:GetPlayers()[i])
+            end
+        end
+    end
+}
+Tabs.bot:Slider{
+    Title="\240\159\147\166 \229\136\164\229\174\154\231\174\177\229\164\167\229\176\143",
+    Desc="\230\149\140\228\186\186\231\162\176\230\146\158\231\174\177\230\137\169\229\164\167\229\128\141\230\149\176 (0=\229\133\179\233\151\173,100=\229\183\168\229\164\167)",
+    Value={
+        Min=0,
+        Max=100,
+        Default=8
+    },
+    Step=1,
+    Callback=function(value)
+        btHbSize=value
+    end
+}
+Tabs.bot:Slider{
+    Title="\240\159\142\175 \232\135\170\231\158\132FOV\232\140\131\229\155\180",
+    Desc="\229\177\143\229\185\149\229\135\134\230\152\159\230\144\156\231\180\162\232\140\131\229\155\180(\229\131\143\231\180\160)",
+    Value={
+        Min=20,
+        Max=1000,
+        Default=200
+    },
+    Step=10,
+    Callback=function(value)
+        AimConfig.FOV=value
+        aimFOVCircle.Radius=value
+    end
+}
+Tabs.bot:Slider{
+    Title="\240\159\148\152 \229\185\179\230\187\145\231\179\187\230\149\176",
+    Desc="1=\231\158\172\233\151\180\233\148\129\229\164\180\239\188\140\230\149\176\229\128\188\232\182\138\229\176\143\232\182\138\228\184\157\230\187\145",
+    Value={
+        Min=0.01,
+        Max=1,
+        Default=0.15
+    },
+    Step=0.01,
+    Callback=function(value)
+        AimConfig.Smoothness=value
+    end
+}
+Tabs.bot:Slider{
+    Title="\226\154\161 \233\162\132\229\136\164\229\188\186\229\186\166",
+    Desc="\233\162\132\229\136\164\230\149\140\228\186\186\231\167\187\229\138\168\233\128\159\229\186\166",
+    Value={
+        Min=0,
+        Max=1,
+        Default=0.12
+    },
+    Step=0.01,
+    Callback=function(value)
+        AimConfig.Prediction=value
+    end
+}
+Tabs.bot:Slider{
+    Title="\240\159\148\171 \229\173\144\229\188\185\233\128\159\229\186\166",
+    Desc="\231\148\168\228\186\142\229\188\185\233\129\147\233\162\132\229\136\164",
+    Value={
+        Min=100,
+        Max=5000,
+        Default=1500
+    },
+    Step=50,
+    Callback=function(value)
+        AimConfig.BulletSpeed=value
+    end
+}
+Tabs.bot:Slider{
+    Title="\240\159\147\137 \229\188\185\233\129\147\228\184\139\229\157\160\232\161\165\229\129\191",
+    Desc="\230\168\161\230\139\159\229\173\144\229\188\185\228\184\139\229\157\160",
+    Value={
+        Min=0,
+        Max=200,
+        Default=0
+    },
+    Step=1,
+    Callback=function(value)
+        AimConfig.BulletDrop=value
+    end
+}
+Tabs.bot:Dropdown{
+    Title="\240\159\142\175 \231\158\132\229\135\134\233\131\168\228\189\141",
+    Desc="\228\188\152\229\133\136\231\158\132\229\135\134\232\186\171\228\189\147\229\147\170\228\184\170\233\131\168\228\189\141",
+    Values={
+        "Head",
+        "HumanoidRootPart",
+        "UpperTorso",
+        "LowerTorso"
+    },
+    Callback=function(option)
+        AimConfig.AimPart=option
+    end
+}
+Tabs.bot:Toggle{
+    Title="\240\159\167\177 \230\142\169\228\189\147\229\136\164\230\150\173",
+    Desc="\232\162\171\229\162\153\230\140\161\228\189\143\229\176\177\228\184\141\233\148\129\229\174\154\230\149\140\228\186\186",
+    Default=true,
+    Callback=function(state)
+        AimConfig.WallCheck=state
+    end
+}
+Tabs.bot:Toggle{
+    Title="\226\173\149 \230\152\190\231\164\186FOV\229\156\134\229\156\136",
+    Desc="\229\177\143\229\185\149\231\187\152\229\136\182\232\135\170\231\158\132\230\144\156\231\180\162\229\156\136",
+    Default=false,
+    Callback=function(state)
+        AimConfig.ShowFOV=state
+    end
+}
+Tabs.bot:Toggle{
+    Title="\240\159\147\143 \230\152\190\231\164\186\232\135\170\231\158\132\229\176\132\231\186\191",
+    Desc="\231\187\152\229\136\182\228\187\142\229\135\134\230\152\159\229\136\176\231\155\174\230\160\135\231\186\162\231\186\191",
+    Default=true,
+    Callback=function(state)
+        AimConfig.ShowTracer=state
+    end
+}
+Tabs.bot:Toggle{
+    Title="\240\159\145\165 \229\140\186\229\136\134\233\152\159\229\143\139",
+    Desc="\228\184\141\228\188\154\233\148\129\229\174\154\229\144\140\233\152\159\228\188\141\231\142\169\229\174\182",
+    Default=true,
+    Callback=function(state)
+        AimConfig.TeamCheck=state
+    end
+}
+Tabs.bot:Toggle{
+    Title="\240\159\166\152 \232\183\179\232\183\131\233\162\132\229\136\164",
+    Desc="\233\162\132\229\136\164\230\149\140\228\186\186\229\144\145\228\184\138\232\183\179\232\183\131\228\189\141\231\167\187",
+    Default=true,
+    Callback=function(state)
+        AimConfig.JumpPrediction=state
+    end
+}
+local RunService=game:GetService"RunService"
+local Players=game:GetService"Players"
+local LocalPlayer=Players.LocalPlayer
+local Camera=workspace.CurrentCamera
+ESP_Config={
+    EnableESP=false,
+    ShowBox=true,
+    ShowHealth=true,
+    ShowName=true,
+    ShowDistance=true,
+    ShowTracer=false,
+    ShowSkeleton=false,
+    ShowWeapon=false,
+    WallHack=false,
+    TeamCheck=false,
+    MaxDrawDistance=350,
+    BoxThickness=1,
+    TracerThickness=1,
+    SkeletonThickness=2,
+    EnemyColor=Color3 .new(1,0.3,0.3),
+    TeammateColor=Color3 .new(0.3,1,0.3),
+    NPCColor=Color3 .new(1,1,0.2),
+    BoxColor=Color3 .new(1,1,1),
+    TracerColor=Color3 .new(1,0,0),
+    SkeletonColor=Color3 .new(0.2,0.8,1),
+    HealthBarColor=Color3 .new(0,1,0)
+}
+local ESPComponents={}
+local function createESP(player)
+    local box=Drawing.new"Square"
+    box.Visible=false
+    box.Color=ESP_Config.BoxColor
+    box.Thickness=ESP_Config.BoxThickness
+    box.Filled=false
+    local healthBar=Drawing.new"Square"
+    healthBar.Visible=false
+    healthBar.Color=ESP_Config.HealthBarColor
+    healthBar.Thickness=1
+    healthBar.Filled=true
+    local healthBarBackground=Drawing.new"Square"
+    healthBarBackground.Visible=false
+    healthBarBackground.Color=Color3 .new(0,0,0)
+    healthBarBackground.Transparency=0.5
+    healthBarBackground.Thickness=1
+    healthBarBackground.Filled=true
+    local healthBarBorder=Drawing.new"Square"
+    healthBarBorder.Visible=false
+    healthBarBorder.Color=Color3 .new(1,1,1)
+    healthBarBorder.Thickness=1
+    healthBarBorder.Filled=false
+    local healthText=Drawing.new"Text"
+    healthText.Visible=false
+    healthText.Color=Color3 .new(1,1,1)
+    healthText.Size=14
+    healthText.Font=Drawing.Fonts.Monospace
+    healthText.Outline=true
+    healthText.OutlineColor=Color3 .new(0,0,0)
+    local nameText=Drawing.new"Text"
+    nameText.Visible=false
+    nameText.Color=Color3 .new(1,1,1)
+    nameText.Size=16
+    nameText.Font=Drawing.Fonts.Monospace
+    nameText.Outline=true
+    nameText.OutlineColor=Color3 .new(0,0,0)
+    local distanceText=Drawing.new"Text"
+    distanceText.Visible=false
+    distanceText.Color=Color3 .new(1,1,0)
+    distanceText.Size=14
+    distanceText.Font=Drawing.Fonts.Monospace
+    distanceText.Outline=true
+    distanceText.OutlineColor=Color3 .new(0,0,0)
+    local weaponText=Drawing.new"Text"
+    weaponText.Visible=false
+    weaponText.Color=Color3 .new(1,0.5,0)
+    weaponText.Size=14
+    weaponText.Font=Drawing.Fonts.Monospace
+    weaponText.Outline=true
+    weaponText.OutlineColor=Color3 .new(0,0,0)
+    local tracer=Drawing.new"Line"
+    tracer.Visible=false
+    tracer.Color=ESP_Config.TracerColor
+    tracer.Thickness=ESP_Config.TracerThickness
+    local skeletonLines={}
+    local skeletonPoints={}
+    for i=1,15 do
+        skeletonLines[i]=Drawing.new"Line"
+        skeletonLines[i].Visible=false
+        skeletonLines[i].Color=ESP_Config.SkeletonColor
+        skeletonLines[i].Thickness=ESP_Config.SkeletonThickness
+    end
+    skeletonPoints.Head=Drawing.new"Circle"
+    skeletonPoints.Head.Visible=false
+    skeletonPoints.Head.Color=Color3 .new(1,0.5,0)
+    skeletonPoints.Head.Thickness=2
+    skeletonPoints.Head.Filled=true
+    skeletonPoints.Head.Radius=4
+    local lastHealth=100
+    local healthChangeTime=0
+    local smoothHealth=100
+    ESPComponents[player]={
+        box=box,
+        healthBar=healthBar,
+        healthBarBackground=healthBarBackground,
+        healthBarBorder=healthBarBorder,
+        healthText=healthText,
+        nameText=nameText,
+        distanceText=distanceText,
+        weaponText=weaponText,
+        tracer=tracer,
+        skeletonLines=skeletonLines,
+        skeletonPoints=skeletonPoints
+    }
+    local function hideAll()
+        box.Visible=false
+        healthBar.Visible=false
+        healthBarBackground.Visible=false
+        healthBarBorder.Visible=false
+        healthText.Visible=false
+        nameText.Visible=false
+        distanceText.Visible=false
+        weaponText.Visible=false
+        tracer.Visible=false
+        for _,line in pairs(skeletonLines)do
+            line.Visible=false
+        end
+        for _,point in pairs(skeletonPoints)do
+            point.Visible=false
+        end
+    end
+    RunService.RenderStepped:Connect(function()
+        if not ESP_Config.EnableESP then
+            hideAll()
+            return
+        end
+        if not player.Character or not player.Character:FindFirstChild"HumanoidRootPart"or not player.Character:FindFirstChild"Humanoid"or player==LocalPlayer then
+            hideAll()
+            return
+        end
+        if ESP_Config.TeamCheck and player.Team and player.Team==LocalPlayer.Team then
+            hideAll()
+            return
+        end
+        local character=player.Character
+        local rootPart=character:FindFirstChild"HumanoidRootPart"
+        local humanoid=character:FindFirstChild"Humanoid"
+        if not rootPart or not humanoid or humanoid.Health<=0 then
+            hideAll()
+            return
+        end
+        local dist=(rootPart.Position-Camera.CFrame.Position).Magnitude
+        if dist>ESP_Config.MaxDrawDistance then
+            hideAll()
+            return
+        end
+        local rootPos,onScreen=Camera:WorldToViewportPoint(rootPart.Position)
+        local headPos,_=Camera:WorldToViewportPoint(rootPart.Position+Vector3 .new(0,3,0))
+        local legPos,_=Camera:WorldToViewportPoint(rootPart.Position-Vector3 .new(0,3,0))
+        local color=ESP_Config.EnemyColor
+        if ESP_Config.TeamCheck and player.Team and player.Team==LocalPlayer.Team then
+            color=ESP_Config.TeammateColor
+        end
+        local weaponName="\230\151\160\230\173\166\229\153\168"
+        for _,tool in ipairs(character:GetChildren())do
+            if tool:IsA"Tool"then
+                weaponName=tool.Name
+                break
+            end
+        end
+        if ESP_Config.ShowBox and onScreen then
+            box.Size=Vector2 .new(1000/rootPos.Z,headPos.Y-legPos.Y)
+            box.Position=Vector2 .new(rootPos.X-box.Size.X/2,rootPos.Y-box.Size.Y/2)
+            box.Visible=true
+            box.Color=ESP_Config.BoxColor
+            box.Thickness=ESP_Config.BoxThickness
+        else
+            box.Visible=false
+        end
+        if ESP_Config.ShowHealth and onScreen then
+            local healthPercentage=humanoid.Health/humanoid.MaxHealth
+            local barX=headPos.X-25
+            local barY=headPos.Y-20
+            healthBarBackground.Size=Vector2 .new(50,5)
+            healthBarBackground.Position=Vector2 .new(barX,barY)
+            healthBarBackground.Visible=true
+            healthBarBorder.Size=Vector2 .new(50,5)
+            healthBarBorder.Position=Vector2 .new(barX,barY)
+            healthBarBorder.Visible=true
+            smoothHealth=smoothHealth+(humanoid.Health-smoothHealth)*0.1
+            local smoothHP=smoothHealth/humanoid.MaxHealth
+            healthBar.Size=Vector2 .new(50*smoothHP,5)
+            healthBar.Position=Vector2 .new(barX,barY)
+            if smoothHP>=0.8 then
+                healthBar.Color=Color3 .new(0,1,0)
+            elseif smoothHP>=0.5 then
+                healthBar.Color=Color3 .new(1,1,0)
+            elseif smoothHP>=0.2 then
+                healthBar.Color=Color3 .new(1,0.5,0)
+            else
+                healthBar.Color=Color3 .new(1,0,0)
+            end
+            if humanoid.Health~=lastHealth then
+                healthChangeTime=tick()
+                lastHealth=humanoid.Health
+            end
+            if tick()-healthChangeTime<0.5 then
+                healthBar.Color=Color3 .new(1,0,0)
+            end
+            healthBar.Visible=true
+            healthText.Position=Vector2 .new(barX+50+5,barY-5)
+            healthText.Text=math.floor(humanoid.Health).."/"..math.floor(humanoid.MaxHealth)
+            healthText.Color=color
+            healthText.Visible=true
+        else
+            healthBar.Visible=false
+            healthBarBackground.Visible=false
+            healthBarBorder.Visible=false
+            healthText.Visible=false
+        end
+        if ESP_Config.ShowName and onScreen then
+            nameText.Position=Vector2 .new(headPos.X,headPos.Y-35)
+            nameText.Text=player.Name
+            nameText.Color=color
+            nameText.Visible=true
+            if ESP_Config.ShowDistance then
+                distanceText.Position=Vector2 .new(headPos.X,headPos.Y+10)
+                distanceText.Text=math.floor(dist).."m"
+                distanceText.Visible=true
+            else
+                distanceText.Visible=false
+            end
+            if ESP_Config.ShowWeapon then
+                weaponText.Position=Vector2 .new(headPos.X,headPos.Y-50)
+                weaponText.Text=weaponName
+                weaponText.Visible=true
+            else
+                weaponText.Visible=false
+            end
+        else
+            nameText.Visible=false
+            distanceText.Visible=false
+            weaponText.Visible=false
+        end
+        if ESP_Config.ShowTracer then
+            local head=character:FindFirstChild"Head"
+            if head then
+                local hPos,hOnScreen=Camera:WorldToViewportPoint(head.Position)
+                if hOnScreen then
+                    tracer.From=Vector2 .new(Camera.ViewportSize.X/2,0)
+                    tracer.To=Vector2 .new(hPos.X,hPos.Y)
+                    tracer.Visible=true
+                    tracer.Color=ESP_Config.TracerColor
+                    tracer.Thickness=ESP_Config.TracerThickness
+                    if dist<20 then
+                        tracer.Color=Color3 .new(0,1,0)
+                    elseif dist<50 then
+                        tracer.Color=Color3 .new(1,1,0)
+                    else
+                        tracer.Color=ESP_Config.TracerColor
+                    end
+                else
+                    tracer.Visible=false
+                end
+            else
+                tracer.Visible=false
+            end
+        else
+            tracer.Visible=false
+        end
+        if ESP_Config.ShowSkeleton and onScreen then
+            local head=character:FindFirstChild"Head"
+            local torso=character:FindFirstChild"Torso"or character:FindFirstChild"UpperTorso"
+            local leftArm=character:FindFirstChild"Left Arm"or character:FindFirstChild"LeftUpperArm"
+            local rightArm=character:FindFirstChild"Right Arm"or character:FindFirstChild"RightUpperArm"
+            local leftLeg=character:FindFirstChild"Left Leg"or character:FindFirstChild"LeftUpperLeg"
+            local rightLeg=character:FindFirstChild"Right Leg"or character:FindFirstChild"RightUpperLeg"
+            if head and torso and leftArm and rightArm and leftLeg and rightLeg then
+                local hP=Camera:WorldToViewportPoint(head.Position)
+                local tP=Camera:WorldToViewportPoint(torso.Position)
+                local laP=Camera:WorldToViewportPoint(leftArm.Position)
+                local raP=Camera:WorldToViewportPoint(rightArm.Position)
+                local llP=Camera:WorldToViewportPoint(leftLeg.Position)
+                local rlP=Camera:WorldToViewportPoint(rightLeg.Position)
+                skeletonPoints.Head.Position=Vector2 .new(hP.X,hP.Y)
+                skeletonPoints.Head.Visible=true
+                skeletonLines[1].From=Vector2 .new(hP.X,hP.Y)
+                skeletonLines[1].To=Vector2 .new(tP.X,tP.Y)
+                skeletonLines[1].Visible=true
+                skeletonLines[2].From=Vector2 .new(tP.X,tP.Y)
+                skeletonLines[2].To=Vector2 .new(laP.X,laP.Y)
+                skeletonLines[2].Visible=true
+                skeletonLines[3].From=Vector2 .new(tP.X,tP.Y)
+                skeletonLines[3].To=Vector2 .new(raP.X,raP.Y)
+                skeletonLines[3].Visible=true
+                skeletonLines[4].From=Vector2 .new(tP.X,tP.Y)
+                skeletonLines[4].To=Vector2 .new(llP.X,llP.Y)
+                skeletonLines[4].Visible=true
+                skeletonLines[5].From=Vector2 .new(tP.X,tP.Y)
+                skeletonLines[5].To=Vector2 .new(rlP.X,rlP.Y)
+                skeletonLines[5].Visible=true
+                if character:FindFirstChild"LeftLowerArm"then
+                    local pos=Camera:WorldToViewportPoint(character.LeftLowerArm.Position)
+                    skeletonLines[6].From=Vector2 .new(laP.X,laP.Y)
+                    skeletonLines[6].To=Vector2 .new(pos.X,pos.Y)
+                    skeletonLines[6].Visible=true
+                end
+                if character:FindFirstChild"RightLowerArm"then
+                    local pos=Camera:WorldToViewportPoint(character.RightLowerArm.Position)
+                    skeletonLines[7].From=Vector2 .new(raP.X,raP.Y)
+                    skeletonLines[7].To=Vector2 .new(pos.X,pos.Y)
+                    skeletonLines[7].Visible=true
+                end
+                if character:FindFirstChild"LeftLowerLeg"then
+                    local pos=Camera:WorldToViewportPoint(character.LeftLowerLeg.Position)
+                    skeletonLines[8].From=Vector2 .new(llP.X,llP.Y)
+                    skeletonLines[8].To=Vector2 .new(pos.X,pos.Y)
+                    skeletonLines[8].Visible=true
+                end
+                if character:FindFirstChild"RightLowerLeg"then
+                    local pos=Camera:WorldToViewportPoint(character.RightLowerLeg.Position)
+                    skeletonLines[9].From=Vector2 .new(rlP.X,rlP.Y)
+                    skeletonLines[9].To=Vector2 .new(pos.X,pos.Y)
+                    skeletonLines[9].Visible=true
+                end
+            else
+                for _,line in pairs(skeletonLines)do
+                    line.Visible=false
+                end
+                for _,point in pairs(skeletonPoints)do
+                    point.Visible=false
+                end
+            end
+        else
+            for _,line in pairs(skeletonLines)do
+                line.Visible=false
+            end
+            for _,point in pairs(skeletonPoints)do
+                point.Visible=false
+            end
+        end
+    end)
+end
+local function cleanupESP(player)
+    if ESPComponents[player]then
+        local comps=ESPComponents[player]
+        for key,component in pairs(comps)do
+            if typeof(component)=="table"then
+                for _,drawing in pairs(component)do
+                    if typeof(drawing)=="userdata"then
+                        pcall(function()
+                            drawing:Remove()
+                        end)
+                    end
+                end
+            else
+                if typeof(component)=="userdata"then
+                    pcall(function()
+                        component:Remove()
+                    end)
+                end
+            end
+        end
+        ESPComponents[player]=nil
+    end
+end
+for _,player in ipairs(Players:GetPlayers())do
+    if player~=LocalPlayer then
+        createESP(player)
+    end
+end
+Players.PlayerAdded:Connect(function(player)
+    if player~=LocalPlayer then
+        createESP(player)
+    end
+end)
+Players.PlayerRemoving:Connect(function(player)
+    cleanupESP(player)
+end)
+Tabs.ESP:Paragraph{
+    Title="ESP\233\128\143\232\167\134\232\174\190\231\189\174",
+    Desc="Drawing API\233\171\152\230\128\167\232\131\189\233\128\143\232\167\134",
+    ImageSize=22,
+    ThumbnailSize=0
+}
+Tabs.ESP:Toggle{
+    Title="\229\188\128\229\144\175ESP\230\128\187\229\188\128\229\133\179",
+    Desc="\229\133\168\229\177\128\229\144\175\231\148\168\233\128\143\232\167\134",
+    Default=false,
+    Callback=function(state)
+        ESP_Config.EnableESP=state
+        if not state then
+            for _,player in ipairs(Players:GetPlayers())do
+                if player~=LocalPlayer then
+                    if ESPComponents[player]then
+                        for key,component in pairs(ESPComponents[player])do
+                            if typeof(component)=="table"then
+                                for _,drawing in pairs(component)do
+                                    if typeof(drawing)=="userdata"then
+                                        pcall(function()
+                                            drawing.Visible=false
+                                        end)
+                                    end
+                                end
+                            else
+                                if typeof(component)=="userdata"then
+                                    pcall(function()
+                                        component.Visible=false
+                                    end)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\230\152\190\231\164\186\229\164\180\233\161\182\229\144\141\231\167\176",
+    Desc="\231\142\169\229\174\182ID",
+    Default=true,
+    Callback=function(v)
+        ESP_Config.ShowName=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\230\152\190\231\164\186\232\161\128\233\135\143",
+    Default=true,
+    Callback=function(v)
+        ESP_Config.ShowHealth=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\230\152\190\231\164\186\232\183\157\231\166\187",
+    Default=true,
+    Callback=function(v)
+        ESP_Config.ShowDistance=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\230\150\185\230\161\134\233\128\143\232\167\134",
+    Desc="2D\230\150\185\230\161\134",
+    Default=true,
+    Callback=function(v)
+        ESP_Config.ShowBox=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\229\176\132\231\186\191\233\128\143\232\167\134",
+    Desc="\228\187\142\229\177\143\229\185\149\233\161\182\233\131\168",
+    Default=false,
+    Callback=function(v)
+        ESP_Config.ShowTracer=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\233\170\168\230\158\182\233\128\143\232\167\134",
+    Desc="\233\170\168\233\170\188\231\186\191\230\157\161",
+    Default=false,
+    Callback=function(v)
+        ESP_Config.ShowSkeleton=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\230\173\166\229\153\168\230\152\190\231\164\186",
+    Desc="\230\152\190\231\164\186\230\137\139\230\140\129\230\173\166\229\153\168\229\144\141",
+    Default=false,
+    Callback=function(v)
+        ESP_Config.ShowWeapon=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\231\169\191\229\162\153ESP",
+    Desc="\229\162\153\228\189\147\233\129\174\230\140\161\228\190\157\230\151\167\230\152\190\231\164\186",
+    Default=false,
+    Callback=function(v)
+        ESP_Config.WallHack=v
+    end
+}
+Tabs.ESP:Toggle{
+    Title="\229\140\186\229\136\134\233\152\159\229\143\139\233\162\156\232\137\178",
+    Desc="\233\152\159\229\143\139\231\187\191/\230\149\140\228\186\186\231\186\162/NPC\233\187\132",
+    Default=false,
+    Callback=function(v)
+        ESP_Config.TeamCheck=v
+    end
+}
+Tabs.ESP:Slider{
+    Title="ESP\230\156\128\229\164\167\229\143\175\232\167\134\232\183\157\231\166\187",
+    Desc="\232\182\133\229\135\186\232\183\157\231\166\187\228\184\141\230\184\178\230\159\147",
+    Value={
+        Min=50,
+        Max=1000,
+        Default=350
+    },
+    Step=10,
+    IsTextbox=true,
+    Callback=function(val)
+        ESP_Config.MaxDrawDistance=val
+    end
+}
+local FONT_NAME=Drawing.Fonts.Monospace
+local MAX_DISTANCE=1500
+local BOX_THICKNESS=1
+local BOX_SCALE=2.2
+local Players=game:GetService"Players"
+local RunService=game:GetService"RunService"
+local LocalPlayer=Players.LocalPlayer
+local Camera=workspace.CurrentCamera
+local ESPEnabled=false
+local DrawBox=false
+local DrawDistance=false
+local DrawName=false
+local DrawTracer=false
+local DrawHealth=false
+local ESPObjects={}
+local ESP_RenderConn=nil
+local ESP_Initialized=false
+local function WorldToScreen(worldPos)
+    local screenPos,onScreen=Camera:WorldToViewportPoint(worldPos)
+    if not onScreen then
+        return nil
+    end
+    return Vector2 .new(screenPos.X,screenPos.Y)
+end
+local function GetCharacterData(player)
+    local char=player.Character
+    if not char then
+        return nil
+    end
+    local humanoid=char:FindFirstChildOfClass"Humanoid"
+    local root=char:FindFirstChild"HumanoidRootPart"or char:FindFirstChild"UpperTorso"or char:FindFirstChild"Torso"
+    local head=char:FindFirstChild"Head"
+    if not humanoid or not root or not head then
+        return nil
+    end
+    return char,humanoid,root,head
+end
+local function CreateDrawingObjects()
+    local objs={}
+    objs.Box=Drawing.new"Square"
+    objs.Box.Filled=false
+    objs.Box.Transparency=1
+    objs.Name=Drawing.new"Text"
+    objs.Name.Size=16
+    objs.Name.Center=true
+    objs.Name.Outline=true
+    objs.Name.Font=FONT_NAME
+    objs.Distance=Drawing.new"Text"
+    objs.Distance.Size=14
+    objs.Distance.Center=true
+    objs.Distance.Outline=true
+    objs.Distance.Font=FONT_NAME
+    objs.Health=Drawing.new"Text"
+    objs.Health.Size=14
+    objs.Health.Center=true
+    objs.Health.Outline=true
+    objs.Health.Font=FONT_NAME
+    objs.Tracer=Drawing.new"Line"
+    objs.Tracer.Thickness=1
+    objs.Tracer.Transparency=0.5
+    return objs
+end
+local function DestroyDrawingObjects(objs)
+    if not objs then
+        return
+    end
+    for _,obj in pairs(objs)do
+        if obj and obj.Remove then
+            pcall(function()
+                obj:Remove()
+            end)
+        end
+    end
+end
+local function UpdatePlayerESP(player,objs)
+    if player==LocalPlayer then
+        return
+    end
+    local char,humanoid,root,head=GetCharacterData(player)
+    if not char or not humanoid or humanoid.Health<=0 then
+        for _,obj in pairs(objs)do
+            obj.Visible=false
+        end
+        return
+    end
+    local distance=(Camera.CFrame.Position-root.Position).Magnitude
+    if distance>MAX_DISTANCE then
+        for _,obj in pairs(objs)do
+            obj.Visible=false
+        end
+        return
+    end
+    local headScreen=WorldToScreen(head.Position+Vector3 .new(0,0.5,0))
+    local rootScreen=WorldToScreen(root.Position)
+    if not headScreen or not rootScreen then
+        for _,obj in pairs(objs)do
+            obj.Visible=false
+        end
+        return
+    end
+    local height=math.abs(headScreen.Y-rootScreen.Y)*BOX_SCALE
+    local width=height*0.65
+    height=math.max(height,15)
+    width=math.max(width,10)
+    local topLeft=Vector2 .new(headScreen.X-width/2,headScreen.Y-height*0.2)
+    local bottomRight=Vector2 .new(headScreen.X+width/2,topLeft.Y+height)
+    if DrawBox then
+        objs.Box.Visible=true
+        objs.Box.Size=bottomRight-topLeft
+        objs.Box.Position=topLeft
+        objs.Box.Thickness=BOX_THICKNESS
+        local healthPercent=humanoid.Health/humanoid.MaxHealth
+        if healthPercent>0.5 then
+            objs.Box.Color=Color3 .fromRGB(0,255,0)
+        elseif healthPercent>0.25 then
+            objs.Box.Color=Color3 .fromRGB(255,165,0)
+        else
+            objs.Box.Color=Color3 .fromRGB(255,0,0)
+        end
+    else
+        objs.Box.Visible=false
+    end
+    if DrawName then
+        objs.Name.Visible=true
+        objs.Name.Text=player.Name
+        objs.Name.Color=Color3 .fromRGB(255,255,255)
+        objs.Name.Position=Vector2 .new(headScreen.X,topLeft.Y-16-2)
+    else
+        objs.Name.Visible=false
+    end
+    if DrawDistance then
+        objs.Distance.Visible=true
+        objs.Distance.Text=string.format("[%d m]",math.floor(distance))
+        objs.Distance.Color=Color3 .fromRGB(200,200,200)
+        objs.Distance.Position=Vector2 .new(headScreen.X,bottomRight.Y+2)
+    else
+        objs.Distance.Visible=false
+    end
+    if DrawHealth then
+        objs.Health.Visible=true
+        objs.Health.Text=string.format("HP: %d/%d",math.floor(humanoid.Health),math.floor(humanoid.MaxHealth))
+        objs.Health.Color=Color3 .fromRGB(0,255,0)
+        objs.Health.Position=Vector2 .new(headScreen.X,bottomRight.Y+16+2)
+    else
+        objs.Health.Visible=false
+    end
+    if DrawTracer then
+        objs.Tracer.Visible=true
+        objs.Tracer.From=Vector2 .new(Camera.ViewportSize.X/2,0)
+        objs.Tracer.To=Vector2 .new(headScreen.X,bottomRight.Y)
+        objs.Tracer.Color=Color3 .fromRGB(255,255,255)
+    else
+        objs.Tracer.Visible=false
+    end
+end
+local function InitPlayer(player)
+    if player==LocalPlayer then
+        return
+    end
+    if ESPObjects[player]then
+        DestroyDrawingObjects(ESPObjects[player])
+    end
+    ESPObjects[player]=CreateDrawingObjects()
+end
+Tabs.ESPP:Button{
+    Title="\229\136\157\229\167\139\229\140\150ESP",
+    Callback=function()
+        if ESP_Initialized then
+            print"\226\154\160\239\184\143 ESP\229\183\178\231\187\143\229\136\157\229\167\139\229\140\150\239\188\140\230\151\160\233\156\128\233\135\141\229\164\141\231\130\185\229\135\187"
+            return
+        end
+        ESP_Initialized=true
+        for _,player in ipairs(Players:GetPlayers())do
+            InitPlayer(player)
+        end
+        Players.PlayerAdded:Connect(InitPlayer)
+        Players.PlayerRemoving:Connect(function(player)
+            if ESPObjects[player]then
+                DestroyDrawingObjects(ESPObjects[player])
+                ESPObjects[player]=nil
+            end
+        end)
+        ESP_RenderConn=RunService.RenderStepped:Connect(function()
+            if not ESPEnabled then
+                return
+            end
+            for player,objs in pairs(ESPObjects)do
+                if player.Parent then
+                    pcall(UpdatePlayerESP,player,objs)
+                else
+                    DestroyDrawingObjects(objs)
+                    ESPObjects[player]=nil
+                end
+            end
+        end)
+        print"\226\156\133 ESP\229\136\157\229\167\139\229\140\150\229\174\140\230\136\144\239\188\140\232\175\183\228\189\191\231\148\168\228\184\139\230\150\185Toggle\229\188\128\229\133\179\230\142\167\229\136\182\229\138\159\232\131\189"
+    end
+}
+Tabs.ESPP:Toggle{
+    Title="ESP\230\128\187\229\188\128\229\133\179",
+    Value=false,
+    Callback=function(s)
+        ESPEnabled=s
+        print("ESP\230\128\187\229\188\128\229\133\179\239\188\154",s and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")
+        if not s then
+            for _,objs in pairs(ESPObjects)do
+                for _,obj in pairs(objs)do
+                    obj.Visible=false
+                end
+            end
+        end
+    end
+}
+Tabs.ESPP:Toggle{
+    Title="\231\142\169\229\174\182\230\150\185\230\161\134",
+    Value=false,
+    Callback=function(s)
+        DrawBox=s
+        print("\231\142\169\229\174\182\230\150\185\230\161\134\239\188\154",s and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")
+    end
+}
+Tabs.ESPP:Toggle{
+    Title="\231\142\169\229\174\182\229\144\141\229\173\151",
+    Value=false,
+    Callback=function(s)
+        DrawName=s
+        print("\231\142\169\229\174\182\229\144\141\229\173\151\239\188\154",s and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")
+    end
+}
+Tabs.ESPP:Toggle{
+    Title="\231\142\169\229\174\182\232\183\157\231\166\187",
+    Value=false,
+    Callback=function(s)
+        DrawDistance=s
+        print("\231\142\169\229\174\182\232\183\157\231\166\187\239\188\154",s and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")
+    end
+}
+Tabs.ESPP:Toggle{
+    Title="\231\148\159\229\145\189\229\128\188",
+    Value=false,
+    Callback=function(s)
+        DrawHealth=s
+        print("\231\148\159\229\145\189\229\128\188\239\188\154",s and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")
+    end
+}
+Tabs.ESPP:Toggle{
+    Title="\229\176\132\231\186\191",
+    Value=false,
+    Callback=function(s)
+        DrawTracer=s
+        print("\229\176\132\231\186\191\239\188\154",s and"\226\156\133\229\188\128\229\144\175"or"\226\157\140\229\133\179\233\151\173")
+    end
+}
+Tabs.ESPP:Slider{
+    Title="\230\156\128\229\164\167\230\184\178\230\159\147\232\183\157\231\166\187",
+    Desc="\232\182\133\232\191\135\232\191\153\228\184\170\232\183\157\231\166\187\231\154\132\231\142\169\229\174\182\229\176\134\228\184\141\231\187\152\229\136\182",
+    Value={
+        Min=500,
+        Max=5000,
+        Default=1500
+    },
+    Step=100,
+    IsTextbox=true,
+    Callback=function(value)
+        MAX_DISTANCE=value
+    end
+}
+Tabs.ESPP:Slider{
+    Title="\230\150\185\230\161\134\229\164\167\229\176\143\229\128\141\230\149\176",
+    Desc="\230\149\176\229\128\188\232\182\138\229\164\167\230\150\185\230\161\134\232\182\138\229\164\167",
+    Value={
+        Min=1.5,
+        Max=3,
+        Default=2.2
+    },
+    Step=0.1,
+    IsTextbox=true,
+    Callback=function(value)
+        BOX_SCALE=value
+    end
+}
+Tabs.ESPP:Slider{
+    Title="\230\150\185\230\161\134\231\186\191\230\157\161\231\178\151\231\187\134",
+    Desc="\230\149\176\229\173\151\232\182\138\229\164\167\231\186\191\230\157\161\232\182\138\231\178\151",
+    Value={
+        Min=1,
+        Max=5,
+        Default=1
+    },
+    Step=1,
+    IsTextbox=true,
+    Callback=function(value)
+        BOX_THICKNESS=value
+    end
+}
+local Players=game:GetService"Players"
+local RunService=game:GetService"RunService"
+local LP=Players.LocalPlayer
+local espEnabled=false
+local COLOR=Color3 .fromRGB(255,50,50)
+local ESP={}
+local espLoop=nil
+local function createESP(player)
+    if player==LP then
+        return
+    end
+    local hl=Instance.new"Highlight"
+    hl.FillTransparency=1
+    hl.OutlineColor=COLOR
+    hl.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+    hl.Enabled=false
+    local bb=Instance.new"BillboardGui"
+    bb.Size=UDim2 .fromOffset(120,30)
+    bb.StudsOffset=Vector3 .new(0,3,0)
+    bb.AlwaysOnTop=true
+    bb.ResetOnSpawn=false
+    bb.Enabled=false
+    local name=Instance.new"TextLabel"
+    name.Size=UDim2 .new(1,0,0,16)
+    name.BackgroundTransparency=1
+    name.TextColor3=Color3 .new(1,1,1)
+    name.TextSize=14
+    name.Font=Enum.Font.GothamBold
+    name.TextStrokeTransparency=0.3
+    name.Text=player.Name
+    name.Parent=bb
+    local bg=Instance.new"Frame"
+    bg.Size=UDim2 .new(0,50,0,3)
+    bg.Position=UDim2 .new(0.5,-25,0,18)
+    bg.BackgroundColor3=Color3 .fromRGB(20,20,20)
+    bg.BorderSizePixel=0
+    bg.Parent=bb
+    local fill=Instance.new"Frame"
+    fill.Size=UDim2 .new(1,0,1,0)
+    fill.BackgroundColor3=Color3 .fromRGB(0,255,80)
+    fill.BorderSizePixel=0
+    fill.Parent=bg
+    ESP[player]={
+        hl=hl,
+        bb=bb,
+        fill=fill
+    }
+end
+local function setup(player)
+    if ESP[player]then
+        ESP[player].hl:Destroy()
+        ESP[player].bb:Destroy()
+        ESP[player]=nil
+    end
+    local char=player.Character
+    if not char then
+        return
+    end
+    createESP(player)
+    local e=ESP[player]
+    if not e then
+        return
+    end
+    local head=char:WaitForChild("Head",5)
+    if head then
+        e.hl.Adornee=char
+        e.hl.Parent=char
+        e.bb.Adornee=head
+        e.bb.Parent=head
+    end
+end
+local function startESP()
+    if espEnabled then
+        return
+    end
+    espEnabled=true
+    for _,p in ipairs(Players:GetPlayers())do
+        if p~=LP then
+            if p.Character then
+                setup(p)
+            end
+            p.CharacterAdded:Connect(function()
+                if espEnabled then
+                    setup(p)
+                end
+            end)
+        end
+    end
+    Players.PlayerAdded:Connect(function(p)
+        if p~=LP then
+            p.CharacterAdded:Connect(function()
+                if espEnabled then
+                    setup(p)
+                end
+            end)
+            if p.Character and espEnabled then
+                setup(p)
+            end
+        end
+    end)
+    Players.PlayerRemoving:Connect(function(p)
+        if ESP[p]then
+            ESP[p].hl:Destroy()
+            ESP[p].bb:Destroy()
+            ESP[p]=nil
+        end
+    end)
+    espLoop=RunService.RenderStepped:Connect(function()
+        if not espEnabled then
+            return
+        end
+        local myChar=LP.Character
+        local myHRP=myChar and myChar:FindFirstChild"HumanoidRootPart"
+        for player,e in pairs(ESP)do
+            local char=player.Character
+            local hum=char and char:FindFirstChildOfClass"Humanoid"
+            local hrp=char and char:FindFirstChild"HumanoidRootPart"
+            local show=hum and hrp and hum.Health>0
+            if show and true and player.Team and player.Team==LP.Team then
+                show=false
+            end
+            if show and myHRP and(myHRP.Position-hrp.Position).Magnitude>1000 then
+                show=false
+            end
+            e.hl.Enabled=show
+            e.bb.Enabled=show
+            if show then
+                local r=math.clamp(hum.Health/math.max(hum.MaxHealth,1),0,1)
+                e.fill.Size=UDim2 .new(r,0,1,0)
+                e.fill.BackgroundColor3=Color3 .fromHSV(r*0.33,1,1)
+            end
+        end
+    end)
+end
+local function stopESP()
+    espEnabled=false
+    if espLoop then
+        espLoop:Disconnect()
+        espLoop=nil
+    end
+    for p,e in pairs(ESP)do
+        e.hl:Destroy()
+        e.bb:Destroy()
+    end
+    table.clear(ESP)
+end
+Tabs.pg:Toggle{
+    Title="ESP\229\134\133\233\128\143",
+    Default=false,
+    Callback=function(state)
+        if state then
+            startESP()
+        else
+            stopESP()
+        end
+    end
+}
+Tabs.wb:Button{
+    Title="\230\163\128\230\159\165\229\133\168\229\177\128\231\156\139\230\156\137\228\186\186\229\129\183\229\144\131\229\141\176\233\146\158\230\156\186\230\178\161\230\156\137",
+    Callback=function()
+        local function createMoneyPrinterESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0,0.8,0.2)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(0.3,1,0.3)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,180,0,40)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\230\156\137\228\186\186\229\156\168\229\129\183\229\144\131\229\141\176\233\146\158\230\156\186 MoneyPrinter"
+            textLabel.TextColor3=Color3 .new(0.3,1,0.3)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\146\176 MoneyPrinter \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllMoneyPrinters()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="MoneyPrinter"then
+                    createMoneyPrinterESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllMoneyPrinters()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 MoneyPrinter")
+        print"\226\156\133 MoneyPrinter \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\231\187\191\232\137\178)"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="MoneyPrinter"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createMoneyPrinterESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 MoneyPrinter")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(0.1)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="MoneyPrinter"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createMoneyPrinterESP(newObj)
+                    print"\240\159\146\176 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 MoneyPrinter!"
+                end
+            end
+        end)
+        print"\226\156\133 \229\133\168\229\155\190 MoneyPrinter\239\188\136\229\141\176\233\146\158\230\156\186\239\188\137\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+local wbSec1=Tabs.wb:Section{
+    Title="\229\143\152\229\141\150\231\137\169"
+}
+wbSec1:Button{
+    Title="\233\135\145\229\157\151",
+    Callback=function()
+        local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+        if not gizmos then
+            warn"Gizmos\228\184\141\229\173\152\229\156\168"
+            return
+        end
+        local function isGoldBar(obj)
+            return obj.Name=="Gold Bar"
+        end
+        local function createGoldBarESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0.8,0)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(1,1,0)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,160,0,50)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=1000
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\233\135\145\229\157\151 "..obj.Name
+            textLabel.TextColor3=Color3 .new(1,0.8,0)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root and obj:IsA"BasePart"then
+                        local dist=(root.Position-obj.Position).Magnitude
+                        distLabel.Text=string.format(" %.1fm",dist)
+                    elseif root and obj:IsA"Model"and obj.PrimaryPart then
+                        local dist=(root.Position-obj.PrimaryPart.Position).Magnitude
+                        distLabel.Text=string.format(" %.1fm",dist)
+                    end
+                end)
+            end
+            print"\226\173\144 Gold Bar \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchGoldBar(parent)
+            local count=0
+            for _,obj in ipairs(parent:GetChildren())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and isGoldBar(obj)then
+                    createGoldBarESP(obj)
+                    count=count+1
+                end
+                if obj:IsA"Folder"or obj:IsA"Model"then
+                    count=count+searchGoldBar(obj)
+                end
+            end
+            return count
+        end
+        local total=searchGoldBar(gizmos)
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 Gold Bar")
+        gizmos.DescendantAdded:Connect(function(newObj)
+            task.wait(0.1)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and isGoldBar(newObj)then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createGoldBarESP(newObj)
+                    print"\226\173\144 \230\150\176\229\162\158 Gold Bar"
+                end
+            end
+        end)
+        print"\226\156\133 Gold Bar \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168\239\188\136\228\187\133\231\178\190\231\161\174\229\140\185\233\133\141\239\188\137"
+    end
+}
+wbSec1:Button{
+    Title="BTCESP",
+    Callback=function()
+        local function createBitcoinESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0.6,0)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(1,0.8,0.2)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,160,0,40)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\230\175\148\231\137\185\229\184\129 Bitcoin"
+            textLabel.TextColor3=Color3 .new(1,0.7,0.1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\226\130\191 Bitcoin \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllBitcoin()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="Bitcoin"then
+                    createBitcoinESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllBitcoin()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 Bitcoin")
+        print"\226\156\133 Bitcoin \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\230\169\153\232\137\178)"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="Bitcoin"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createBitcoinESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 Bitcoin")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(5)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="Bitcoin"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createBitcoinESP(newObj)
+                    print"\226\130\191 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 Bitcoin!"
+                end
+            end
+        end)
+        print"\226\156\133 \229\133\168\229\155\190 Bitcoin \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+wbSec1:Button{
+    Title="\231\180\171\229\174\157\231\159\179",
+    Callback=function()
+        local function createGemESP(obj,color,icon)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=color
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=color
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,200,0,55)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text=icon.." "..obj.Name
+            textLabel.TextColor3=color
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print("\240\159\146\142\231\180\171\229\174\157\231\159\179 "..obj.Name.." \229\183\178\230\160\135\232\174\176!")
+        end
+        local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+        if not gizmos then
+            warn"Gizmos\228\184\141\229\173\152\229\156\168"
+            return
+        end
+        local gemColors={
+            ["Sapphire"]={
+                color=Color3 .new(0.6,0,1),
+                icon="\240\159\146\142"
+            }
+        }
+        local function scanAllGems()
+            local count=0
+            for _,obj in ipairs(gizmos:GetChildren())do
+                local gemInfo=gemColors[obj.Name]
+                if gemInfo and(obj:IsA"Model"or obj:IsA"BasePart")then
+                    createGemESP(obj,gemInfo.color,gemInfo.icon)
+                    count=count+1
+                end
+            end
+            print("\226\156\133 \229\183\178\230\160\135\232\174\176 "..count.." \228\184\170\229\174\157\231\159\179")
+        end
+        scanAllGems()
+        spawn(function()
+            while true do
+                wait(5)
+                for _,obj in ipairs(gizmos:GetChildren())do
+                    local gemInfo=gemColors[obj.Name]
+                    if gemInfo and(obj:IsA"Model"or obj:IsA"BasePart")then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createGemESP(obj,gemInfo.color,gemInfo.icon)
+                        end
+                    end
+                end
+            end
+        end)
+        print"\226\156\133 \230\137\128\230\156\137\229\174\157\231\159\179\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"
+    end
+}
+wbSec1:Button{
+    Title="\228\191\157\233\153\169\231\174\177",
+    Callback=function()
+        local function createSafeDoorESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0.7,0)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(1,0.9,0.3)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,160,0,40)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\228\191\157\233\153\169\231\174\177 SafeDoor"
+            textLabel.TextColor3=Color3 .new(1,0.8,0)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\148\144 SafeDoor \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllSafeDoors()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="SafeDoor"then
+                    createSafeDoorESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllSafeDoors()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 SafeDoor")
+        print"\226\156\133 SafeDoor \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\233\135\145\232\137\178)"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="SafeDoor"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createSafeDoorESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 SafeDoor")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(5)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="SafeDoor"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createSafeDoorESP(newObj)
+                    print" \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 SafeDoor!"
+                end
+            end
+        end)
+        print"\226\156\133 SafeDoor \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\229\133\168\229\177\128\230\144\156\231\180\162 + \232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+wbSec1:Button{
+    Title="\231\180\171\230\176\180\230\153\182",
+    Callback=function()
+        local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+        local amethystRing=gizmos and gizmos:FindFirstChild"Amethyst Ring"
+        if not amethystRing then
+            warn"Amethyst Ring \228\184\141\229\173\152\229\156\168"
+            return
+        end
+        local function createAmethystRingESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0.7,0.2,1)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(0.9,0.4,1)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,200,0,55)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text=" \231\180\171\230\176\180\230\153\182"
+            textLabel.TextColor3=Color3 .new(0.8,0.3,1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\146\141 Amethyst Ring \229\183\178\230\160\135\232\174\176!"
+        end
+        createAmethystRingESP(amethystRing)
+        print"\226\156\133 Amethyst Ring \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"
+    end
+}
+local wbSec2=Tabs.wb:Section{
+    Title="\230\158\170\230\162\176\230\152\190\231\164\186"
+}
+wbSec2:Button{
+    Title="AK47",
+    Callback=function()
+        local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+        local pelicanCase=gizmos and gizmos:FindFirstChild"PelicanCase"
+        local ak47=pelicanCase and pelicanCase:FindFirstChild"AK-47"
+        if not ak47 then
+            warn"AK-47 \228\184\141\229\173\152\229\156\168\239\188\140\232\175\183\230\163\128\230\159\165\232\183\175\229\190\132"
+            return
+        end
+        local function createAK47ESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0.2,0)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(1,0,0)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,200,0,35)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="AK-47"
+            textLabel.TextColor3=Color3 .new(1,0.3,0)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print" AK-47 \229\183\178\230\160\135\232\174\176!"
+        end
+        createAK47ESP(ak47)
+        print"\226\156\133 AK-47 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"
+    end
+}
+wbSec2:Button{
+    Title="AUG A1",
+    Callback=function()
+        local function createAUGESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0.6,0.2,1)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(0.8,0.4,1)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,160,0,28)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="AUG A1"
+            textLabel.TextColor3=Color3 .new(0.7,0.3,1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\148\171 AUG A1 \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllAUG()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="AUG A1"then
+                    createAUGESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllAUG()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 AUG A1")
+        print"\226\156\133 AUG A1 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\231\180\171\232\137\178)"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="AUG A1"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createAUGESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 AUG A1")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(5)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="AUG A1"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createAUGESP(newObj)
+                    print"\240\159\148\171 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 AUG A1!"
+                end
+            end
+        end)
+        print"\226\156\133 \229\133\168\229\155\190 AUG A1 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+wbSec2:Button{
+    Title="\231\177\179\230\139\137\231\142\155\231\139\153\231\165\158AWM",
+    Callback=function()
+        local function isInteractable(obj)
+            if obj:FindFirstChild"ClickDetector"then
+                return true
+            end
+            if obj:FindFirstChild"ProximityPrompt"then
+                return true
+            end
+            if obj:FindFirstChild"TouchInterest"then
+                return true
+            end
+            if obj:IsA"Tool"then
+                return true
+            end
+            if obj:FindFirstChild"Handle"then
+                return true
+            end
+            if obj.Parent then
+                if obj.Parent:FindFirstChild"ClickDetector"then
+                    return true
+                end
+                if obj.Parent:FindFirstChild"ProximityPrompt"then
+                    return true
+                end
+                if obj.Parent:FindFirstChild"TouchInterest"then
+                    return true
+                end
+                if obj.Parent:IsA"Tool"then
+                    return true
+                end
+                if obj.Parent:FindFirstChild"Handle"then
+                    return true
+                end
+            end
+            for _,child in ipairs(obj:GetChildren())do
+                if child:IsA"ClickDetector"or child:IsA"ProximityPrompt"or child:IsA"TouchInterest"then
+                    return true
+                end
+                if child.Name=="Handle"then
+                    return true
+                end
+            end
+            return false
+        end
+        local function createAWMESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0.3,0.3,0.3)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(1,0.2,0.2)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,140,0,25)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text=" AWM"
+            textLabel.TextColor3=Color3 .new(1,0.3,0.3)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text="\240\159\147\143 --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\142\175 AWM \229\183\178\230\160\135\232\174\176 (\229\143\175\228\186\164\228\186\146)"
+        end
+        local function searchAndDrawAWM()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="AWM"then
+                    if isInteractable(obj)then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createAWMESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+            end
+            return count
+        end
+        local total=searchAndDrawAWM()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170\229\143\175\228\186\164\228\186\146\231\154\132 AWM")
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="AWM"then
+                        if isInteractable(obj)and not obj:FindFirstChild"ESP_Highlight"then
+                            createAWMESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(0.1)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="AWM"then
+                if isInteractable(newObj)and not newObj:FindFirstChild"ESP_Highlight"then
+                    createAWMESP(newObj)
+                end
+            end
+        end)
+        print"\226\156\133 AWM \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\228\187\133\229\143\175\228\186\164\228\186\146, \229\173\151\228\189\147\229\183\178\232\176\131\229\176\143)"
+    end
+}
+wbSec2:Button{
+    Title="M4A1",
+    Callback=function()
+        local function getM4A1()
+            local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+            local pelicanCase=gizmos and gizmos:FindFirstChild"PelicanCase"
+            return pelicanCase and pelicanCase:FindFirstChild"M4A1"
+        end
+        local function createM4A1ESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0,0.5,1)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(0,1,1)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,200,0,55)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text=" M4A1"
+            textLabel.TextColor3=Color3 .new(0,0.6,1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\148\171 M4A1 \229\183\178\230\160\135\232\174\176!"
+        end
+        local function startLoopESP()
+            local lastM4A1=nil
+            game:GetService"RunService".Heartbeat:Connect(function()
+                local currentM4A1=getM4A1()
+                if currentM4A1 and currentM4A1~=lastM4A1 then
+                    if lastM4A1 then
+                        local oldHighlight=lastM4A1:FindFirstChild"ESP_Highlight"
+                        if oldHighlight then
+                            oldHighlight:Destroy()
+                        end
+                        local oldTag=lastM4A1:FindFirstChild"ESP_Tag"
+                        if oldTag then
+                            oldTag:Destroy()
+                        end
+                    end
+                    createM4A1ESP(currentM4A1)
+                    lastM4A1=currentM4A1
+                end
+                if not currentM4A1 then
+                    lastM4A1=nil
+                end
+            end)
+        end
+        startLoopESP()
+        print"\226\156\133 M4A1 \229\190\170\231\142\175\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168\239\188\136\232\135\170\229\138\168\233\135\141\232\191\158\239\188\137"
+    end
+}
+wbSec2:Button{
+    Title="RPG",
+    Callback=function()
+        local function createRPG7ESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0.5,0)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(1,0.2,0)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,200,0,55)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text=" RPG-7"
+            textLabel.TextColor3=Color3 .new(1,0.5,0)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print" RPG-7 \229\183\178\230\160\135\232\174\176!"
+        end
+        local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+        local pelicanCase=gizmos and gizmos:FindFirstChild"PelicanCase"
+        if not pelicanCase then
+            warn"PelicanCase \228\184\141\229\173\152\229\156\168"
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="RPG-7"then
+                    createRPG7ESP(obj)
+                    count=count+1
+                end
+            end
+            print("\226\156\133 \229\133\168\229\177\128\230\144\156\231\180\162\230\137\190\229\136\176 "..count.." \228\184\170 RPG-7")
+        else
+            local count=0
+            for _,obj in ipairs(pelicanCase:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="RPG-7"then
+                    createRPG7ESP(obj)
+                    count=count+1
+                end
+            end
+            print("\226\156\133 PelicanCase \228\184\173\230\137\190\229\136\176 "..count.." \228\184\170 RPG-7")
+        end
+        print"\226\156\133 RPG-7 \231\129\171\231\174\173\231\173\146\233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"
+        local function rescanRPG7()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="RPG-7"then
+                    if not obj:FindFirstChild"ESP_Highlight"then
+                        createRPG7ESP(obj)
+                        count=count+1
+                    end
+                end
+            end
+            if count>0 then
+                print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 RPG-7")
+            end
+        end
+        game:GetService"RunService".Heartbeat:Connect(function()
+            if not _G.lastRescanTime then
+                _G.lastRescanTime=tick()
+            end
+            if tick()-_G.lastRescanTime>=5 then
+                _G.lastRescanTime=tick()
+                rescanRPG7()
+            end
+        end)
+        print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"
+    end
+}
+wbSec2:Button{
+    Title="ARX-160",
+    Callback=function()
+        local function createARX160ESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0.2,0.5,1)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(0.4,0.7,1)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,160,0,40)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text=" ARX-160"
+            textLabel.TextColor3=Color3 .new(0.3,0.6,1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\148\171 ARX-160 \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllARX160()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="ARX-160"then
+                    createARX160ESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllARX160()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 ARX-160")
+        print"\226\156\133 ARX-160 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\147\157\232\137\178)"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="ARX-160"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createARX160ESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 ARX-160")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(0.1)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="ARX-160"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createARX160ESP(newObj)
+                    print"\240\159\148\171 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 ARX-160!"
+                end
+            end
+        end)
+        print"\226\156\133 \229\133\168\229\155\190 ARX-160 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+wbSec1:Button{
+    Title="\232\180\167\231\137\169\229\141\161",
+    Callback=function()
+        local localContainer=workspace:FindFirstChild"Local"
+        local tools=localContainer and localContainer:FindFirstChild"Tools"
+        local cargoCard=tools and tools:FindFirstChild"Cargo Card"
+        if not cargoCard then
+            warn"Cargo Card \228\184\141\229\173\152\229\156\168\239\188\140\232\175\183\230\163\128\230\159\165\232\183\175\229\190\132: workspace.Local.Tools"
+            return
+        end
+        local function createCargoCardESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0.2,0.4,1)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(0.5,0.7,1)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,220,0,60)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local background=Instance.new"Frame"
+            background.Name="CardBackground"
+            background.Size=UDim2 .new(1,0,1,0)
+            background.BackgroundColor3=Color3 .new(0.1,0.2,0.5)
+            background.BackgroundTransparency=0.2
+            background.BorderSizePixel=2
+            background.BorderColor3=Color3 .new(0.3,0.6,1)
+            background.Parent=billboard
+            local iconLabel=Instance.new"TextLabel"
+            iconLabel.Size=UDim2 .new(0.2,0,1,0)
+            iconLabel.Position=UDim2 .new(0,5,0,0)
+            iconLabel.BackgroundTransparency=1
+            iconLabel.Text="\240\159\146\179"
+            iconLabel.TextColor3=Color3 .new(1,1,1)
+            iconLabel.TextScaled=true
+            iconLabel.Font=Enum.Font.GothamBold
+            iconLabel.Parent=billboard
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(0.7,0,0.5,0)
+            textLabel.Position=UDim2 .new(0.2,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\240\159\146\179 Cargo Card"
+            textLabel.TextColor3=Color3 .new(0.5,0.8,1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(0.7,0,0.4,0)
+            distLabel.Position=UDim2 .new(0.2,0,0.55,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text="\240\159\147\143 --m"
+            distLabel.TextColor3=Color3 .new(0.7,0.9,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format("\240\159\147\143 %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\146\179 Cargo Card \229\183\178\230\160\135\232\174\176!"
+        end
+        createCargoCardESP(cargoCard)
+        print"\226\156\133 Cargo Card \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\147\157\232\137\178\229\141\161\231\137\135\230\160\183\229\188\143)"
+        local function rescanCargoCard()
+            local newLocalContainer=workspace:FindFirstChild"Local"
+            local newTools=newLocalContainer and newLocalContainer:FindFirstChild"Tools"
+            local newCargoCard=newTools and newTools:FindFirstChild"Cargo Card"
+            if newCargoCard then
+                if not newCargoCard:FindFirstChild"ESP_Highlight"then
+                    createCargoCardESP(newCargoCard)
+                    print"\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 Cargo Card"
+                end
+            else
+                print"\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: Cargo Card \230\156\170\230\137\190\229\136\176"
+            end
+        end
+        game:GetService"RunService".Heartbeat:Connect(function()
+            if not _G.lastRescanTime then
+                _G.lastRescanTime=tick()
+            end
+            if tick()-_G.lastRescanTime>=5 then
+                _G.lastRescanTime=tick()
+                rescanCargoCard()
+            end
+        end)
+        print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"
+    end
+}
+wbSec1:Button{
+    Title="\231\186\162\229\174\157\231\159\179",
+    Callback=function()
+        local gizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+        if not gizmos then
+            warn"Gizmos \228\184\141\229\173\152\229\156\168"
+            return
+        end
+        local function createRubyESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0,0)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(1,0.3,0.3)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,180,0,55)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\240\159\148\180\231\186\162\229\174\157\231\159\179 Ruby"
+            textLabel.TextColor3=Color3 .new(1,0,0)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\148\180 Ruby \229\183\178\230\160\135\232\174\176!"
+        end
+        local function scanAllRuby()
+            local count=0
+            for _,obj in ipairs(gizmos:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="Ruby"then
+                    createRubyESP(obj)
+                    count=count+1
+                end
+            end
+            print("\226\156\133 \230\137\190\229\136\176 "..count.." \228\184\170 Ruby")
+        end
+        scanAllRuby()
+        print"\226\156\133 Ruby \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"
+        local function rescanRuby()
+            local newGizmos=workspace.Local and workspace.Local:FindFirstChild"Gizmos"
+            if not newGizmos then
+                print"\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: Gizmos \228\184\141\229\173\152\229\156\168"
+                return
+            end
+            local count=0
+            for _,obj in ipairs(newGizmos:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="Ruby"then
+                    if not obj:FindFirstChild"ESP_Highlight"then
+                        createRubyESP(obj)
+                        count=count+1
+                    end
+                end
+            end
+            if count>0 then
+                print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 Ruby")
+            end
+        end
+        game:GetService"RunService".Heartbeat:Connect(function()
+            if not _G.lastRescanTime then
+                _G.lastRescanTime=tick()
+            end
+            if tick()-_G.lastRescanTime>=5 then
+                _G.lastRescanTime=tick()
+                rescanRuby()
+            end
+        end)
+        print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"
+    end
+}
+wbSec1:Button{
+    Title="GPU",
+    Callback=function()
+        print"\240\159\148\141 \229\188\128\229\167\139\230\144\156\231\180\162 GPU..."
+        local function createGPUESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                print("\226\154\160\239\184\143 GPU \229\183\178\230\156\137ESP\239\188\140\232\183\179\232\191\135: "..obj:GetFullName())
+                return
+            end
+            print("\226\156\133 \230\173\163\229\156\168\230\160\135\232\174\176GPU: "..obj:GetFullName())
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0,0.8,1)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(0.3,1,1)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,200,0,55)
+            billboard.StudsOffset=Vector3 .new(0,4,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=0
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\230\152\190\229\141\161 GPU"
+            textLabel.TextColor3=Color3 .new(0.3,0.9,1)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.GothamBold
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".Heartbeat:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print" GPU \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllGPUs()
+            local count=0
+            print"\240\159\148\141 \230\173\163\229\156\168\230\137\171\230\143\143 workspace..."
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="GPU"then
+                    print("\240\159\147\141 \230\137\190\229\136\176GPU: "..obj:GetFullName())
+                    createGPUESP(obj)
+                    count=count+1
+                end
+            end
+            if count==0 then
+                print"\226\157\140 \230\178\161\230\156\137\230\137\190\229\136\176\228\187\187\228\189\149 GPU!"
+                print"\240\159\146\161 \230\143\144\231\164\186: \230\163\128\230\159\165\231\137\169\229\147\129\229\144\141\231\167\176\230\152\175\229\144\166\230\173\163\231\161\174\239\188\140\230\152\175\229\144\166\229\156\168\229\173\144\230\150\135\228\187\182\229\164\185\228\184\173"
+            else
+                print("\226\156\133 \230\137\190\229\136\176 "..count.." \228\184\170 GPU")
+            end
+            return count
+        end
+        local total=searchAllGPUs()
+        local function rescanGPU()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="GPU"then
+                    if not obj:FindFirstChild"ESP_Highlight"then
+                        createGPUESP(obj)
+                        count=count+1
+                    end
+                end
+            end
+            if count>0 then
+                print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 GPU")
+            end
+        end
+        game:GetService"RunService".Heartbeat:Connect(function()
+            if not _G.lastRescanTime then
+                _G.lastRescanTime=tick()
+            end
+            if tick()-_G.lastRescanTime>=5 then
+                _G.lastRescanTime=tick()
+                rescanGPU()
+            end
+        end)
+        print"\226\156\133 \230\175\143\53\231\167\146\232\135\170\229\138\168\233\135\141\230\150\176\230\144\156\231\180\162\229\183\178\229\144\175\229\138\168"
+    end
+}
+wbSec1:Button{
+    Title="\229\134\155\228\186\139\229\159\186\229\156\176\230\136\152\229\164\135\231\174\177",
+    Callback=function()
+        local function createMilitaryChestESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(0.3,0.5,0.2)
+            highlight.FillTransparency=0.15
+            highlight.OutlineColor=Color3 .new(0.5,0.8,0.3)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,180,0,40)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\229\134\155\233\156\128\231\174\177"
+            textLabel.TextColor3=Color3 .new(0.5,0.8,0.3)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print" \229\134\155\233\156\128\231\174\177 \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllMilitaryChest()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="MilitaryChest"then
+                    createMilitaryChestESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllMilitaryChest()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 \229\134\155\233\156\128\231\174\177")
+        print"\226\156\133 \229\134\155\233\156\128\231\174\177 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\229\134\155\231\187\191\232\137\178)"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="MilitaryChest"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createMilitaryChestESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 \229\134\155\233\156\128\231\174\177")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(5)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="MilitaryChest"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createMilitaryChestESP(newObj)
+                    print"\240\159\142\150\239\184\143 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 \229\134\155\233\156\128\231\174\177!"
+                end
+            end
+        end)
+        print"\226\156\133 \229\133\168\229\155\190 \229\134\155\233\156\128\231\174\177 \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+wbSec1:Button{
+    Title="\231\186\162\229\174\157\231\159\179\230\136\146\230\140\135",
+    Callback=function()
+        local function createRubyRingESP(obj)
+            if obj:FindFirstChild"ESP_Highlight"then
+                return
+            end
+            local highlight=Instance.new"Highlight"
+            highlight.Name="ESP_Highlight"
+            highlight.FillColor=Color3 .new(1,0,0)
+            highlight.FillTransparency=0.2
+            highlight.OutlineColor=Color3 .new(1,0.3,0.3)
+            highlight.OutlineTransparency=0.05
+            highlight.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent=obj
+            local billboard=Instance.new"BillboardGui"
+            billboard.Name="ESP_Tag"
+            billboard.Size=UDim2 .new(0,160,0,40)
+            billboard.StudsOffset=Vector3 .new(0,3,0)
+            billboard.AlwaysOnTop=true
+            billboard.MaxDistance=999999
+            billboard.Parent=obj
+            local textLabel=Instance.new"TextLabel"
+            textLabel.Size=UDim2 .new(1,0,0.5,0)
+            textLabel.Position=UDim2 .new(0,0,0,0)
+            textLabel.BackgroundTransparency=1
+            textLabel.Text="\231\186\162\229\174\157\231\159\179\230\136\146\230\140\135 Ruby Ring"
+            textLabel.TextColor3=Color3 .new(1,0.2,0.2)
+            textLabel.TextScaled=true
+            textLabel.Font=Enum.Font.GothamBold
+            textLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            textLabel.TextStrokeTransparency=0.3
+            textLabel.Parent=billboard
+            local distLabel=Instance.new"TextLabel"
+            distLabel.Size=UDim2 .new(1,0,0.5,0)
+            distLabel.Position=UDim2 .new(0,0,0.5,0)
+            distLabel.BackgroundTransparency=1
+            distLabel.Text=" --m"
+            distLabel.TextColor3=Color3 .new(1,1,1)
+            distLabel.TextScaled=true
+            distLabel.Font=Enum.Font.Gotham
+            distLabel.TextStrokeColor3=Color3 .new(0,0,0)
+            distLabel.TextStrokeTransparency=0.3
+            distLabel.Parent=billboard
+            local player=game.Players.LocalPlayer
+            if player and player.Character then
+                game:GetService"RunService".RenderStepped:Connect(function()
+                    local root=player.Character and player.Character:FindFirstChild"HumanoidRootPart"
+                    if root then
+                        local position=nil
+                        if obj:IsA"BasePart"then
+                            position=obj.Position
+                        elseif obj:IsA"Model"and obj.PrimaryPart then
+                            position=obj.PrimaryPart.Position
+                        elseif obj:IsA"Model"then
+                            local parts=obj:GetDescendants()
+                            for _,part in ipairs(parts)do
+                                if part:IsA"BasePart"then
+                                    position=part.Position
+                                    break
+                                end
+                            end
+                        end
+                        if position then
+                            local dist=(root.Position-position).Magnitude
+                            distLabel.Text=string.format(" %.1fm",dist)
+                        end
+                    end
+                end)
+            end
+            print"\240\159\146\141 Ruby Ring \229\183\178\230\160\135\232\174\176!"
+        end
+        local function searchAllRubyRings()
+            local count=0
+            for _,obj in ipairs(workspace:GetDescendants())do
+                if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="Ruby Ring"then
+                    createRubyRingESP(obj)
+                    count=count+1
+                end
+            end
+            return count
+        end
+        local total=searchAllRubyRings()
+        print("\226\156\133 \230\137\190\229\136\176 "..total.." \228\184\170 Ruby Ring")
+        print"\226\156\133 Ruby Ring \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168"
+        spawn(function()
+            while true do
+                wait(5)
+                local count=0
+                for _,obj in ipairs(workspace:GetDescendants())do
+                    if(obj:IsA"BasePart"or obj:IsA"Model")and obj.Name=="Ruby Ring"then
+                        if not obj:FindFirstChild"ESP_Highlight"then
+                            createRubyRingESP(obj)
+                            count=count+1
+                        end
+                    end
+                end
+                if count>0 then
+                    print("\240\159\148\132 \233\135\141\230\150\176\230\144\156\231\180\162: \230\137\190\229\136\176\229\185\182\230\160\135\232\174\176 "..count.." \228\184\170 Ruby Ring")
+                end
+            end
+        end)
+        workspace.DescendantAdded:Connect(function(newObj)
+            task.wait(5)
+            if(newObj:IsA"BasePart"or newObj:IsA"Model")and newObj.Name=="Ruby Ring"then
+                if not newObj:FindFirstChild"ESP_Highlight"then
+                    createRubyRingESP(newObj)
+                    print"\240\159\146\141 \230\163\128\230\181\139\229\136\176\230\150\176\231\154\132 Ruby Ring!"
+                end
+            end
+        end)
+        print"\226\156\133 \229\133\168\229\155\190 Ruby Ring \233\128\143\232\167\134\229\183\178\229\144\175\229\138\168 (\232\135\170\229\138\168\229\136\183\230\150\176)"
+    end
+}
+Tabs.qq:Button{
+    Title="\229\136\160\233\153\164\231\130\174\229\143\176",
+    Callback=function()
+        local turret=workspace:FindFirstChild"Local"
+        if turret then
+            turret=turret:FindFirstChild"Gizmos"
+            if turret then
+                turret=turret:FindFirstChild"Turret"
+                if turret then
+                    turret:Destroy()
+                    print"\229\183\178\229\136\160\233\153\164: workspace.Local.Gizmos.Turret"
+                else
+                    print"\230\156\170\230\137\190\229\136\176: workspace.Local.Gizmos.Turret"
+                end
+            else
+                print"\230\156\170\230\137\190\229\136\176: workspace.Local.Gizmos"
+            end
+        else
+            print"\230\156\170\230\137\190\229\136\176: workspace.Local"
+        end
+        if script then
+            script:Destroy()
+        end
+    end
+}
+Tabs.qq:Button{
+    Title="\229\136\160\233\153\164\231\186\162\229\164\150\231\186\191",
+    Callback=function()
+        local laser=workspace:FindFirstChild"Props"
+        if laser then
+            local laserPart=laser:FindFirstChild"Laser"
+            if laserPart then
+                laserPart:Destroy()
+                print"\229\183\178\229\136\160\233\153\164 workspace.Props.Laser"
+            else
+                print"\230\156\170\230\137\190\229\136\176 workspace.Props.Laser"
+            end
+            local laserAssembly=laser:FindFirstChild"LaserAssembly"
+            if laserAssembly then
+                laserAssembly:Destroy()
+                print"\229\183\178\229\136\160\233\153\164 workspace.Props.LaserAssembly"
+            else
+                print"\230\156\170\230\137\190\229\136\176 workspace.Props.LaserAssembly"
+            end
+            if#laser:GetChildren()==0 then
+                laser:Destroy()
+                print"\229\183\178\229\136\160\233\153\164 workspace.Props\239\188\136\229\183\178\228\184\186\231\169\186\239\188\137"
+            end
+        else
+            print"\230\156\170\230\137\190\229\136\176 workspace.Props"
+        end
+    end
+}
+Tabs.qq:Button{
+    Title="\229\136\160\233\153\164\231\186\162\232\137\178\229\177\143\233\154\156",
+    Callback=function()
+        local laser=workspace:FindFirstChild"Props"
+        if laser then
+            local laserForcefield=laser:FindFirstChild"LaserForcefield"
+            if laserForcefield then
+                laserForcefield:Destroy()
+                print"\229\183\178\229\136\160\233\153\164: workspace.Props.LaserForcefield"
+            else
+                print"\230\156\170\230\137\190\229\136\176: workspace.Props.LaserForcefield"
+            end
+            if#laser:GetChildren()==0 then
+                laser:Destroy()
+                print"\229\183\178\229\136\160\233\153\164: workspace.Props\239\188\136\229\183\178\228\184\186\231\169\186\239\188\137"
+            end
+        else
+            print"\230\156\170\230\137\190\229\136\176: workspace.Props"
+        end
+        if script then
+            script:Destroy()
+        end
+    end
+}
+local burningActive=false
+local burningCoroutine=nil
+Tabs.rsao:Toggle{
+    Title="\231\131\136\231\132\176\230\136\152\229\163\171",
+    Callback=function(state)
+        burningActive=state
+        if burningActive then
+            burningCoroutine=task.spawn(function()
+                local Event=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[75]
+                while burningActive do
+                    Event:FireServer("burning",true)
+                    print" \229\183\178\229\143\145\233\128\129 burning \232\175\183\230\177\130"
+                    task.wait(0.2)
+                end
+            end)
+        else
+            burningActive=false
+        end
+    end
+}
+Tabs.rsao:Button{
+    Title="\229\136\183\229\141\176\233\146\158\230\156\186",
+    Callback=function()
+        local LocalPlayer=game:GetService"Players".LocalPlayer
+        LocalPlayer:Kick"\231\187\153\230\136\145\233\135\141\232\191\155\229\144\167\239\188\140\232\128\129\229\188\159"
+        game:GetService"Players".LocalPlayer:Kick"\230\131\179\229\177\129\229\144\131"
+        pcall(function()
+            local ReplicatedStorage=game:GetService"ReplicatedStorage"
+            local Remote=ReplicatedStorage:FindFirstChild"Remote"
+            if Remote then
+                local PlayerEvent=Remote:FindFirstChild"PlayerEvent"
+                if PlayerEvent then
+                    PlayerEvent:FireServer("kick",LocalPlayer)
+                end
+            end
+        end)
+        game:GetService"TeleportService":Teleport(game.PlaceId,LocalPlayer)
+        task.wait(9)
+        LocalPlayer:Kick"\231\153\158\232\155\164\232\159\134\230\131\179\229\144\131\229\164\169\233\185\133\232\130\137?"
+        print"[\226\156\133] \232\184\162\229\135\186"
+    end
+}
+Tabs.rsao:Button{
+    Title="\229\164\169\233\187\145\49",
+    Callback=function()
+        local Lighting=game:GetService"Lighting"
+        local function setNightClient()
+            Lighting.ClockTime=2
+            Lighting.Brightness=0.45
+            Lighting.Ambient=Color3 .new(0.18,0.18,0.25)
+            Lighting.OutdoorAmbient=Color3 .new(0.16,0.16,0.22)
+            Lighting.GlobalShadows=true
+            local skybox=Lighting:FindFirstChild"Realistic Skybox"
+            if skybox then
+                skybox.TimeOfDay=0.15
+                skybox.StarsVisible=true
+                skybox.MoonBrightness=1
+                skybox.SunBrightness=0
+            end
+        end
+        task.spawn(function()
+            while task.wait(0.3)do
+                setNightClient()
+            end
+        end)
+        print"\228\191\174\229\164\141\232\183\175\231\129\175\226\128\145\229\164\156\230\153\154\229\183\178\229\138\160\232\189\189"
+    end
+}
+Tabs.rsao:Button{
+    Title="\229\164\169\233\187\145\50",
+    Callback=function()
+        local Lighting=game:GetService"Lighting"
+        Lighting.ClockTime=2
+        Lighting.Brightness=0.35
+        Lighting.Ambient=Color3 .new(0.12,0.12,0.18)
+        Lighting.OutdoorAmbient=Color3 .new(0.1,0.1,0.15)
+        Lighting.GlobalShadows=true
+        local skybox=Lighting:FindFirstChild"Realistic Skybox"
+        if skybox then
+            skybox.TimeOfDay=0.15
+            skybox.StarsVisible=true
+            skybox.MoonBrightness=1
+            skybox.SunBrightness=0
+        end
+    end
+}
+local gmSec1=Tabs.gm:Section{
+    Title="\232\180\173\228\185\176\229\141\150\229\159\186\231\161\128\231\137\169\229\147\129\229\137\141\230\143\144\229\191\133\233\161\187\229\156\168\229\187\186\231\173\145\232\140\131\229\155\180\229\134\133"
+}
+Tabs.gm:Button{
+    Title="\229\165\165\232\143\178\229\189\147\233\147\186\229\135\186\229\148\174\231\137\169\229\147\129\229\190\170\231\142\175\229\148\174\229\141\150",
+    Callback=function()
+        local Event=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[144]
+        local function ofyLoop()
+            while wait(0.2)do
+                pcall(function()
+                    Event:InvokeServer"Ofy"
+                    print"\226\156\133 Ofy \229\183\178\230\137\167\232\161\140"
+                end)
+            end
+        end
+        spawn(ofyLoop)
+        print"\240\159\148\132 Ofy \229\190\170\231\142\175\229\183\178\229\144\175\229\138\168\239\188\136\233\151\180\233\154\148\48.5\231\167\146\239\188\137"
+    end
+}
+Tabs.gm:Button{
+    Title="C4\226\158\150\50\53\48\229\133\131",
+    Callback=function()
+        local Event=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[190]
+        Event:InvokeServer{
+            itemName="C4",
+            itemType="Ammo",
+            ammoToBuyIndex=1,
+            categoryName="Explosives",
+            shopName="Guns"
+        }
+    end
+}
+Tabs.gm:Button{
+    Title="\229\190\170\231\142\175\232\161\165\229\133\133\229\188\185\232\141\175",
+    Callback=function()
+        local Event=game:GetService"ReplicatedStorage".Shared.Core.Network:GetChildren()[190]
+        local function refillLoop()
+            while wait(0.2)do
+                pcall(function()
+                    Event:InvokeServer{
+                        refillAll=true
+                    }
+                    print"\226\156\133 \229\188\185\232\141\175\229\183\178\232\161\165\229\133\133"
+                end)
+            end
+        end
+        spawn(refillLoop)
+        print"\240\159\148\132 \229\188\185\232\141\175\229\190\170\231\142\175\232\161\165\229\133\133\229\183\178\229\144\175\229\138\168\239\188\136\233\151\180\233\154\148\48.5\231\167\146\239\188\137"
+    end
+}
+Window:SelectTab(1)
