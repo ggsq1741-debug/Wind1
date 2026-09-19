@@ -295,7 +295,7 @@ WindUI:Notify({
 })
 local Popup = WindUI:Popup({
     Title = "hi你好👋",
-    Content = "无话可说",
+    Content = "更新了实体飞行，不会再有拉回情况，完美绕过，取消了坠落状态还有自动化光环",
     Buttons = {
         {
             Title = "Get Started",
@@ -348,7 +348,7 @@ local Window = WindUI:CreateWindow({
     SideBarWidth = 130,
     HideSearchBar = false,
     ScrollBarEnabled = true,
-    Background = "https://raw.githubusercontent.com/ggsq1741-debug/BAL/refs/heads/main/080ac076-1d58-4f85-9683-17bf5f1aa0b7.png",
+    Background = "https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/33490c2c-02d8-4dc8-b24a-0e0478a45b8f.png",
     BackgroundImageTransparency = 0.4,
     User = { Enabled = true },
     ToggleKey = Enum.KeyCode.F,
@@ -358,6 +358,7 @@ print("窗口标题应为绿色，控件标题应为白色")
 local Tabs = {
     wj = Window:Tab({ Title = "玩家", Icon = "users" }),
     jx = Window:Tab({ Title = "远程击杀+雷达", Icon = "crown" }), 
+    gh = Window:Tab({ Title = "光环", Icon = "crown" }),
     bot = Window:Tab({ Title = "瞄准", Icon = "target" }),
     ESP = Window:Tab({ Title = "ESP", Icon = "eye" }),
     ESPP = Window:Tab({ Title = "ESP2", Icon = "eye" }),
@@ -423,7 +424,7 @@ LocalPlayer.CharacterAdded:Connect(updateChar)
 task.spawn(updateChar)
 Tabs.wj:Code({
     Title = "你好",
-    Code = "纸飞机@you25801"
+    Code = "QQ售后1125514261"
 })
 Tabs.wj:Input({
     Title = "超级快跑",
@@ -448,167 +449,128 @@ Tabs.wj:Slider({
         updateChar()
     end
 })
-local Players = game:GetService("Players")
-local RunService = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
+-- ==================== 玩家页：飞行（摇杆/键盘控制） ====================
+local FlyingEnabled = false
+local FlightSpeed = 180
+local CurrentAO, CurrentLV, CurrentMoverAttachment, FlightConnection
+local flyHumanoid = nil
 
-local lp = Players.LocalPlayer
-local camera = workspace.CurrentCamera
-
-local isWarpFlying = false
-local flySpeed = 50
-
-local MICRO_STEP_INTERVAL = 0.001
-local MAX_STEP_SIZE = 10
-
-local hrp, hum
-local ControlModule = require(
-    lp.PlayerScripts:WaitForChild("PlayerModule")
-):GetControls()
-
-local microStepConn, healthLockConn, diedConn
-local originalCanCollide = {}
-local descendantConnection
-
-local function clearFlyRes()
-    pcall(function()
-        for part, state in pairs(originalCanCollide) do
-            if part and part.Parent then
-                part.CanCollide = state
-            end
-        end
-        table.clear(originalCanCollide)
-
-        if descendantConnection then descendantConnection:Disconnect() end
-        if microStepConn then microStepConn:Cancel() end
-        if healthLockConn then healthLockConn:Cancel() end
-        if diedConn then diedConn:Disconnect() end
-
-        if hrp and hum then
-            hum:ChangeState(Enum.HumanoidStateType.Running)
-        end
-    end)
+local function getFlyControlModule()
+    local PlayerModule = LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule")
+    return require(PlayerModule:WaitForChild("ControlModule"))
 end
 
-local function microStepLoop()
-    local targetPos = hrp.Position
-    local lastTime = tick()
+local function setupFlyBodyMovers(character)
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    local humanoid = character:WaitForChild("Humanoid")
+    local moverParent = workspace:FindFirstChildOfClass("Terrain") or workspace
 
-    while isWarpFlying do
-        local now = tick()
-        local dt = now - lastTime
-        lastTime = now
+    local moverAttachment = Instance.new("Attachment", hrp)
+    moverAttachment.Name = "FlightAttachment"
 
-        local mv = ControlModule:GetMoveVector()
-        local cf = camera.CFrame
+    local alignOrientation = Instance.new("AlignOrientation")
+    alignOrientation.Mode = Enum.OrientationAlignmentMode.OneAttachment
+    alignOrientation.RigidityEnabled = true
+    alignOrientation.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+    alignOrientation.CFrame = hrp.CFrame
+    alignOrientation.Attachment0 = moverAttachment
+    alignOrientation.Parent = moverParent
 
-        local moveDir =
-            (cf.LookVector * -mv.Z) +
-            (cf.RightVector * mv.X)
+    local linearVelocity = Instance.new("LinearVelocity")
+    linearVelocity.VectorVelocity = Vector3.new(0, 0, 0)
+    linearVelocity.MaxForce = 9e9
+    linearVelocity.Attachment0 = moverAttachment
+    linearVelocity.Parent = moverParent
 
-        local vertical = 0
-        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then
-            vertical = 1
-        elseif UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
-            vertical = -1
+    return alignOrientation, linearVelocity, moverAttachment, humanoid
+end
+
+local function startFlying()
+    if FlyingEnabled then return end
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    if not character then return end
+
+    CurrentAO, CurrentLV, CurrentMoverAttachment, flyHumanoid = setupFlyBodyMovers(character)
+    FlyingEnabled = true
+
+    local controlModule = getFlyControlModule()
+
+    FlightConnection = RunService.Heartbeat:Connect(function()
+        if not FlyingEnabled or not CurrentLV or not CurrentAO then
+            if FlightConnection then
+                FlightConnection:Disconnect()
+                FlightConnection = nil
+            end
+            return
         end
 
-        local totalDelta =
-            (moveDir + Vector3.new(0, vertical, 0)) *
-            flySpeed * dt
+        local moveVector = controlModule:GetMoveVector()
+        local cam = workspace.CurrentCamera
 
-        targetPos += totalDelta
+        local F, B, L, R, Q, E = 0, 0, 0, 0, 0, 0
+        F = -moveVector.Z
+        B = moveVector.Z
+        L = -moveVector.X
+        R = moveVector.X
 
-        local currentPos = hrp.Position
-        local remaining = targetPos - currentPos
-        local distance = remaining.Magnitude
+        if UserInputService:IsKeyDown(Enum.KeyCode.W) then F = 1 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.S) then B = 1 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.A) then L = 1 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.D) then R = 1 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then Q = 1 end
+        if UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then E = 1 end
 
-        if distance > 0 then
-            local steps = math.ceil(distance / MAX_STEP_SIZE)
-            local stepVec = remaining / steps
+        local flightVector = (cam.CFrame.LookVector * (F - B) +
+                              cam.CFrame.RightVector * (R - L) +
+                              Vector3.new(0, 1, 0) * (Q - E))
 
-            for i = 1, steps do
-                if not isWarpFlying then break end
-                currentPos += stepVec
-                hrp.CFrame =
-                    CFrame.new(currentPos) * hrp.CFrame.Rotation
-                hrp.Velocity = Vector3.zero
-            end
+        if flightVector.Magnitude > 0 then
+            CurrentLV.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+            CurrentLV.VectorVelocity = flightVector.Unit * FlightSpeed
         else
-            hrp.CFrame =
-                CFrame.new(targetPos) * hrp.CFrame.Rotation
-            hrp.Velocity = Vector3.zero
+            CurrentLV.VectorVelocity = Vector3.new(0, 0, 0)
         end
 
-        hum:ChangeState(Enum.HumanoidStateType.Climbing)
-        task.wait(MICRO_STEP_INTERVAL)
-    end
-end
-
-local function healthLockLoop()
-    while isWarpFlying do
-        if hum and hum.Health < hum.MaxHealth then
-            hum.Health = hum.MaxHealth
-        end
-        RunService.Heartbeat:Wait()
-    end
-end
-
-local function onDied()
-    if hum and isWarpFlying then
-        hum.Health = hum.MaxHealth
-        hum:ChangeState(Enum.HumanoidStateType.Running)
-    end
-end
-
-local function startWarpFly()
-    if isWarpFlying then return end
-
-    local char = lp.Character
-    if not char then return end
-
-    hrp = char:FindFirstChild("HumanoidRootPart")
-    hum = char:FindFirstChild("Humanoid")
-    if not hrp or not hum then return end
-
-    for _, part in ipairs(char:GetDescendants()) do
-        if part:IsA("BasePart") then
-            originalCanCollide[part] = part.CanCollide
-            part.CanCollide = false
-        end
-    end
-
-    descendantConnection = char.DescendantAdded:Connect(function(desc)
-        if desc:IsA("BasePart") then
-            originalCanCollide[desc] = desc.CanCollide
-            desc.CanCollide = false
+        CurrentAO.CFrame = workspace.CurrentCamera.CFrame
+        if character and character:FindFirstChild("Humanoid") then
+            character.Humanoid.PlatformStand = true
         end
     end)
 
-    isWarpFlying = true
-    hum:ChangeState(Enum.HumanoidStateType.Climbing)
-
-    microStepConn = task.spawn(microStepLoop)
-    healthLockConn = task.spawn(healthLockLoop)
-    diedConn = hum.Died:Connect(onDied)
+    print("飞行已开启，速度:", FlightSpeed)
 end
 
-local function stopWarpFly()
-    isWarpFlying = false
-    clearFlyRes()
+local function stopFlying()
+    if not FlyingEnabled then return end
+    FlyingEnabled = false
+
+    if FlightConnection then
+        FlightConnection:Disconnect()
+        FlightConnection = nil
+    end
+
+    local character = LocalPlayer.Character
+    if character and character:FindFirstChild("Humanoid") then
+        character.Humanoid.PlatformStand = false
+    end
+
+    if CurrentAO then CurrentAO:Destroy() CurrentAO = nil end
+    if CurrentLV then CurrentLV:Destroy() CurrentLV = nil end
+    if CurrentMoverAttachment then CurrentMoverAttachment:Destroy() CurrentMoverAttachment = nil end
+
+    print("飞行已关闭")
 end
 
--- ===================== WindUI控件 =====================
--- 放到你脚本里随便哪个标签，例如 Tabs.wj（玩家标签）
+-- ==================== WindUI 控件 ====================
 Tabs.wj:Toggle({
-    Title = "灵魂飞行",
-    Desc = "飞行思路来自AF作者秋辞❤️",
+    Title = "飞行模式",
+    Desc = "",
     Default = false,
-    Callback = function(Value)
-        if Value then
-            startWarpFly()
+    Callback = function(v)
+        if v then
+            startFlying()
         else
-            stopWarpFly()
+            stopFlying()
         end
     end
 })
@@ -617,13 +579,13 @@ Tabs.wj:Slider({
     Title = "飞行速度",
     Desc = "",
     Value = {
-        Min = 10,
-        Max = 130 ,
-        Default = 50
+        Min = 50,
+        Max = 400,
+        Default = 180
     },
-    Step = 1,
+    Step = 10,
     Callback = function(val)
-        flySpeed = val
+        FlightSpeed = val
     end
 })
 -- =================== 旋转模块（完全修复版） ===================
@@ -917,6 +879,23 @@ _G.HeadScalerStatus = function()
 end
 
 print("💡 输入 HeadScalerStatus() 查看状态")
+Tabs.wj:Button({
+    Title = "取消坠落状态",
+    Callback = function()
+        local mt = getrawmetatable(game)
+local old = mt.__index
+setreadonly(mt, false)
+
+mt.__index = newcclosure(function(self, key)
+    if (key == "AssemblyLinearVelocity" or key == "Velocity") and self:IsA("BasePart") then
+        return Vector3.new(0, 0, 0)
+    end
+    return old(self, key)
+end)
+
+setreadonly(mt, true)
+    end
+})
 Tabs.wj:Toggle({
     Title = "无限跳",
     Desc = "",
@@ -1322,6 +1301,156 @@ Tabs.jx:Code({
 Tabs.jx:Code({
     Title = "当然你也可以在安全区内击杀玩家",
     Code = "天天开心哦"
+})
+-- ============================================
+-- 服务
+-- ============================================
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Network = game:GetService("ReplicatedStorage").Shared.Core.Network
+
+-- 事件索引
+local Event87   = Network:GetChildren()[87]
+local Event200  = Network:GetChildren()[200]
+local Event156  = Network:GetChildren()[156]
+
+-- ============================================
+-- 找最近敌人（跳过队友）
+-- ============================================
+local function findNearestEnemy()
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    if not hrp then return nil end
+
+    local nearest, nearestDist = nil, math.huge
+    for _, p in ipairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer and p.Character then
+            local hum = p.Character:FindFirstChildOfClass("Humanoid")
+            local tHrp = p.Character:FindFirstChild("HumanoidRootPart")
+            if hum and hum.Health > 0 and tHrp then
+                local skip = false
+                if p.Team and LocalPlayer.Team and p.Team == LocalPlayer.Team then
+                    skip = true
+                end
+                if not skip then
+                    local dist = (tHrp.Position - hrp.Position).Magnitude
+                    if dist < nearestDist then
+                        nearest = p
+                        nearestDist = dist
+                    end
+                end
+            end
+        end
+    end
+    return nearest
+end
+
+-- ============================================
+-- 配置
+-- ============================================
+local Config = {
+    E87_Enabled = false,
+    E87_Interval = 0.1,
+
+    E200_Enabled = false,
+    E200_Interval = 0.1,
+
+    Arrest_Enabled = false,
+    Arrest_Interval = 0.5,
+}
+
+-- ============================================
+-- [87] 循环
+-- ============================================
+task.spawn(function()
+    while true do
+        if Config.E87_Enabled then
+            local enemy = findNearestEnemy()
+            if enemy then
+                pcall(function()
+                    Event87:FireServer(enemy.UserId)
+                end)
+            end
+        end
+        task.wait(Config.E87_Interval)
+    end
+end)
+
+-- ============================================
+-- [200] 循环
+-- ============================================
+task.spawn(function()
+    while true do
+        if Config.E200_Enabled then
+            local enemy = findNearestEnemy()
+            if enemy then
+                pcall(function()
+                    Event200:FireServer(enemy.UserId)
+                end)
+            end
+        end
+        task.wait(Config.E200_Interval)
+    end
+end)
+
+-- ============================================
+-- [156] 逮捕光环
+-- ============================================
+local lastArrest = 0
+
+RunService.Heartbeat:Connect(function()
+    if not Config.Arrest_Enabled then return end
+    local now = tick()
+    if now - lastArrest < Config.Arrest_Interval then return end
+    local enemy = findNearestEnemy()
+    if enemy then
+        pcall(function()
+            Event156:FireServer(enemy.UserId)
+        end)
+        lastArrest = now
+    end
+end)
+
+Tabs.gh:Toggle({
+    Title = "启用救援",
+    Default = false,
+    Callback = function(v) Config.E87_Enabled = v end,
+})
+
+Tabs.gh:Slider({
+    Title = "救援间隔",
+    Value = { Min = 0.05, Max = 2, Default = 0.1 },
+    Step = 0.05,
+    Callback = function(v) Config.E87_Interval = v end,
+})
+
+-- [200] 控件
+Tabs.gh:Toggle({
+    Title = "启用脚踩",
+    Default = false,
+    Callback = function(v) Config.E200_Enabled = v end,
+})
+
+Tabs.gh:Slider({
+    Title = "脚踩间隔",
+    Value = { Min = 0.05, Max = 2, Default = 0.1 },
+    Step = 0.05,
+    Callback = function(v) Config.E200_Interval = v end,
+})
+
+-- 逮捕光环控件
+Tabs.gh:Toggle({
+    Title = "启用逮捕光环",
+    Default = false,
+    Callback = function(v) Config.Arrest_Enabled = v end,
+})
+
+Tabs.gh:Slider({
+    Title = "逮捕间隔",
+    Value = { Min = 0.1, Max = 3, Default = 0.5 },
+    Step = 0.1,
+    Callback = function(v) Config.Arrest_Interval = v end,
 })
 -- ========== WindUI bot标签页UI控件 ==========
 Tabs.bot:Paragraph({
