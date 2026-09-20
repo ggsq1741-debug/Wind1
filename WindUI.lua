@@ -223,7 +223,7 @@ WindUI:Notify{
 }
 local Popup=WindUI:Popup{
     Title="hi\228\189\160\229\165\189\240\159\145\139",
-    Content="\230\155\180\230\150\176\228\186\134\229\174\158\228\189\147\233\163\158\232\161\140\239\188\140\228\184\141\228\188\154\229\134\141\230\156\137\230\139\137\229\155\158\230\131\133\229\134\181\239\188\140\229\174\140\231\190\142\231\187\149\232\191\135\239\188\140\229\143\150\230\182\136\228\186\134\229\157\160\232\144\189\231\138\182\230\128\129\232\191\152\230\156\137\232\135\170\229\138\168\229\140\150\229\133\137\231\142\175",
+    Content="\230\155\180\230\150\176\228\186\134\229\174\158\228\189\147\233\163\158\232\161\140\239\188\140\228\184\141\228\188\154\229\134\141\230\156\137\230\139\137\229\155\158\230\131\133\229\134\181\239\188\140\229\174\140\231\190\142\231\187\149\232\191\135\239\188\140\229\143\150\230\182\136\228\186\134\229\157\160\232\144\189\231\138\182\230\128\129\232\191\152\230\156\137\232\135\170\229\138\168\229\140\150\229\133\137\231\142\175\240\159\145\190\240\159\145\190\230\183\187\229\138\160\228\186\134\233\163\158\232\189\166\229\138\159\232\131\189\239\188\140\232\167\134\232\167\146\233\148\129\229\174\154",
     Buttons={
         {
             Title="Get Started",
@@ -278,6 +278,10 @@ local Tabs={
     wj=Window:Tab{
         Title="\231\142\169\229\174\182",
         Icon="users"
+    },
+    fc=Window:Tab{
+        Title="\228\186\154\230\180\178\232\189\166\231\142\139",
+        Icon="rbxassetid://7733708835"
     },
     jx=Window:Tab{
         Title="\232\191\156\231\168\139\229\135\187\230\157\128+\233\155\183\232\190\190",
@@ -1037,6 +1041,198 @@ local function doCameraAim()
         Camera.CFrame=Camera.CFrame:Lerp(targetCF,s)
     end
 end
+local CamStabState={
+    Enabled=false,
+    Mode="\231\168\179\229\174\154\232\183\159\233\154\143",
+    Smoothness=0.3,
+    LastCFrame=nil,
+    Connection=nil,
+    SubjectConn=nil
+}
+local function CamStab_getCam()
+    return workspace.CurrentCamera
+end
+local function CamStab_restore()
+    local cam=CamStab_getCam()
+    if not cam then
+        return
+    end
+    if CamStabState.SubjectConn then
+        CamStabState.SubjectConn:Disconnect()
+        CamStabState.SubjectConn=nil
+    end
+    local char=LocalPlayer.Character
+    if char then
+        local hum=char:FindFirstChildOfClass"Humanoid"
+        if hum then
+            cam.CameraSubject=hum
+        end
+    end
+    cam.CameraType=Enum.CameraType.Custom
+end
+local function CamStab_start()
+    local cam=CamStab_getCam()
+    if not cam then
+        return
+    end
+    if CamStabState.Connection then
+        CamStabState.Connection:Disconnect()
+        CamStabState.Connection=nil
+    end
+    if CamStabState.SubjectConn then
+        CamStabState.SubjectConn:Disconnect()
+        CamStabState.SubjectConn=nil
+    end
+    if CamStabState.Mode=="\231\168\179\229\174\154\232\183\159\233\154\143"then
+        local function setSub()
+            local char=LocalPlayer.Character
+            if char then
+                local hrp=char:FindFirstChild"HumanoidRootPart"
+                if hrp then
+                    cam.CameraSubject=hrp
+                end
+            end
+        end
+        setSub()
+        CamStabState.SubjectConn=RunService.Heartbeat:Connect(function()
+            if not CamStabState.Enabled then
+                return
+            end
+            local char=LocalPlayer.Character
+            if char then
+                local hrp=char:FindFirstChild"HumanoidRootPart"
+                if hrp and cam.CameraSubject~=hrp then
+                    cam.CameraSubject=hrp
+                end
+            end
+        end)
+    end
+    if CamStabState.Mode=="\229\155\186\229\174\154\230\156\157\229\144\145"then
+        cam.CameraType=Enum.CameraType.Scriptable
+        local lockedRot=cam.CFrame-cam.CFrame.Position
+        CamStabState.Connection=RunService.RenderStepped:Connect(function()
+            if not CamStabState.Enabled then
+                return
+            end
+            local c=CamStab_getCam()
+            if not c then
+                return
+            end
+            local char=LocalPlayer.Character
+            if char then
+                local hrp=char:FindFirstChild"HumanoidRootPart"
+                if hrp then
+                    local pos=hrp.Position+Vector3 .new(0,2,0)
+                    c.CFrame=CFrame.new(pos)*lockedRot
+                end
+            end
+        end)
+    end
+    if CamStabState.Mode=="\230\138\151\230\138\150\229\138\168"then
+        cam.CameraType=Enum.CameraType.Custom
+        CamStabState.LastCFrame=nil
+        CamStabState.Connection=RunService.RenderStepped:Connect(function()
+            if not CamStabState.Enabled then
+                return
+            end
+            local c=CamStab_getCam()
+            if not c then
+                return
+            end
+            local currentCF=c.CFrame
+            if not CamStabState.LastCFrame then
+                CamStabState.LastCFrame=currentCF
+            else
+                local smooth=math.clamp(CamStabState.Smoothness,0,0.95)
+                local newCF=CamStabState.LastCFrame:Lerp(currentCF,1-smooth)
+                c.CFrame=CFrame.new(newCF.Position)*(currentCF-currentCF.Position)
+                CamStabState.LastCFrame=c.CFrame
+            end
+        end)
+    end
+end
+local function CamStab_stop()
+    if CamStabState.Connection then
+        CamStabState.Connection:Disconnect()
+        CamStabState.Connection=nil
+    end
+    if CamStabState.SubjectConn then
+        CamStabState.SubjectConn:Disconnect()
+        CamStabState.SubjectConn=nil
+    end
+    CamStab_restore()
+    CamStabState.LastCFrame=nil
+end
+LocalPlayer.CharacterAdded:Connect(function()
+    if CamStabState.Enabled then
+        task.wait(1)
+        CamStab_stop()
+        CamStabState.Enabled=true
+        CamStab_start()
+    end
+end)
+Tabs.fc:Toggle{
+    Title="\229\144\175\231\148\168\232\167\134\232\167\146\231\168\179\229\174\154",
+    Desc="\229\188\128\229\144\175\229\144\142\232\167\134\232\167\146\228\184\141\229\134\141\230\153\131\229\138\168",
+    Default=false,
+    Callback=function(v)
+        CamStabState.Enabled=v
+        if v then
+            CamStab_start()
+        else
+            CamStab_stop()
+        end
+    end
+}
+Tabs.fc:Dropdown{
+    Title="\233\152\178\230\138\150\230\168\161\229\188\143",
+    Desc="\231\168\179\229\174\154\232\183\159\233\154\143=\232\181\176\232\183\175\228\184\141\233\162\160\231\176\184 | \229\155\186\229\174\154\230\156\157\229\144\145=\232\189\172\229\144\145\228\184\141\230\153\131 | \230\138\151\230\138\150\229\138\168=\232\191\135\230\187\164\229\188\128\230\158\170\233\156\135\229\138\168",
+    Values={
+        "\231\168\179\229\174\154\232\183\159\233\154\143",
+        "\229\155\186\229\174\154\230\156\157\229\144\145",
+        "\230\138\151\230\138\150\229\138\168"
+    },
+    Default="\231\168\179\229\174\154\232\183\159\233\154\143",
+    Callback=function(v)
+        CamStabState.Mode=v
+        if CamStabState.Enabled then
+            CamStab_stop()
+            CamStabState.Enabled=true
+            CamStab_start()
+        end
+    end
+}
+Tabs.fc:Slider{
+    Title="\229\185\179\230\187\145\231\168\139\229\186\166",
+    Desc="",
+    Value={
+        Min=0,
+        Max=0.9,
+        Default=0.3
+    },
+    Step=0.05,
+    Callback=function(v)
+        CamStabState.Smoothness=v
+    end
+}
+Tabs.fc:Button{
+    Title="\233\135\141\230\150\176\229\186\148\231\148\168\231\168\179\229\174\154",
+    Desc="",
+    Callback=function()
+        if not CamStabState.Enabled then
+            return
+        end
+        CamStab_stop()
+        CamStabState.Enabled=true
+        CamStab_start()
+    end
+}
+Tabs.fc:Button{
+    Title="\233\163\158\232\189\166\232\132\154\230\156\172",
+    Callback=function()
+        loadstring(game:HttpGet"https://raw.githubusercontent.com/ggsq1741-debug/BAL/refs/heads/main/GUI.lua")()
+    end
+}
 Tabs.jx:Button{
     Title="\232\191\156\231\168\139\228\188\160\233\128\129\229\135\187\230\157\128",
     Callback=function()
