@@ -223,7 +223,7 @@ WindUI:Notify{
 }
 local Popup=WindUI:Popup{
     Title="hi\228\189\160\229\165\189\240\159\145\139",
-    Content="\230\155\180\230\150\176\228\186\134\229\174\158\228\189\147\233\163\158\232\161\140\239\188\140\228\184\141\228\188\154\229\134\141\230\156\137\230\139\137\229\155\158\230\131\133\229\134\181\239\188\140\229\174\140\231\190\142\231\187\149\232\191\135\239\188\140\229\143\150\230\182\136\228\186\134\229\157\160\232\144\189\231\138\182\230\128\129\232\191\152\230\156\137\232\135\170\229\138\168\229\140\150\229\133\137\231\142\175\240\159\145\190\240\159\145\190\230\183\187\229\138\160\228\186\134\233\163\158\232\189\166\229\138\159\232\131\189\239\188\140\232\167\134\232\167\146\233\148\129\229\174\154",
+    Content="\230\155\180\230\150\176\228\186\134\230\173\187\240\159\144\180\229\138\159\232\131\189\231\148\169\233\163\158",
     Buttons={
         {
             Title="Get Started",
@@ -278,6 +278,10 @@ local Tabs={
     wj=Window:Tab{
         Title="\231\142\169\229\174\182",
         Icon="users"
+    },
+    sf=Window:Tab{
+        Title="\231\148\169\233\163\158",
+        Icon="rbxassetid://7733799371"
     },
     fc=Window:Tab{
         Title="\228\186\154\230\180\178\232\189\166\231\142\139",
@@ -913,6 +917,525 @@ Tabs.wj:Button{
         end)
     end
 }
+local Players=game:GetService"Players"
+local RunService=game:GetService"RunService"
+local Workspace=game:GetService"Workspace"
+local LocalPlayer=Players.LocalPlayer
+local Camera=Workspace.CurrentCamera
+local CONFIG={
+    SwingRange=8,
+    SwingFreq=20,
+    SwingSpeed=0.03,
+    TeleportPerTick=8,
+    AngularForce=200000,
+    VelocityMultiplier=3,
+    TargetForce=2000,
+    TargetAngular=500000,
+    TeleportDuration=4,
+    CameraOffset=Vector3 .new(0,3,15)
+}
+local function GetChar(p)
+    if not p or not p.Parent then
+        return nil
+    end
+    local c=p.Character
+    if not c or not c.Parent then
+        return nil
+    end
+    return c
+end
+local function GetHRP(c)
+    return c and c:FindFirstChild"HumanoidRootPart"
+end
+local function GetHum(c)
+    return c and c:FindFirstChildOfClass"Humanoid"
+end
+local camConn,camSubject
+local function LockCam(subj)
+    camSubject=subj
+    Camera.CameraType=Enum.CameraType.Scriptable
+    Camera.CameraSubject=subj
+    if camConn then
+        camConn:Disconnect()
+    end
+    camConn=RunService.RenderStepped:Connect(function()
+        if not camSubject or not camSubject.Parent then
+            return
+        end
+        local tp=camSubject.Position
+        local cp=tp+CONFIG.CameraOffset
+        Camera.CFrame=CFrame.new(cp,tp)
+        Camera.Focus=CFrame.new(tp)
+    end)
+end
+local function UnlockCam()
+    if camConn then
+        camConn:Disconnect()
+        camConn=nil
+    end
+    camSubject=nil
+    local c=LocalPlayer.Character
+    if c then
+        local h=c:FindFirstChildOfClass"Humanoid"
+        if h then
+            Camera.CameraSubject=h
+            Camera.CameraType=Enum.CameraType.Custom
+        end
+    end
+end
+local selfConn,selfStep
+local function EnableSelf()
+    if selfConn then
+        return
+    end
+    selfConn=RunService.Heartbeat:Connect(function()
+        local c=LocalPlayer.Character
+        if not c then
+            return
+        end
+        local hrp=GetHRP(c)
+        local hum=GetHum(c)
+        if not hrp or not hum then
+            return
+        end
+        pcall(function()
+            hum.PlatformStand=false
+            hum.Sit=false
+            hum.AutoRotate=true
+            local s=hum:GetState()
+            if s==Enum.HumanoidStateType.Physics or s==Enum.HumanoidStateType.FallingDown or s==Enum.HumanoidStateType.Ragdoll then
+                hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+            end
+            hum:ChangeState(Enum.HumanoidStateType.Running)
+            local vel=hrp.AssemblyLinearVelocity
+            local sy=math.clamp(vel.Y,-40,40)
+            hrp.AssemblyAngularVelocity=Vector3 .new(CONFIG.AngularForce,CONFIG.AngularForce,CONFIG.AngularForce)
+            hrp.AssemblyLinearVelocity=Vector3 .new(vel.X*CONFIG.VelocityMultiplier,sy,vel.Z*CONFIG.VelocityMultiplier)
+            RunService.RenderStepped:Wait()
+            if hrp and hrp.Parent then
+                hrp.AssemblyAngularVelocity=Vector3 .zero
+            end
+        end)
+    end)
+    selfStep=RunService.Stepped:Connect(function()
+        for _,p in pairs(Players:GetPlayers())do
+            if p~=LocalPlayer and p.Character then
+                for _,part in pairs(p.Character:GetDescendants())do
+                    if part:IsA"BasePart"then
+                        pcall(function()
+                            part.CanCollide=false
+                        end)
+                    end
+                end
+            end
+        end
+    end)
+end
+local function DisableSelf()
+    if selfConn then
+        selfConn:Disconnect()
+        selfConn=nil
+    end
+    if selfStep then
+        selfStep:Disconnect()
+        selfStep=nil
+    end
+end
+local function ForceTarget(p)
+    if not p then
+        return
+    end
+    local c=GetChar(p)
+    if not c then
+        return
+    end
+    local hrp=GetHRP(c)
+    if not hrp then
+        return
+    end
+    pcall(function()
+        hrp:SetNetworkOwner(LocalPlayer)
+    end)
+    pcall(function()
+        hrp.AssemblyLinearVelocity=Vector3 .new(CONFIG.TargetForce,CONFIG.TargetForce,CONFIG.TargetForce)
+        hrp.AssemblyAngularVelocity=Vector3 .new(CONFIG.TargetAngular,CONFIG.TargetAngular,CONFIG.TargetAngular)
+    end)
+    local h=GetHum(c)
+    if h then
+        pcall(function()
+            h.PlatformStand=true
+            h:ChangeState(Enum.HumanoidStateType.Physics)
+        end)
+    end
+end
+local selectedPlayer=nil
+local isTeleportFlying=false
+local LoopFly={
+    Running=false,
+    Target=nil,
+    Orig=nil,
+    Conn=nil,
+    Leave=nil
+}
+local function TeleportFly(target,duration)
+    if isTeleportFlying then
+        return false
+    end
+    duration=duration or CONFIG.TeleportDuration
+    if not target then
+        return false
+    end
+    local tc=GetChar(target)
+    if not tc then
+        return false
+    end
+    local mc=GetChar(LocalPlayer)
+    local mhrp=GetHRP(mc)
+    if not mhrp then
+        return false
+    end
+    isTeleportFlying=true
+    local orig=mhrp.Position
+    LockCam(mhrp)
+    EnableSelf()
+    local t0=tick()
+    local dir=1
+    local lastSwitch=tick()
+    local detected=false
+    while tick()-t0<duration do
+        local tc2=GetChar(target)
+        if not tc2 then
+            break
+        end
+        local thrp=GetHRP(tc2)
+        if thrp then
+            if tick()-lastSwitch>CONFIG.SwingSpeed then
+                dir=dir*-1
+                lastSwitch=tick()
+            end
+            local mc2=GetChar(LocalPlayer)
+            local mhrp2=GetHRP(mc2)
+            if mhrp2 then
+                for i=1,CONFIG.TeleportPerTick do
+                    local off=dir*CONFIG.SwingRange*(i/CONFIG.TeleportPerTick)
+                    local pos=thrp.Position+thrp.CFrame.LookVector*off
+                    pcall(function()
+                        mhrp2 .CFrame=CFrame.new(pos)
+                    end)
+                end
+                ForceTarget(target)
+            end
+            if not detected and thrp.AssemblyLinearVelocity.Magnitude>30 then
+                detected=true
+            end
+        end
+        task.wait(0.02)
+    end
+    local fc=GetChar(LocalPlayer)
+    local fhrp=GetHRP(fc)
+    if fhrp then
+        pcall(function()
+            fhrp.CFrame=CFrame.new(orig)
+            fhrp.AssemblyAngularVelocity=Vector3 .zero
+            fhrp.AssemblyLinearVelocity=Vector3 .zero
+        end)
+    end
+    DisableSelf()
+    UnlockCam()
+    isTeleportFlying=false
+    return detected
+end
+local function LoopStart(target)
+    if LoopFly.Running then
+        LoopFly.Stop()
+        task.wait(0.2)
+    end
+    if not target then
+        return false
+    end
+    local tc=GetChar(target)
+    if not tc then
+        return false
+    end
+    local mc=GetChar(LocalPlayer)
+    local mhrp=GetHRP(mc)
+    if not mhrp then
+        return false
+    end
+    LoopFly.Running=true
+    LoopFly.Target=target
+    LoopFly.Orig=mhrp.Position
+    LockCam(mhrp)
+    EnableSelf()
+    LoopFly.Conn=RunService.Heartbeat:Connect(function()
+        if not LoopFly.Running then
+            return
+        end
+        local tc2=GetChar(LoopFly.Target)
+        if not tc2 then
+            LoopFly.Stop()
+            return
+        end
+        local thrp=GetHRP(tc2)
+        if not thrp then
+            return
+        end
+        local dir=math.sin(tick()*CONFIG.SwingFreq)
+        local off=dir*CONFIG.SwingRange
+        local mc2=GetChar(LocalPlayer)
+        local mhrp2=GetHRP(mc2)
+        if mhrp2 then
+            for i=1,CONFIG.TeleportPerTick do
+                local sub=off*(i/CONFIG.TeleportPerTick)
+                local pos=thrp.Position+thrp.CFrame.LookVector*sub
+                pcall(function()
+                    mhrp2 .CFrame=CFrame.new(pos)
+                end)
+            end
+            ForceTarget(LoopFly.Target)
+        end
+    end)
+    LoopFly.Leave=Players.PlayerRemoving:Connect(function(p)
+        if p==LoopFly.Target and LoopFly.Running then
+            LoopFly.Stop()
+        end
+    end)
+    return true
+end
+function LoopFly.Stop()
+    if not LoopFly.Running then
+        return
+    end
+    LoopFly.Running=false
+    if LoopFly.Conn then
+        LoopFly.Conn:Disconnect()
+        LoopFly.Conn=nil
+    end
+    if LoopFly.Leave then
+        LoopFly.Leave:Disconnect()
+        LoopFly.Leave=nil
+    end
+    local mc=GetChar(LocalPlayer)
+    local mhrp=GetHRP(mc)
+    if mhrp and LoopFly.Orig then
+        pcall(function()
+            mhrp.CFrame=CFrame.new(LoopFly.Orig)
+            mhrp.AssemblyAngularVelocity=Vector3 .zero
+            mhrp.AssemblyLinearVelocity=Vector3 .zero
+        end)
+    end
+    DisableSelf()
+    UnlockCam()
+    LoopFly.Target=nil
+    LoopFly.Orig=nil
+end
+local function getPlayerList()
+    local t={}
+    for _,p in pairs(Players:GetPlayers())do
+        if p~=LocalPlayer then
+            table.insert(t,p.Name)
+        end
+    end
+    return t
+end
+local playerDropdown
+playerDropdown=Tabs.sf:Dropdown{
+    Title="\233\128\137\230\139\169\231\155\174\230\160\135\231\142\169\229\174\182",
+    Desc="\233\128\137\230\139\169\232\166\129\231\148\169\233\163\158\231\154\132\231\142\169\229\174\182",
+    Values=getPlayerList(),
+    Value=nil,
+    Callback=function(v)
+        if v and v~=""then
+            selectedPlayer=Players:FindFirstChild(v)
+            WindUI:Notify{
+                Title="\229\183\178\233\128\137\230\139\169",
+                Content=v,
+                Icon="check",
+                Duration=2
+            }
+            if LoopFly.Running then
+                LoopFly.Stop()
+                task.wait(0.2)
+                LoopStart(selectedPlayer)
+            end
+        end
+    end
+}
+Tabs.sf:Button{
+    Title="\229\136\183\230\150\176\231\142\169\229\174\182\229\136\151\232\161\168",
+    Callback=function()
+        if playerDropdown and playerDropdown.Refresh then
+            playerDropdown:Refresh(getPlayerList())
+        end
+        WindUI:Notify{
+            Title="\229\183\178\229\136\183\230\150\176",
+            Content="\229\133\177 "..#getPlayerList().." \228\184\170\231\142\169\229\174\182",
+            Icon="refresh-cw",
+            Duration=2
+        }
+    end
+}
+Tabs.sf:Button{
+    Title=" \228\188\160\233\128\129\231\148\169\233\163\158\239\188\136\228\184\128\230\172\161\239\188\137",
+    Desc="\231\158\172\231\167\187\229\136\176\231\155\174\230\160\135\232\186\171\232\190\185\230\157\165\229\155\158\230\145\134\229\138\168\231\148\169\233\163\158",
+    Callback=function()
+        if not selectedPlayer then
+            WindUI:Notify{
+                Title="\230\156\170\233\128\137\230\139\169\231\142\169\229\174\182",
+                Icon="alert-circle",
+                Duration=2
+            }
+            return
+        end
+        if isTeleportFlying then
+            WindUI:Notify{
+                Title="\230\173\163\229\156\168\230\137\167\232\161\140\228\184\173",
+                Icon="alert-circle",
+                Duration=2
+            }
+            return
+        end
+        task.spawn(function()
+            local ok=TeleportFly(selectedPlayer)
+            WindUI:Notify{
+                Title=ok and"\231\148\169\233\163\158\230\136\144\229\138\159"or"\231\148\169\233\163\158\231\187\147\230\157\159",
+                Content=selectedPlayer.Name,
+                Icon=ok and"check"or"x",
+                Duration=3
+            }
+        end)
+    end
+}
+Tabs.sf:Toggle{
+    Title=" \229\190\170\231\142\175\231\148\169\233\163\158",
+    Desc="\230\140\129\231\187\173\233\148\129\229\174\154\231\155\174\230\160\135\230\157\165\229\155\158\230\145\134\229\138\168",
+    Value=false,
+    Callback=function(state)
+        if state then
+            if not selectedPlayer then
+                WindUI:Notify{
+                    Title="\230\156\170\233\128\137\230\139\169\231\142\169\229\174\182",
+                    Icon="alert-circle",
+                    Duration=2
+                }
+                return
+            end
+            LoopStart(selectedPlayer)
+            WindUI:Notify{
+                Title="\229\190\170\231\142\175\231\148\169\233\163\158\229\183\178\229\188\128\229\144\175",
+                Content=selectedPlayer.Name,
+                Icon="check",
+                Duration=2
+            }
+        else
+            LoopFly.Stop()
+            WindUI:Notify{
+                Title="\229\190\170\231\142\175\231\148\169\233\163\158\229\183\178\229\133\179\233\151\173",
+                Icon="x",
+                Duration=2
+            }
+        end
+    end
+}
+Tabs.sf:Slider{
+    Title="\230\145\134\229\138\168\229\185\133\229\186\166\239\188\136\231\177\179\239\188\137",
+    Value={
+        Min=2,
+        Max=20,
+        Default=CONFIG.SwingRange
+    },
+    Step=1,
+    IsTextbox=true,
+    Callback=function(v)
+        CONFIG.SwingRange=v
+    end
+}
+Tabs.sf:Slider{
+    Title="\230\145\134\229\138\168\233\162\145\231\142\135\239\188\136Hz\239\188\137",
+    Value={
+        Min=5,
+        Max=50,
+        Default=CONFIG.SwingFreq
+    },
+    Step=1,
+    IsTextbox=true,
+    Callback=function(v)
+        CONFIG.SwingFreq=v
+    end
+}
+Tabs.sf:Slider{
+    Title="\230\175\143\230\172\161\228\188\160\233\128\129\230\172\161\230\149\176",
+    Value={
+        Min=1,
+        Max=20,
+        Default=CONFIG.TeleportPerTick
+    },
+    Step=1,
+    IsTextbox=true,
+    Callback=function(v)
+        CONFIG.TeleportPerTick=v
+    end
+}
+Tabs.sf:Slider{
+    Title="\231\155\174\230\160\135\230\150\189\229\138\155",
+    Value={
+        Min=100,
+        Max=10000,
+        Default=CONFIG.TargetForce
+    },
+    Step=100,
+    IsTextbox=true,
+    Callback=function(v)
+        CONFIG.TargetForce=v
+    end
+}
+Tabs.sf:Slider{
+    Title="\228\188\160\233\128\129\231\148\169\233\163\158\230\151\182\233\149\191\239\188\136\231\167\146\239\188\137",
+    Value={
+        Min=1,
+        Max=10,
+        Default=CONFIG.TeleportDuration
+    },
+    Step=1,
+    IsTextbox=true,
+    Callback=function(v)
+        CONFIG.TeleportDuration=v
+    end
+}
+Tabs.sf:Button{
+    Title="\233\135\141\231\189\174\228\184\186\233\187\152\232\174\164\229\143\130\230\149\176",
+    Callback=function()
+        CONFIG.SwingRange=8
+        CONFIG.SwingFreq=20
+        CONFIG.SwingSpeed=0.03
+        CONFIG.TeleportPerTick=8
+        CONFIG.AngularForce=200000
+        CONFIG.VelocityMultiplier=3
+        CONFIG.TargetForce=2000
+        CONFIG.TargetAngular=500000
+        CONFIG.TeleportDuration=4
+        WindUI:Notify{
+            Title="\229\183\178\233\135\141\231\189\174",
+            Icon="refresh-cw",
+            Duration=2
+        }
+    end
+}
+game:GetService"UserInputService".InputBegan:Connect(function(input,gp)
+    if gp then
+        return
+    end
+    if input.KeyCode==Enum.KeyCode.F then
+    end
+end)
+LocalPlayer.CharacterAdded:Connect(function()
+    task.wait(0.5)
+    if LoopFly.Running then
+        LoopFly.Stop()
+    end
+    UnlockCam()
+end)
+print"\233\157\153\233\187\152\231\148\169\233\163\158 WindUI \231\137\136\229\183\178\229\138\160\232\189\189"
 local RunService=game:GetService"RunService"
 local Players=game:GetService"Players"
 local LocalPlayer=Players.LocalPlayer
