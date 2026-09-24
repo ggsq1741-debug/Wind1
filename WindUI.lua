@@ -223,7 +223,7 @@ WindUI:Notify{
 }
 local Popup=WindUI:Popup{
     Title="hi\228\189\160\229\165\189\240\159\145\139",
-    Content="\230\155\180\230\150\176\228\186\134\230\173\187\240\159\144\180\229\138\159\232\131\189\231\148\169\233\163\158",
+    Content="\230\155\180\230\150\176\228\186\134\230\173\187\240\159\144\180\229\138\159\232\131\189\231\148\169\233\163\158\229\173\144\229\188\185\232\191\189\232\184\170",
     Buttons={
         {
             Title="Get Started",
@@ -266,7 +266,7 @@ local Window=WindUI:CreateWindow{
     SideBarWidth=130,
     HideSearchBar=false,
     ScrollBarEnabled=true,
-    Background="https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/33490c2c-02d8-4dc8-b24a-0e0478a45b8f.png",
+    Background="https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/ad2a1a05-be7b-4adf-9a77-008a62464197.png",
     BackgroundImageTransparency=0.4,
     User={
         Enabled=true
@@ -297,6 +297,10 @@ local Tabs={
     },
     bot=Window:Tab{
         Title="\231\158\132\229\135\134",
+        Icon="target"
+    },
+    zj=Window:Tab{
+        Title="\229\173\144\229\188\185\232\191\189\232\184\170",
         Icon="target"
     },
     ESP=Window:Tab{
@@ -2266,6 +2270,373 @@ Tabs.bot:Toggle{
         AimConfig.JumpPrediction=state
     end
 }
+local SilentAimSettings={
+    Enabled=false,
+    TeamCheck=false,
+    VisibleCheck=false,
+    TargetPart="HumanoidRootPart",
+    FOVRadius=130,
+    FOVVisible=false,
+    ShowSilentAimTarget=false,
+    HitChance=100,
+    FixedFOV=true,
+    TargetIndicatorRadius=20,
+    MaxDistance=500,
+    PriorityMode="\229\135\134\230\152\159\230\156\128\232\191\145",
+    Wallbang=false,
+    ShowTracer=false,
+    TracerFromBottom=true,
+    TracerThickness=1,
+    TracerTransparency=0.3
+}
+local sa_currentTargetPart=nil
+local sa_lastTargetCharacter=nil
+local sa_target_circle=Drawing.new"Circle"
+sa_target_circle.Visible=false
+sa_target_circle.Thickness=2
+sa_target_circle.Filled=false
+sa_target_circle.Color=Color3 .fromRGB(255,0,0)
+local sa_tracer=Drawing.new"Line"
+sa_tracer.Visible=false
+sa_tracer.Thickness=1
+sa_tracer.Transparency=0.3
+sa_tracer.Color=Color3 .fromRGB(255,0,0)
+sa_tracer.ZIndex=999
+local sa_FOVGui=Instance.new("ScreenGui",LocalPlayer:WaitForChild"PlayerGui")
+sa_FOVGui.Name="SA_FOVGui"
+sa_FOVGui.ResetOnSpawn=false
+sa_FOVGui.IgnoreGuiInset=true
+sa_FOVGui.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+sa_FOVGui.Enabled=false
+local sa_FOVFrame=Instance.new("Frame",sa_FOVGui)
+sa_FOVFrame.AnchorPoint=Vector2 .new(0.5,0.5)
+sa_FOVFrame.Position=UDim2 .fromScale(0.5,0.5)
+sa_FOVFrame.BackgroundTransparency=1
+sa_FOVFrame.Size=UDim2 .fromOffset(260,260)
+local sa_FOVStroke=Instance.new("UIStroke",sa_FOVFrame)
+sa_FOVStroke.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+sa_FOVStroke.Thickness=1
+sa_FOVStroke.Transparency=0.5
+sa_FOVStroke.Color=Color3 .fromRGB(54,57,241)
+local sa_FOVCorner=Instance.new("UICorner",sa_FOVFrame)
+sa_FOVCorner.CornerRadius=UDim.new(1,0)
+local function SA_getScreenPos(v)
+    local p,on=Camera:WorldToViewportPoint(v)
+    return Vector2 .new(p.X,p.Y),on
+end
+local function SA_isVisible(part,origin)
+    if not part then
+        return false
+    end
+    local char=LocalPlayer.Character
+    if not char then
+        return false
+    end
+    local o=origin or Camera.CFrame.Position
+    local dir=part.Position-o
+    local rp=RaycastParams.new()
+    rp.FilterType=Enum.RaycastFilterType.Exclude
+    rp.FilterDescendantsInstances={
+        char,
+        part.Parent
+    }
+    return not workspace:Raycast(o,dir.Unit*dir.Magnitude,rp)
+end
+local function SA_getClosestPlayer()
+    local myChar=LocalPlayer.Character
+    if not myChar or not myChar:FindFirstChild"HumanoidRootPart"then
+        return nil
+    end
+    local myRoot=myChar.HumanoidRootPart
+    local aimPoint=SilentAimSettings.FixedFOV and(Camera.ViewportSize/2)or UserInputService:GetMouseLocation()
+    local list={}
+    for _,p in ipairs(Players:GetPlayers())do
+        if p~=LocalPlayer and not(SilentAimSettings.TeamCheck and p.Team==LocalPlayer.Team)then
+            local c=p.Character
+            local h=c and c:FindFirstChildOfClass"Humanoid"
+            if c and h and h.Health>0 then
+                local part=c:FindFirstChild(SilentAimSettings.TargetPart)or c:FindFirstChild"HumanoidRootPart"
+                if part then
+                    if not(SilentAimSettings.VisibleCheck and not SA_isVisible(part,myChar.Head.Position))then
+                        local dist=(myRoot.Position-part.Position).Magnitude
+                        if dist<=SilentAimSettings.MaxDistance then
+                            local sp,on=SA_getScreenPos(part.Position)
+                            if on then
+                                local fovDist=(aimPoint-sp).Magnitude
+                                if fovDist<=SilentAimSettings.FOVRadius then
+                                    table.insert(list,{
+                                        char=c,
+                                        fov=fovDist,
+                                        dist=dist,
+                                        health=h.Health
+                                    })
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    if#list==0 then
+        return nil
+    end
+    table.sort(list,function(a,b)
+        if SilentAimSettings.PriorityMode=="\230\156\128\228\189\142\232\161\128\233\135\143"then
+            return a.health<b.health
+        elseif SilentAimSettings.PriorityMode=="\232\183\157\231\166\187\230\156\128\232\191\145"then
+            return a.dist<b.dist
+        else
+            return a.fov<b.fov
+        end
+    end)
+    return list[1].char
+end
+Tabs.zj:Toggle{
+    Title="\229\144\175\231\148\168\233\157\153\233\187\152\231\158\132\229\135\134",
+    Desc="\229\188\128\229\144\175\229\144\142\229\173\144\229\188\185\232\135\170\229\138\168\230\137\147\229\144\145\230\149\140\228\186\186",
+    Default=false,
+    Callback=function(v)
+        SilentAimSettings.Enabled=v
+    end
+}
+Tabs.zj:Toggle{
+    Title="\233\152\159\228\188\141\230\163\128\230\159\165",
+    Desc="\229\191\189\231\149\165\233\152\159\229\143\139",
+    Default=false,
+    Callback=function(v)
+        SilentAimSettings.TeamCheck=v
+    end
+}
+Tabs.zj:Toggle{
+    Title="\229\143\175\232\167\129\230\128\167\230\163\128\230\159\165",
+    Desc="\232\162\171\229\162\153\230\140\161\228\189\143\231\154\132\228\184\141\233\148\129",
+    Default=false,
+    Callback=function(v)
+        SilentAimSettings.VisibleCheck=v
+    end
+}
+Tabs.zj:Toggle{
+    Title="\231\169\191\229\162\153",
+    Default=false,
+    Callback=function(v)
+        SilentAimSettings.Wallbang=v
+    end
+}
+Tabs.zj:Slider{
+    Title="\229\145\189\228\184\173\231\142\135",
+    Value={
+        Min=0,
+        Max=100,
+        Default=100
+    },
+    Step=1,
+    Callback=function(v)
+        SilentAimSettings.HitChance=v
+    end
+}
+Tabs.zj:Divider()
+Tabs.zj:Dropdown{
+    Title="\231\155\174\230\160\135\233\131\168\228\189\141",
+    Values={
+        "Head",
+        "HumanoidRootPart"
+    },
+    Default="HumanoidRootPart",
+    Callback=function(v)
+        SilentAimSettings.TargetPart=v
+    end
+}
+Tabs.zj:Dropdown{
+    Title="\228\188\152\229\133\136\230\168\161\229\188\143",
+    Values={
+        "\229\135\134\230\152\159\230\156\128\232\191\145",
+        "\232\183\157\231\166\187\230\156\128\232\191\145",
+        "\230\156\128\228\189\142\232\161\128\233\135\143"
+    },
+    Default="\229\135\134\230\152\159\230\156\128\232\191\145",
+    Callback=function(v)
+        SilentAimSettings.PriorityMode=v
+    end
+}
+Tabs.zj:Slider{
+    Title="\230\156\128\229\164\167\232\183\157\231\166\187",
+    Value={
+        Min=10,
+        Max=2000,
+        Default=500
+    },
+    Step=10,
+    Callback=function(v)
+        SilentAimSettings.MaxDistance=v
+    end
+}
+Tabs.zj:Divider()
+Tabs.zj:Toggle{
+    Title="\230\152\190\231\164\186 FOV \229\156\136",
+    Default=false,
+    Callback=function(v)
+        sa_FOVGui.Enabled=v
+    end
+}
+Tabs.zj:Slider{
+    Title="FOV \229\156\136\229\141\138\229\190\132",
+    Value={
+        Min=10,
+        Max=1000,
+        Default=130
+    },
+    Step=10,
+    Callback=function(v)
+        sa_FOVFrame.Size=UDim2 .fromOffset(v*2,v*2)
+        SilentAimSettings.FOVRadius=v
+    end
+}
+Tabs.zj:Toggle{
+    Title="\229\155\186\229\174\154 FOV\239\188\136\229\177\143\229\185\149\228\184\173\229\191\131\239\188\137",
+    Default=true,
+    Callback=function(v)
+        SilentAimSettings.FixedFOV=v
+    end
+}
+Tabs.zj:Divider()
+Tabs.zj:Toggle{
+    Title="\230\152\190\231\164\186\231\155\174\230\160\135\230\140\135\231\164\186\229\153\168",
+    Desc="\232\162\171\233\148\129\229\174\154\231\154\132\230\149\140\228\186\186\229\164\180\228\184\138\230\152\190\231\164\186\231\186\162\229\156\136",
+    Default=false,
+    Callback=function(v)
+        SilentAimSettings.ShowSilentAimTarget=v
+    end
+}
+Tabs.zj:Slider{
+    Title="\230\140\135\231\164\186\229\153\168\229\164\167\229\176\143",
+    Value={
+        Min=5,
+        Max=50,
+        Default=20
+    },
+    Step=1,
+    Callback=function(v)
+        SilentAimSettings.TargetIndicatorRadius=v
+    end
+}
+Tabs.zj:Divider()
+Tabs.zj:Toggle{
+    Title="\230\152\190\231\164\186\231\158\132\229\135\134\229\176\132\231\186\191",
+    Default=false,
+    Callback=function(v)
+        SilentAimSettings.ShowTracer=v
+    end
+}
+Tabs.zj:Toggle{
+    Title="\228\187\142\229\177\143\229\185\149\229\186\149\233\131\168\229\143\145\229\176\132",
+    Desc="\229\133\179 = \228\187\142\229\177\143\229\185\149\228\184\173\229\191\131\229\143\145\229\176\132",
+    Default=true,
+    Callback=function(v)
+        SilentAimSettings.TracerFromBottom=v
+    end
+}
+Tabs.zj:Slider{
+    Title="\229\176\132\231\186\191\231\178\151\231\187\134",
+    Value={
+        Min=1,
+        Max=10,
+        Default=1
+    },
+    Step=1,
+    Callback=function(v)
+        SilentAimSettings.TracerThickness=v
+        sa_tracer.Thickness=v
+    end
+}
+Tabs.zj:Slider{
+    Title="\229\176\132\231\186\191\233\128\143\230\152\142\229\186\166",
+    Value={
+        Min=0,
+        Max=1,
+        Default=0.3
+    },
+    Step=0.05,
+    Callback=function(v)
+        SilentAimSettings.TracerTransparency=v
+        sa_tracer.Transparency=v
+    end
+}
+RunService.RenderStepped:Connect(function()
+    sa_currentTargetPart=nil
+    local target=nil
+    if SilentAimSettings.Enabled then
+        target=SA_getClosestPlayer()
+    end
+    sa_lastTargetCharacter=target
+    if target then
+        local h=target:FindFirstChildOfClass"Humanoid"
+        if h and h.Health>0 then
+            sa_currentTargetPart=target:FindFirstChild(SilentAimSettings.TargetPart)or target:FindFirstChild"HumanoidRootPart"
+        end
+    end
+    if sa_target_circle then
+        sa_target_circle.Visible=false
+        if sa_currentTargetPart and SilentAimSettings.ShowSilentAimTarget then
+            local sp,on=SA_getScreenPos(sa_currentTargetPart.Position)
+            if on then
+                sa_target_circle.Visible=true
+                sa_target_circle.Position=sp
+                sa_target_circle.Radius=SilentAimSettings.TargetIndicatorRadius
+            end
+        end
+    end
+    sa_tracer.Visible=false
+    if sa_currentTargetPart and SilentAimSettings.ShowTracer and SilentAimSettings.Enabled then
+        local sp,on=SA_getScreenPos(sa_currentTargetPart.Position)
+        if on then
+            local fromPos
+            if SilentAimSettings.TracerFromBottom then
+                fromPos=Vector2 .new(Camera.ViewportSize.X/2,Camera.ViewportSize.Y)
+            else
+                fromPos=Vector2 .new(Camera.ViewportSize.X/2,Camera.ViewportSize.Y/2)
+            end
+            sa_tracer.From=fromPos
+            sa_tracer.To=sp
+            sa_tracer.Thickness=SilentAimSettings.TracerThickness
+            sa_tracer.Transparency=SilentAimSettings.TracerTransparency
+            sa_tracer.Visible=true
+        end
+    end
+    if sa_FOVGui.Enabled then
+        if SilentAimSettings.FixedFOV then
+            sa_FOVFrame.Position=UDim2 .fromScale(0.5,0.5)
+        else
+            local m=UserInputService:GetMouseLocation()
+            sa_FOVFrame.Position=UDim2 .fromOffset(m.X,m.Y)
+        end
+    end
+end)
+local sa_oldNamecall
+sa_oldNamecall=hookmetamethod(game,"__namecall",newcclosure(function(...)
+    local Method=getnamecallmethod()
+    local Args={
+        ...
+    }
+    local self=Args[1]
+    if SilentAimSettings.Enabled and not checkcaller()and sa_currentTargetPart then
+        if math.random()<=SilentAimSettings.HitChance/100 then
+            if Method=="Raycast"then
+                if#Args>=3 and typeof(Args[2])=="Vector3"and typeof(Args[3])=="Vector3"then
+                    local origin=Args[2]
+                    local direction=Args[3]
+                    if direction.Magnitude<100 then
+                        return sa_oldNamecall(...)
+                    end
+                    Args[3]=(sa_currentTargetPart.Position-origin).Unit*1000
+                    return sa_oldNamecall(unpack(Args))
+                end
+            end
+        end
+    end
+    return sa_oldNamecall(...)
+end))
+print"[\233\157\153\233\187\152\231\158\132\229\135\134] \229\183\178\229\138\160\232\189\189\229\136\176 Tabs.zj\239\188\136WindUI \230\160\188\229\188\143\239\188\137"
 local RunService=game:GetService"RunService"
 local Players=game:GetService"Players"
 local LocalPlayer=Players.LocalPlayer
