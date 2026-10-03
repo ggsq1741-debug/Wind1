@@ -1,12 +1,9 @@
--- ============================================
--- 检测多个指定玩家加入服务器并提示（纯源码）
--- ============================================
 
 local TARGET_NAMES = {
     "Suponjibobu00",
     "YK666308",
     "某某某3",
-} -- 需要监控的玩家名字，随意增加
+}
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -139,7 +136,7 @@ WindUI:Notify({
 })
 WindUI:Notify({
     Title = "更新",
-    Content = "灵魂/实体飞行和ESP2",
+    Content = "辅助瞄准/自动刷钱",
     Icon = "circle-user-round",
     Duration = 15,
 })
@@ -213,6 +210,7 @@ local Tabs = {
     lc = Window:Tab({ Title = "自动农场", Icon = "rbxassetid://7733920117" }),
     jx = Window:Tab({ Title = "远程击杀+雷达", Icon = "crown" }), 
     gh = Window:Tab({ Title = "光环", Icon = "crown" }),
+    fz = Window:Tab({ Title = "进阶辅助瞄准", Icon = "crosshair" }),    
     bot = Window:Tab({ Title = "瞄准", Icon = "target" }),
     zj = Window:Tab({ Title = "子弹追踪", Icon = "target" }),
     ESP = Window:Tab({ Title = "ESP", Icon = "eye" }),
@@ -2023,57 +2021,60 @@ function _G.BuildRagebotUI(Tab)
 end
 
 print("[Ragebot] 功能模块已加载，等待挂载...")
--- ═══════════════════════════════════════════════════
--- Wanted 农场光环 → 挂载到 Tabs.lc
--- ═══════════════════════════════════════════════════
-do
-    local FarmConfig = {
-        Enabled    = false,
-        Range      = 10,
-        Cash       = true,
-        ATM        = true,
-        Safe       = true,
-        BreakGlass = true,
-    }
 
-    local FarmReady = false
-    local Network, ClientPlayers, ClientGizmos, ClientProps, ClientTools
+-- ============================================
+-- 农场光环 + 自动农场（WindUI 格式，挂在 Tabs.lc）
+-- ============================================
+do
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local TweenService      = game:GetService("TweenService")
+    local LocalPlayer       = game:GetService("Players").LocalPlayer
+
+    -- 加载 Wanted 模块
+    local Network, ClientPlayers, ClientTools, ClientGizmos, ClientProps
     local fireServer, invokeServer
 
-    -- ═══════════ 载入 Wanted 模块（失败也不中断主脚本）═══════════
-    pcall(function()
+    local loadOK = pcall(function()
         local DevvFolder = ReplicatedStorage:FindFirstChild("Devv") or ReplicatedStorage:FindFirstChild("devv")
-        if not DevvFolder then
-            warn("[FarmAura] 找不到 Devv 文件夹")
-            return
-        end
+        if not DevvFolder then error("找不到 Devv 文件夹") end
         local DevvModule = require(DevvFolder)
-        if type(DevvModule.load) ~= "function" then
-            warn("[FarmAura] Devv 加载失败")
-            return
-        end
-        local load     = DevvModule.load
-        Network        = load("Network")
-        ClientPlayers  = load("ClientPlayers")
-        ClientGizmos   = require(ReplicatedStorage.Client.Wanted.Modules.ClientGizmos)
-        ClientProps    = require(ReplicatedStorage.Client.Wanted.Modules.ClientProps)
-        ClientTools    = require(ReplicatedStorage.Client.Wanted.Modules.ClientTools)
-        fireServer     = Network.FireServer
-        invokeServer   = Network.InvokeServer
-        FarmReady      = true
+        if type(DevvModule.load) ~= "function" then error("Devv.load 异常") end
+        local load = DevvModule.load
+        Network       = load("Network")
+        ClientPlayers = load("ClientPlayers")
+        ClientTools   = require(ReplicatedStorage.Client.Wanted.Modules.ClientTools)
+        ClientGizmos  = require(ReplicatedStorage.Client.Wanted.Modules.ClientGizmos)
+        ClientProps   = require(ReplicatedStorage.Client.Wanted.Modules.ClientProps)
+        fireServer    = Network.FireServer
+        invokeServer  = Network.InvokeServer
     end)
 
-    -- ═══════════ 工具 ═══════════
-    local function getMyChar()
-        local c = LocalPlayer.Character
-        return c, c and c:FindFirstChild("HumanoidRootPart")
-    end
+    local GIZMO_NAME_MAP = {
+        ["GasStationSafe"] = "加油站保险箱",
+        ["ATM"]            = "ATM 机",
+        ["Register"]       = "收银机",
+        ["Lootable"]       = "可搜刮物品",
+        ["WorldItem"]      = "世界物品",
+        ["WorldBag"]       = "世界背包",
+        ["MainCashPile"]   = "主钱堆",
+        ["CashPallet"]     = "现金托盘",
+        ["Cash"]           = "现金",
+        ["MilitaryChest"]  = "军事箱",
+        ["PelicanCase"]    = "鹈鹕箱",
+        ["WorldSafe"]      = "世界保险箱",
+        ["PC Block"]       = "港猫草私你们",
+        ["WorldItemSpawn"] = "物品刷新点",
+        ["Break Glass"]    = "打碎玻璃（电锯）",
+    }
+
+    local function getHRP() local c = LocalPlayer.Character; return c and c:FindFirstChild("HumanoidRootPart") end
+    local function getHum() local c = LocalPlayer.Character; return c and c:FindFirstChildOfClass("Humanoid") end
 
     local function getGizmos(hrp)
         local list = {}
         if not ClientGizmos then return list end
-        local ok, source = pcall(debug.getupvalue, ClientGizmos.Get, 1)
-        if not ok or type(source) ~= "table" then return list end
+        local ok2, source = pcall(debug.getupvalue, ClientGizmos.Get, 1)
+        if not ok2 or type(source) ~= "table" then return list end
         for k, v in pairs(source) do
             if k and type(v) == "table" and v.position then
                 v.objectId = v.objectId or k
@@ -2095,39 +2096,30 @@ do
     local function getCashLeft(g)
         if type(g) ~= "table" then return nil end
         if type(g.cashLeft) == "number" then return g.cashLeft end
-        if g.gizmoState and type(g.gizmoState.amount) == "number" then
-            return g.gizmoState.amount
-        end
+        if g.gizmoState and type(g.gizmoState.amount) == "number" then return g.gizmoState.amount end
         return nil
     end
 
     local function canInteract(g)
         if type(g) ~= "table" or not g.gizmoType then return false end
         local gs = g.gizmoState
-        if gs and (gs.broken or gs.searched or gs.robbed or gs.used or gs.isDestroyed) then
-            return false
-        end
-        if g.broken or g.searched or g.robbed or g.isCollected then
-            return false
-        end
+        if gs and (gs.broken or gs.searched or gs.robbed or gs.used or gs.isDestroyed) then return false end
+        if g.broken or g.searched or g.robbed or g.isCollected then return false end
         if isCash(g) then
             local left = getCashLeft(g)
             if left ~= nil and left <= 0 then return false end
             return g.objectId ~= nil
         end
-        if g.gizmoType == "ATM" or g.gizmoType == "Register" then
-            return g.position ~= nil
-        end
-        if g.gizmoType == "WorldSafe" then
-            return g.objectId ~= nil
-        end
+        if g.gizmoType == "ATM" or g.gizmoType == "Register" then return g.position ~= nil end
+        if g.gizmoType == "WorldSafe" or g.gizmoType == "GasStationSafe" then return g.objectId ~= nil end
+        if g.gizmoType == "PC Block" then return g.objectId ~= nil end
+        if type(g.AttemptCollect) == "function" or type(g.Interact) == "function" then return true end
         return false
     end
 
     local function interact(g)
         if type(g) ~= "table" then return false end
         local t = g.gizmoType
-
         if t == "ATM" or t == "Register" then
             local CP = ClientPlayers and ClientPlayers.Get()
             if CP and g.position then
@@ -2136,15 +2128,20 @@ do
             end
             return false
         end
-
-        if t == "WorldSafe" then
+        if t == "WorldSafe" or t == "GasStationSafe" then
             if g.objectId then
                 fireServer("gizmoInteraction", g.objectId, "OpenSafe")
                 return true
             end
             return false
         end
-
+        if t == "PC Block" then
+            if g.objectId then
+                fireServer("gizmoInteraction", g.objectId, "Search")
+                return true
+            end
+            return false
+        end
         if isCash(g) then
             if not g.objectId then return false end
             local count = (t == "CashPallet" or t == "MainCashPile") and 10 or 1
@@ -2152,139 +2149,313 @@ do
             pcall(invokeServer, "collectCurrency", ids)
             return true
         end
+        if type(g.AttemptCollect) == "function" then pcall(g.AttemptCollect, g); return true end
+        if type(g.Interact) == "function" then pcall(g.Interact, g); return true end
         return false
     end
 
-    local function tryBreakGlass(hrp)
-        if not FarmConfig.BreakGlass then return end
-        if not ClientProps or type(ClientProps.worldPropsById) ~= "table" then return end
-
-        local best, bestD = nil, 10
-        for _, v in pairs(ClientProps.worldPropsById) do
-            if type(v) == "table" and v.name == "JewelSpawn" and not v.isShattered then
-                local p = (v.GetPosition and v:GetPosition()) or
-                          (v.model and v.model.PrimaryPart and v.model.PrimaryPart.Position)
-                if p then
-                    local d = (hrp.Position - p).Magnitude
-                    if d < bestD then bestD = d; best = v end
-                end
-            end
-        end
-        if not best or best.isShattered then return end
-
-        local buzz = nil
-        local ok, items = pcall(ClientTools.GetItems)
-        if ok and type(items) == "table" then
-            for _, cat in pairs(items) do
-                if type(cat) == "table" then
-                    for guid, data in pairs(cat) do
-                        if data and (data.name == "Buzzsaw" or data.isBuzzSaw) then
-                            buzz = { guid = guid, data = data }
-                            break
-                        end
+    local function findBuzzsaw()
+        if not ClientTools then return nil end
+        local ok2, items = pcall(ClientTools.GetItems)
+        if not ok2 or type(items) ~= "table" then return nil end
+        for _, category in pairs(items) do
+            if type(category) == "table" then
+                for guid, data in pairs(category) do
+                    if data and (data.name == "Buzzsaw" or data.isBuzzSaw) then
+                        return { guid = guid, data = data }
                     end
                 end
-                if buzz then break end
             end
         end
-        if not buzz then return end
+        return nil
+    end
 
+    local function equipBuzzsaw()
+        local saw = findBuzzsaw()
+        if not saw then return false end
+        fireServer("equip", saw.guid)
         local CP = ClientPlayers and ClientPlayers.Get()
-        if not CP then return end
+        if CP then
+            pcall(function()
+                if setthreadidentity then setthreadidentity(2) end
+                CP:SetEquipped({ toolId = saw.guid, toolState = true })
+                if setthreadidentity then setthreadidentity(8) end
+            end)
+        end
+        return true
+    end
 
-        fireServer("equip", buzz.guid)
-        pcall(function()
-            setthreadidentity(2)
-            CP:SetEquipped({ toolId = buzz.guid, toolState = true })
-            setthreadidentity(8)
-        end)
+    local function breakGlass(hrp)
+        if not ClientProps or type(ClientProps.worldPropsById) ~= "table" then return false end
+        local best, bestD = nil, 12
+        for _, prop in pairs(ClientProps.worldPropsById) do
+            if type(prop) == "table" and prop.name == "JewelSpawn" and not prop.isShattered then
+                local pos = (prop.GetPosition and prop:GetPosition())
+                    or (prop.model and prop.model.PrimaryPart and prop.model.PrimaryPart.Position)
+                if pos then
+                    local d = (hrp.Position - pos).Magnitude
+                    if d < bestD then bestD = d; best = prop end
+                end
+            end
+        end
+        if not best then return false end
+        equipBuzzsaw()
+        local CP = ClientPlayers and ClientPlayers.Get()
+        if not CP then return false end
+        local pos = (best.GetPosition and best:GetPosition())
+            or (best.model and best.model.PrimaryPart and best.model.PrimaryPart.Position)
+        if pos then
+            pcall(function() CP:Melee(pos) end)
+            return true
+        end
+        return false
+    end
 
-        local p = (best.GetPosition and best:GetPosition()) or
-                  (best.model and best.model.PrimaryPart and best.model.PrimaryPart.Position)
-        if p then
-            pcall(function() CP:Melee(p) end)
+    local FarmConfig = {
+        Enabled = false,
+        Range   = 15,
+        Options = {
+            "GasStationSafe", "ATM", "Register", "Lootable", "WorldItem",
+            "WorldBag", "MainCashPile", "CashPallet", "Cash", "MilitaryChest",
+            "PelicanCase", "WorldSafe", "PC Block", "WorldItemSpawn", "Break Glass",
+        },
+    }
+
+    local AutoFarmConfig = {
+        Enabled = false,
+        Options = {
+            "GasStationSafe", "ATM", "Register", "Lootable", "WorldItem",
+            "WorldBag", "MainCashPile", "CashPallet", "Cash", "MilitaryChest",
+            "PelicanCase", "WorldSafe", "PC Block", "WorldItemSpawn",
+        },
+        SellPos = Vector3.new(-2826, 37, 1738),
+        BagFullThreshold = 0.8,
+    }
+
+    local FARM_SPOTS = {
+        CFrame.new(-387,     612,  -1194),
+        CFrame.new(-3139,    36,   1638),
+        CFrame.new(212,      39.7, -2917.9),
+        CFrame.new(-1677.8,  181,  3336.4),
+        CFrame.new(-490.5,   128,  -1677.2),
+        CFrame.new(-940.7,   73.9, -1541.6),
+        CFrame.new(-484.2,   44.1, -1956.6),
+    }
+
+    local function matchesOption(g, options)
+        for _, opt in ipairs(options) do
+            if opt == g.gizmoType then return true end
+            if opt == "Break Glass" and g.isJewelry then return true end
+        end
+        return false
+    end
+
+    local function tweenTo(hrp, duration, targetCF)
+        if not hrp or not hrp.Parent then return end
+        if not FarmConfig.Enabled and not AutoFarmConfig.Enabled then return end
+        local tw = TweenService:Create(hrp, TweenInfo.new(duration, Enum.EasingStyle.Linear), { CFrame = targetCF })
+        tw:Play()
+        while tw.PlaybackState == Enum.PlaybackState.Playing do
+            if not FarmConfig.Enabled and not AutoFarmConfig.Enabled then tw:Cancel() return end
+            task.wait(0.05)
         end
     end
 
     local function tickFarmAura()
-        if not FarmReady then return end
-        local char, hrp = getMyChar()
+        local hrp = getHRP()
         if not hrp then return end
-
-        tryBreakGlass(hrp)
-
+        local hasBuzz = findBuzzsaw() ~= nil
+        for _, opt in ipairs(FarmConfig.Options) do
+            if opt == "Break Glass" and hasBuzz then breakGlass(hrp) break end
+        end
+        if #FarmConfig.Options == 0 then return end
         local gizmos = getGizmos(hrp)
         local cashList, otherList = {}, {}
-
         for _, g in ipairs(gizmos) do
-            if g.dist < FarmConfig.Range and canInteract(g) then
-                if isCash(g) and FarmConfig.Cash then
-                    table.insert(cashList, g)
-                elseif (g.gizmoType == "ATM" or g.gizmoType == "Register") and FarmConfig.ATM then
-                    table.insert(otherList, g)
-                elseif g.gizmoType == "WorldSafe" and FarmConfig.Safe then
-                    table.insert(otherList, g)
-                end
+            if g.dist < FarmConfig.Range and canInteract(g) and matchesOption(g, FarmConfig.Options) then
+                if isCash(g) then table.insert(cashList, g)
+                else table.insert(otherList, g) end
             end
         end
-
         for i = 1, #cashList do interact(cashList[i]) end
         table.sort(otherList, function(a, b) return a.dist < b.dist end)
         for i = 1, math.min(3, #otherList) do interact(otherList[i]) end
     end
 
-    -- ═══════════ 主循环 ═══════════
-    RunService.Heartbeat:Connect(function()
-        if not FarmConfig.Enabled then return end
-        pcall(tickFarmAura)
+    task.spawn(function()
+        while true do
+            if FarmConfig.Enabled then pcall(tickFarmAura) end
+            task.wait(0.03)
+        end
     end)
 
-    -- ═══════════ 挂载控件到 Tabs.lc ═══════════
-    if not Tabs or not Tabs.lc then
-        warn("[FarmAura] 没找到 Tabs.lc，请先在 Tabs 表里加 lc 标签")
-    else
+    local function getBagFullPercent()
+        local ok2, data = pcall(function()
+            return require(ReplicatedStorage.Devv).load("ClientData").Get()
+        end)
+        if not ok2 or type(data) ~= "table" or type(data.bag) ~= "table" then return 0 end
+        local totalWeight = 0
+        if type(data.bag.contents) == "table" then
+            local Objects = require(ReplicatedStorage.Shared.Wanted.Indicies.Objects)
+            for _, itemName in pairs(data.bag.contents) do
+                if type(itemName) == "string" then
+                    local w = Objects.GetDataProperty(itemName, "weight")
+                    if type(w) == "number" then totalWeight += w end
+                end
+            end
+        end
+        local UpgradeUtil = require(ReplicatedStorage.Shared.Wanted.Modules.UpgradeUtil)
+        local cap = UpgradeUtil.GetBagCapacity()
+        if type(cap) ~= "number" or cap <= 0 then
+            cap = type(data.bag.capacity) == "number" and data.bag.capacity or 1
+        end
+        return totalWeight / cap
+    end
+
+    local function isBagFull(threshold)
+        threshold = threshold or 0.8
+        if LocalPlayer:GetAttribute("isBagFull") then return true end
+        if not LocalPlayer:GetAttribute("hasLootBag") then return false end
+        return getBagFullPercent() >= threshold
+    end
+
+    local function sellLoot()
+        local hrp = getHRP()
+        if not hrp then return false end
+        tweenTo(hrp, 1, hrp.CFrame + Vector3.new(0, 150, 0))
+        if not AutoFarmConfig.Enabled then return true end
+        hrp = getHRP()
+        if not hrp then return true end
+        local dest = Vector3.new(AutoFarmConfig.SellPos.X, hrp.Position.Y, AutoFarmConfig.SellPos.Z)
+        tweenTo(hrp, (hrp.Position - dest).Magnitude / 100, CFrame.new(dest))
+        if not AutoFarmConfig.Enabled then return true end
+        hrp = getHRP()
+        if not hrp then return true end
+        tweenTo(hrp, 3, CFrame.new(AutoFarmConfig.SellPos))
+        if not AutoFarmConfig.Enabled then return true end
+        pcall(invokeServer, "sellLoot", "Ofy")
+        return true
+    end
+
+    local autoFarmRunning = false
+    local function startAutoFarm()
+        if autoFarmRunning then return end
+        autoFarmRunning = true
+        task.spawn(function()
+            while AutoFarmConfig.Enabled do
+                pcall(function()
+                    local hrp = getHRP()
+                    if not hrp or not getHum() then return end
+                    if isBagFull(AutoFarmConfig.BagFullThreshold) then sellLoot() return end
+                    local spot = FARM_SPOTS[math.random(1, #FARM_SPOTS)]
+                    tweenTo(hrp, 1, hrp.CFrame + Vector3.new(0, 150, 0))
+                    if not AutoFarmConfig.Enabled then return end
+                    hrp = getHRP()
+                    if not hrp then return end
+                    local horizontal = Vector3.new(spot.X, hrp.Position.Y, spot.Z)
+                    tweenTo(hrp, (hrp.Position - horizontal).Magnitude / 100, CFrame.new(horizontal))
+
+                    local hasBuzz = findBuzzsaw() ~= nil
+                    local gizmos = getGizmos(getHRP())
+                    local targets = {}
+                    for _, g in ipairs(gizmos) do
+                        if canInteract(g) and matchesOption(g, AutoFarmConfig.Options) then
+                            table.insert(targets, g)
+                        end
+                    end
+                    table.sort(targets, function(a, b) return a.dist < b.dist end)
+                    for _, g in ipairs(targets) do
+                        if not AutoFarmConfig.Enabled then return end
+                        if isBagFull(AutoFarmConfig.BagFullThreshold) then sellLoot(); return end
+                        hrp = getHRP()
+                        if not hrp then return end
+                        local targetCF = g.cframe and (g.cframe * CFrame.new(0, 1, -1)) or CFrame.new(g.position)
+                        tweenTo(hrp, math.max((hrp.Position - targetCF.Position).Magnitude / 60, 0.05), targetCF)
+                        if g.isJewelry and hasBuzz then
+                            breakGlass(hrp)
+                            task.wait(0.35)
+                        end
+                        interact(g)
+                        local waitTime = (g.gizmoType == "ATM" or g.gizmoType == "Register") and 2.5 or 0.6
+                        task.wait(waitTime)
+                    end
+                end)
+                task.wait(0.1)
+            end
+            autoFarmRunning = false
+        end)
+    end
+
+    local function stopAutoFarm()
+        AutoFarmConfig.Enabled = false
+    end
+
+    -- ============================================
+    -- WindUI 控件（挂 Tabs.lc）
+    -- ============================================
+    Tabs.lc:Section({ Title = "农场光环" })
+
+    Tabs.lc:Toggle({
+        Title = "开启农场光环",
+        Desc = "",
+        Default = false,
+        Callback = function(v) FarmConfig.Enabled = v end,
+    })
+
+    Tabs.lc:Slider({
+        Title = "触发距离",
+        Value = { Min = 5, Max = 50, Default = 15 },
+        Step = 1,
+        Suffix = " 格",
+        Callback = function(v) FarmConfig.Range = v end,
+    })
+
+    Tabs.lc:Section({ Title = "交互类型" })
+
+    local optionListFarm = {
+        "GasStationSafe", "ATM", "Register", "Lootable", "WorldItem",
+        "WorldBag", "MainCashPile", "CashPallet", "Cash", "MilitaryChest",
+        "PelicanCase", "WorldSafe", "PC Block", "WorldItemSpawn", "Break Glass",
+    }
+    for _, opt in ipairs(optionListFarm) do
         Tabs.lc:Toggle({
-            Title = "开启农场光环",
-            Desc = "自动捡现金、开 ATM、开保险箱、破玻璃",
-            Value = false,
-            Callback = function(v) FarmConfig.Enabled = v end,
-        })
-
-        Tabs.lc:Slider({
-            Title = "触发距离",
-            Value = { Min = 5, Max = 50, Default = 10 },
-            Step = 1,
-            Suffix = " 格",
-            Callback = function(v) FarmConfig.Range = v end,
-        })
-
-        Tabs.lc:Divider()
-
-        Tabs.lc:Toggle({
-            Title = "现金 / 钱堆",
-            Value = true,
-            Callback = function(v) FarmConfig.Cash = v end,
-        })
-
-        Tabs.lc:Toggle({
-            Title = "ATM / 收银机",
-            Value = true,
-            Callback = function(v) FarmConfig.ATM = v end,
-        })
-
-        Tabs.lc:Toggle({
-            Title = "世界保险箱",
-            Value = true,
-            Callback = function(v) FarmConfig.Safe = v end,
-        })
-
-        Tabs.lc:Toggle({
-            Title = "破玻璃珠宝",
-            Desc = "自动切 Buzzsaw 打碎珠宝柜玻璃",
-            Value = true,
-            Callback = function(v) FarmConfig.BreakGlass = v end,
+            Title = GIZMO_NAME_MAP[opt] or opt,
+            Default = true,
+            Callback = function(v)
+                if v then
+                    if not table.find(FarmConfig.Options, opt) then
+                        table.insert(FarmConfig.Options, opt)
+                    end
+                else
+                    for i = #FarmConfig.Options, 1, -1 do
+                        if FarmConfig.Options[i] == opt then
+                            table.remove(FarmConfig.Options, i)
+                        end
+                    end
+                end
+            end,
         })
     end
+
+    Tabs.lc:Section({ Title = "自动农场" })
+
+    Tabs.lc:Toggle({
+        Title = "开启自动农场",
+        Desc = "自动跑图捡东西，背包满时自动出售",
+        Default = false,
+        Callback = function(v)
+            AutoFarmConfig.Enabled = v
+            if v then startAutoFarm() else stopAutoFarm() end
+        end,
+    })
+
+    Tabs.lc:Slider({
+        Title = "背包出售阈值",
+        Desc = "背包填充达到此百分比时自动出售",
+        Value = { Min = 0.5, Max = 1, Default = 0.8 },
+        Step = 0.05,
+        Callback = function(v) AutoFarmConfig.BagFullThreshold = v end,
+    })
 end
 ------远程击杀*-------
 Tabs.jx:Button({
@@ -2590,6 +2761,177 @@ Tabs.gh:Slider({
     Step = 0.05,
     Callback = function(v) Config.E39_Interval = v end,
 })
+-- ============================================
+-- 从 amibot 提取的「辅助瞄准」，全部挂到 fz
+-- ============================================
+do
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local UserInputService  = game:GetService("UserInputService")
+
+    -- ============================================
+    -- 加载 Wanted 内部模块（失败不崩）
+    -- ============================================
+    local ClientSettings, SettingsData, AimAssistModule
+
+    local modulesOk = pcall(function()
+        local DevvFolder = ReplicatedStorage:FindFirstChild("Devv") or ReplicatedStorage:FindFirstChild("devv")
+        if not DevvFolder then error("Devv 不存在") end
+        local DevvModule = require(DevvFolder)
+        local load = DevvModule.load
+
+        ClientSettings  = load("ClientSettings")
+        SettingsData    = require(ReplicatedStorage.Shared.Wanted.Indicies.SettingsData)
+        AimAssistModule = require(ReplicatedStorage.Client.Wanted.Objects.ClientTool.Components.Tools.Guns.AimAssist)
+    end)
+
+    -- ============================================
+    -- 通用工具
+    -- ============================================
+    local function getChar() return LocalPlayer.Character end
+    local function getHRP()  local c = getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
+
+    local function getPlayerList()
+        local list = {}
+        for _, p in ipairs(Players:GetPlayers()) do
+            if p ~= LocalPlayer then table.insert(list, p) end
+        end
+        return list
+    end
+
+    -- ============================================
+    -- 辅助瞄准
+    -- ============================================
+    local AA = {
+        Enabled = false,
+        Part = "Body",
+        SpeedX = 2.7,
+        SpeedY = 1,
+        PredictionX = 2.8,
+        PredictionY = 2.6,
+        Range = 300,
+    }
+    local originalAimStep = AimAssistModule and AimAssistModule.Step
+
+    local function setAssistSensitivity(v)
+        pcall(function()
+            local setting = SettingsData.settingDataByName and SettingsData.settingDataByName.assistSensitivity
+            if type(setting) == "table" then setting.defaultValue = v end
+            if type(ClientSettings.Set) == "function" then
+                ClientSettings.Set("assistSensitivity", v)
+            end
+        end)
+    end
+
+    local function getViewportCenter(cam)
+        if UserInputService.TouchEnabled then
+            return cam.ViewportSize.X * 0.5, cam.ViewportSize.Y * 0.5
+        end
+        local m = UserInputService:GetMouseLocation()
+        return m.X, m.Y
+    end
+
+    local function aimStep(self, dt)
+        local tool = self and self.tool
+        local ts = tool and tool.toolState
+        if not ts or (ts.ammo or 0) <= 0 then
+            return originalAimStep(self, dt)
+        end
+        local char, hrp, cam = getChar(), getHRP(), workspace.CurrentCamera
+        if not char or not hrp or not cam then
+            return originalAimStep(self, dt)
+        end
+
+        local cFrame = cam.CFrame
+        local vp = cam.ViewportSize
+        local sx, sy = getViewportCenter(cam)
+        local screenHalf = math.max(1, math.min(vp.X, vp.Y) * 0.5)
+        local bestScore, bestYaw, bestPitch = math.huge, nil, nil
+
+        for _, plr in ipairs(getPlayerList()) do
+            local pchar = plr.Character
+            local phum = pchar and pchar:FindFirstChildOfClass("Humanoid")
+            local phrp = pchar and pchar:FindFirstChild("HumanoidRootPart")
+            local phead = pchar and pchar:FindFirstChild("Head")
+            if pchar and phum and phum.Health > 0 and phrp then
+                local target
+                if AA.Part == "Head" then target = phead or phrp
+                else
+                    local ut = pchar:FindFirstChild("UpperTorso") or pchar:FindFirstChild("Torso") or phrp
+                    target = ut
+                end
+
+                local dist = (hrp.Position - target.Position).Magnitude
+                if dist <= AA.Range then
+                    local predict = target.Position
+                        + (target.AssemblyLinearVelocity or Vector3.zero) * (AA.PredictionX * 0.01)
+                    local rel = cFrame:PointToObjectSpace(predict)
+                    local mag = rel.Magnitude
+                    if mag > 0.35 then
+                        local inv = 1 / mag
+                        local fwd = -rel.Z * inv
+                        if fwd > 0.02 then
+                            local sp = cam:WorldToViewportPoint(predict)
+                            local dx = sp.X - sx
+                            local dy = sp.Y - sy
+                            local pixDist = math.sqrt(dx * dx + dy * dy)
+                            local score = (pixDist / screenHalf) ^ 2 * 1.55
+                                + (dist / math.max(1, AA.Range)) ^ 2 * 0.35
+                            if score < bestScore then
+                                local yaw = math.atan2(rel.X * inv, fwd)
+                                local pitch = math.atan2(rel.Y * inv, fwd)
+                                bestYaw, bestPitch = math.deg(yaw), math.deg(pitch)
+                                bestScore = score
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        if bestYaw then
+            local mod = 1
+            if tool and tool.GetData then
+                local ok, data = pcall(tool.GetData, tool)
+                if ok and data and data.aimAssistMod then mod = data.aimAssistMod end
+            end
+            local spX = AA.SpeedX * mod * dt * 10
+            local spY = AA.SpeedY * mod * dt * 10
+            local curX = LocalPlayer:GetAttribute("xAngle") or 0
+            local curY = LocalPlayer:GetAttribute("yAngle") or 0
+            LocalPlayer:SetAttribute("xAngle", (curX - bestYaw * spX) % 360)
+            LocalPlayer:SetAttribute("yAngle", math.clamp(curY + bestPitch * spY, -80, 80))
+        end
+    end
+
+    Tabs.fz:Section({ Title = "辅助瞄准" })
+
+    Tabs.fz:Toggle({ Title = "启用辅助瞄准", Default = false, Callback = function(v)
+        AA.Enabled = v
+        if not AimAssistModule then return end
+        if v then
+            AimAssistModule.Step = aimStep
+        else
+            AimAssistModule.Step = originalAimStep
+        end
+    end })
+
+    Tabs.fz:Dropdown({ Title = "瞄准部位", Values = {"Head", "Body"}, Default = "Body", Callback = function(v) AA.Part = v end })
+
+    Tabs.fz:Slider({ Title = "水平速度", Value = { Min = 0.1, Max = 5, Default = 2.7 }, Step = 0.1, Callback = function(v)
+        AA.SpeedX = v
+        setAssistSensitivity(v)
+    end })
+
+    Tabs.fz:Slider({ Title = "垂直速度", Value = { Min = 0.1, Max = 5, Default = 1 }, Step = 0.1, Callback = function(v) AA.SpeedY = v end })
+
+    Tabs.fz:Slider({ Title = "水平预判", Value = { Min = 0, Max = 7, Default = 2.8 }, Step = 0.01, Callback = function(v) AA.PredictionX = v end })
+
+    Tabs.fz:Slider({ Title = "垂直预判", Value = { Min = 0, Max = 7, Default = 2.6 }, Step = 0.01, Callback = function(v) AA.PredictionY = v end })
+
+    Tabs.fz:Slider({ Title = "范围", Value = { Min = 10, Max = 1000, Default = 300 }, Step = 1, Callback = function(v) AA.Range = v end })
+
+    print("[辅助瞄准] 已搬到 fz 标签页")
+end
 -- ========== WindUI bot标签页UI控件 ==========
 Tabs.bot:Paragraph({
     Title = "🎯自瞄与子弹追踪",
