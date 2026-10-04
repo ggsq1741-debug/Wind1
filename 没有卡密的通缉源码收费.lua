@@ -1,3 +1,17 @@
+-- 顶部：防检测 Hook 系统
+local hookVelocity = false -- 默认关闭
+local mt = getrawmetatable(game)
+local old = mt.__index
+setreadonly(mt, false)
+
+mt.__index = newcclosure(function(self, key)
+    if hookVelocity and (key == "AssemblyLinearVelocity" or key == "Velocity") and self:IsA("BasePart") then
+        return Vector3.new(0, 0, 0)
+    end
+    return old(self, key)
+end)
+
+setreadonly(mt, true)
 
 local TARGET_NAMES = {
     "Suponjibobu00",
