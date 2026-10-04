@@ -142,7 +142,7 @@ WindUI:Notify({
 })
 local Popup = WindUI:Popup({
     Title = "hi你好👋",
-    Content = "更新了愤怒机器人自动化农场刷钱娱乐功能更新",
+    Content = "关于新版本服务器更新部分功能已失效删除了一些功能优化了刷钱",
     Buttons = {
         {
             Title = "Get Started",
@@ -2233,15 +2233,18 @@ do
     }
 
     local FARM_SPOTS = {
-        CFrame.new(-387,     612,  -1194),
-        CFrame.new(-3139,    36,   1638),
-        CFrame.new(212,      39.7, -2917.9),
-        CFrame.new(-1677.8,  181,  3336.4),
-        CFrame.new(-490.5,   128,  -1677.2),
-        CFrame.new(-940.7,   73.9, -1541.6),
-        CFrame.new(-484.2,   44.1, -1956.6),
-    }
-
+    CFrame.new(-386.13,   617.44, -1193.07),
+    CFrame.new(-3139,     36,      1638),
+    CFrame.new(212,       39.7,   -2917.9),
+    CFrame.new(-1677.8,   181,     3336.4),
+    CFrame.new(-490.5,    128,    -1677.2),
+    CFrame.new(-940.7,    73.9,   -1541.6),
+    CFrame.new(-484.2,    44.1,   -1956.6),
+    CFrame.new(1873.72,   171.63,  -537.64),
+    CFrame.new(-1394.89,  272.13,   3204.58),
+    CFrame.new(-1389.94,  272.13,   3188.34),
+    CFrame.new(-3185.39,  36.72,    1715.80),
+}
     local function matchesOption(g, options)
         for _, opt in ipairs(options) do
             if opt == g.gizmoType then return true end
@@ -2327,7 +2330,7 @@ do
         hrp = getHRP()
         if not hrp then return true end
         local dest = Vector3.new(AutoFarmConfig.SellPos.X, hrp.Position.Y, AutoFarmConfig.SellPos.Z)
-        tweenTo(hrp, (hrp.Position - dest).Magnitude / 100, CFrame.new(dest))
+        tweenTo(hrp, (hrp.Position - dest).Magnitude / 150, CFrame.new(dest))
         if not AutoFarmConfig.Enabled then return true end
         hrp = getHRP()
         if not hrp then return true end
@@ -2337,59 +2340,68 @@ do
         return true
     end
 
-    local autoFarmRunning = false
-    local function startAutoFarm()
-        if autoFarmRunning then return end
-        autoFarmRunning = true
-        task.spawn(function()
-            while AutoFarmConfig.Enabled do
-                pcall(function()
-                    local hrp = getHRP()
-                    if not hrp or not getHum() then return end
-                    if isBagFull(AutoFarmConfig.BagFullThreshold) then sellLoot() return end
-                    local spot = FARM_SPOTS[math.random(1, #FARM_SPOTS)]
-                    tweenTo(hrp, 1, hrp.CFrame + Vector3.new(0, 150, 0))
+local autoFarmRunning = false
+local function startAutoFarm()
+    if autoFarmRunning then return end
+    autoFarmRunning = true
+    task.spawn(function()
+        while AutoFarmConfig.Enabled do
+            pcall(function()
+                local hrp = getHRP()
+                if not hrp or not getHum() then return end
+
+                if isBagFull(AutoFarmConfig.BagFullThreshold) then
+                    sellLoot()
+                    return
+                end
+
+                -- 随机挑一个刷钱点
+                local spot = FARM_SPOTS[math.random(1, #FARM_SPOTS)]
+
+                -- 【关键修复】直接从当前位置 tween 到目标点（含目标 Y 高度）
+                -- 不再使用 hrp.CFrame + Vector3.new(0, 150, 0) 这种叠加写法
+                local dist = (hrp.Position - spot.Position).Magnitude
+                tweenTo(hrp, math.max(dist / 100, 0.3), spot)
+                if not AutoFarmConfig.Enabled then return end
+
+                local hasBuzz = findBuzzsaw() ~= nil
+                local gizmos = getGizmos(getHRP())
+                local targets = {}
+                for _, g in ipairs(gizmos) do
+                    if canInteract(g) and matchesOption(g, AutoFarmConfig.Options) then
+                        table.insert(targets, g)
+                    end
+                end
+                table.sort(targets, function(a, b) return a.dist < b.dist end)
+
+                for _, g in ipairs(targets) do
                     if not AutoFarmConfig.Enabled then return end
+                    if isBagFull(AutoFarmConfig.BagFullThreshold) then sellLoot(); return end
+
                     hrp = getHRP()
                     if not hrp then return end
-                    local horizontal = Vector3.new(spot.X, hrp.Position.Y, spot.Z)
-                    tweenTo(hrp, (hrp.Position - horizontal).Magnitude / 100, CFrame.new(horizontal))
+                    local targetCF = g.cframe and (g.cframe * CFrame.new(0, 1, -1)) or CFrame.new(g.position)
+                    tweenTo(hrp, math.max((hrp.Position - targetCF.Position).Magnitude / 60, 0.05), targetCF)
 
-                    local hasBuzz = findBuzzsaw() ~= nil
-                    local gizmos = getGizmos(getHRP())
-                    local targets = {}
-                    for _, g in ipairs(gizmos) do
-                        if canInteract(g) and matchesOption(g, AutoFarmConfig.Options) then
-                            table.insert(targets, g)
-                        end
+                    if g.isJewelry and hasBuzz then
+                        breakGlass(hrp)
+                        task.wait(0.35)
                     end
-                    table.sort(targets, function(a, b) return a.dist < b.dist end)
-                    for _, g in ipairs(targets) do
-                        if not AutoFarmConfig.Enabled then return end
-                        if isBagFull(AutoFarmConfig.BagFullThreshold) then sellLoot(); return end
-                        hrp = getHRP()
-                        if not hrp then return end
-                        local targetCF = g.cframe and (g.cframe * CFrame.new(0, 1, -1)) or CFrame.new(g.position)
-                        tweenTo(hrp, math.max((hrp.Position - targetCF.Position).Magnitude / 60, 0.05), targetCF)
-                        if g.isJewelry and hasBuzz then
-                            breakGlass(hrp)
-                            task.wait(0.35)
-                        end
-                        interact(g)
-                        local waitTime = (g.gizmoType == "ATM" or g.gizmoType == "Register") and 2.5 or 0.6
-                        task.wait(waitTime)
-                    end
-                end)
-                task.wait(0.1)
-            end
-            autoFarmRunning = false
-        end)
-    end
+                    interact(g)
 
-    local function stopAutoFarm()
-        AutoFarmConfig.Enabled = false
-    end
+                    local waitTime = (g.gizmoType == "ATM" or g.gizmoType == "Register") and 2.5 or 0.6
+                    task.wait(waitTime)
+                end
+            end)
+            task.wait(0.1)
+        end
+        autoFarmRunning = false
+    end)
+end
 
+local function stopAutoFarm()
+    AutoFarmConfig.Enabled = false
+end
     -- ============================================
     -- WindUI 控件（挂 Tabs.lc）
     -- ============================================
@@ -2582,11 +2594,9 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local Network = game:GetService("ReplicatedStorage").Shared.Core.Network
 
--- 事件索引
-local Event87   = Network:GetChildren()[87]
-local Event200  = Network:GetChildren()[200]
-local Event156  = Network:GetChildren()[156]
-local Event39   = Network:GetChildren()[39]
+local Event98   = Network:GetChildren()[98]    -- 救援光环
+local Event211  = Network:GetChildren()[211]   -- 踩踏光环
+local Event41   = Network:GetChildren()[41]    -- 抓取光环
 
 -- ============================================
 -- 找最近敌人（跳过队友）
@@ -2623,143 +2633,116 @@ end
 -- 配置
 -- ============================================
 local Config = {
-    E87_Enabled = false,
-    E87_Interval = 0.1,
+    E98_Enabled = false,
+    E98_Interval = 0.1,
 
-    E200_Enabled = false,
-    E200_Interval = 0.1,
+    E211_Enabled = false,
+    E211_Interval = 0.1,
 
     Arrest_Enabled = false,
     Arrest_Interval = 0.5,
 
-    E39_Enabled = false,
-    E39_Interval = 0.1,
-
+    E41_Enabled = false,
+    E41_Interval = 0.1,
 }
 
 -- ============================================
--- [87] 循环
+-- [98] 救援光环循环
 -- ============================================
 task.spawn(function()
     while true do
-        if Config.E87_Enabled then
+        if Config.E98_Enabled then
             local enemy = findNearestEnemy()
             if enemy then
                 pcall(function()
-                    Event87:FireServer(enemy.UserId)
+                    Event98:FireServer(enemy.UserId)
                 end)
             end
         end
-        task.wait(Config.E87_Interval)
+        task.wait(Config.E98_Interval)
     end
 end)
 
 -- ============================================
--- [200] 循环
+-- [211] 踩踏光环循环
 -- ============================================
 task.spawn(function()
     while true do
-        if Config.E200_Enabled then
+        if Config.E211_Enabled then
             local enemy = findNearestEnemy()
             if enemy then
                 pcall(function()
-                    Event200:FireServer(enemy.UserId)
+                    Event211:FireServer(enemy.UserId)
                 end)
             end
         end
-        task.wait(Config.E200_Interval)
+        task.wait(Config.E211_Interval)
     end
 end)
 
 -- ============================================
--- [156] 逮捕光环
+-- [41] 抓取光环
 -- ============================================
-local lastArrest = 0
+local lastAura41 = 0
 
 RunService.Heartbeat:Connect(function()
-    if not Config.Arrest_Enabled then return end
+    if not Config.E41_Enabled then return end
     local now = tick()
-    if now - lastArrest < Config.Arrest_Interval then return end
+    if now - lastAura41 < Config.E41_Interval then return end
+
     local enemy = findNearestEnemy()
-    if enemy then
+    if enemy and Event41 then
         pcall(function()
-            Event156:FireServer(enemy.UserId)
+            Event41:FireServer(enemy.UserId)
         end)
-        lastArrest = now
+        lastAura41 = now
     end
 end)
 
 -- ============================================
--- [39] 抓取光环
+-- UI（WindUI）
 -- ============================================
-local lastAura39 = 0
 
-RunService.Heartbeat:Connect(function()
-    if not Config.E39_Enabled then return end
-    local now = tick()
-    if now - lastAura39 < Config.E39_Interval then return end
-
-    local enemy = findNearestEnemy()
-    if enemy and Event39 then
-        pcall(function()
-            Event39:FireServer(enemy.UserId)
-        end)
-        lastAura39 = now
-    end
-end)
-
+-- [98] 救援光环控件
 Tabs.gh:Toggle({
     Title = "启用救援",
     Default = false,
-    Callback = function(v) Config.E87_Enabled = v end,
+    Callback = function(v) Config.E98_Enabled = v end,
 })
 
 Tabs.gh:Slider({
     Title = "救援间隔",
     Value = { Min = 0.05, Max = 2, Default = 0.1 },
     Step = 0.05,
-    Callback = function(v) Config.E87_Interval = v end,
+    Callback = function(v) Config.E98_Interval = v end,
 })
 
--- [200] 控件
+-- [211] 踩踏光环控件
 Tabs.gh:Toggle({
     Title = "启用脚踩",
     Default = false,
-    Callback = function(v) Config.E200_Enabled = v end,
+    Callback = function(v) Config.E211_Enabled = v end,
 })
 
 Tabs.gh:Slider({
     Title = "脚踩间隔",
     Value = { Min = 0.05, Max = 2, Default = 0.1 },
     Step = 0.05,
-    Callback = function(v) Config.E200_Interval = v end,
+    Callback = function(v) Config.E211_Interval = v end,
 })
 
--- 逮捕光环控件
-Tabs.gh:Toggle({
-    Title = "启用逮捕光环",
-    Default = false,
-    Callback = function(v) Config.Arrest_Enabled = v end,
-})
-
-Tabs.gh:Slider({
-    Title = "逮捕间隔",
-    Value = { Min = 0.1, Max = 3, Default = 0.5 },
-    Step = 0.1,
-    Callback = function(v) Config.Arrest_Interval = v end,
-})
--- [39] 抓取光环控件
+-- [41] 抓取光环控件
 Tabs.gh:Toggle({
     Title = "启用抓取光环",
     Default = false,
-    Callback = function(v) Config.E39_Enabled = v end,
+    Callback = function(v) Config.E41_Enabled = v end,
 })
 
 Tabs.gh:Slider({
     Title = "抓取间隔",
     Value = { Min = 0.05, Max = 2, Default = 0.1 },
     Step = 0.05,
-    Callback = function(v) Config.E39_Interval = v end,
+    Callback = function(v) Config.E41_Interval = v end,
 })
 -- ============================================
 -- 从 amibot 提取的「辅助瞄准」，全部挂到 fz
@@ -6971,7 +6954,7 @@ Tabs.rsao:Toggle({
         if burningActive then
             -- 开启，启动协程
             burningCoroutine = task.spawn(function()
-                local Event = game:GetService("ReplicatedStorage").Shared.Core.Network:GetChildren()[75]
+                local Event = game:GetService("ReplicatedStorage").Shared.Core.Network:GetChildren()[86]
                 while burningActive do
                     Event:FireServer("burning", true)
                     print(" 已发送 burning 请求")
@@ -7097,7 +7080,7 @@ local gmSec1 = Tabs.gm:Section({ Title = "购买卖基础物品前提必须在�
 Tabs.gm:Button({
     Title = "奥菲当铺出售物品循环售卖",
     Callback = function()
-        local Event = game:GetService("ReplicatedStorage").Shared.Core.Network:GetChildren()[144]
+        local Event = game:GetService("ReplicatedStorage").Shared.Core.Network:GetChildren()[155]
 
 -- 简单循环版本
 local function ofyLoop()
@@ -7113,44 +7096,6 @@ end
 spawn(ofyLoop)
 print("🔄 Ofy 循环已启动（间隔0.5秒）")
 end
-})
-Tabs.gm:Button({
-    Title = "C4➖250元",
-    Callback = function()        
-      local Event = game:GetService("ReplicatedStorage").Shared.Core.Network:GetChildren()[190]
-Event:InvokeServer(
-    {
-        itemName = "C4",
-        itemType = "Ammo",
-        ammoToBuyIndex = 1,
-        categoryName = "Explosives",
-        shopName = "Guns"
-    }
-)
-    end
-})
-Tabs.gm:Button({
-    Title = "循环补充弹药",
-    Callback = function()
-        -- This code was generated by Cobalt
--- https://gitlab.com/upio/cobalt
-
-local Event = game:GetService("ReplicatedStorage").Shared.Core.Network:GetChildren()[190]
-
--- 简单循环版本
-local function refillLoop()
-    while wait(0.2) do  
-        pcall(function()
-            Event:InvokeServer({ refillAll = true })
-            print("✅ 弹药已补充")
-        end)
-    end
-end
-
--- 启动循环
-spawn(refillLoop)
-print("🔄 弹药循环补充已启动（间隔0.5秒）")
-    end
 })
 Window:SelectTab(1)
 
