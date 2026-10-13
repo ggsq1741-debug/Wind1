@@ -174,7 +174,7 @@ WindUI:Notify({
 })
 local Popup = WindUI:Popup({
     Title = "hi你好👋",
-    Content = "关于新版本服务器更新：手动锤玻璃柜感谢汤姆猫赞助😘",
+    Content = "关于新版本服务器更新：手动锤玻璃柜感谢汤姆猫赞助😘2026/10/13优化辅助瞄准",
     Buttons = {
         {
             Title = "Get Started",
@@ -309,8 +309,12 @@ end
 LocalPlayer.CharacterAdded:Connect(updateChar)
 task.spawn(updateChar)
 Tabs.wj:Code({
-    Title = "你好",
-    Code = "QQ售后1125514261"
+    Title = "你好🟡",
+    Code = "QQ售后1109337389"
+})
+Tabs.wj:Code({
+    Title = "你好🟢",
+    Code = "dc群https://discord.gg/rEAd5RdNe请加入dc"
 })
 Tabs.wj:Input({
     Title = "超级快跑",
@@ -2989,7 +2993,8 @@ else
     })    
 end
 -- ============================================
--- 从 amibot 提取的「辅助瞄准」，全部挂到 fz
+-- 辅助瞄准（完整版）挂到 fz
+-- + 队伍阵营过滤 + 掩体检测
 -- ============================================
 do
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -3011,154 +3016,314 @@ do
         AimAssistModule = require(ReplicatedStorage.Client.Wanted.Objects.ClientTool.Components.Tools.Guns.AimAssist)
     end)
 
-    -- ============================================
-    -- 通用工具
-    -- ============================================
-    local function getChar() return LocalPlayer.Character end
-    local function getHRP()  local c = getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
+    if not modulesOk then
+        WindUI:Notify({
+            Title = "辅助瞄准",
+            Content = "未检测到 Wanted 模块，请进游戏后再执行",
+            Icon = "alert-circle",
+            Duration = 5,
+        })
+    else
+        -- ============================================
+        -- 通用工具
+        -- ============================================
+        local function getChar() return LocalPlayer.Character end
+        local function getHRP()  local c = getChar(); return c and c:FindFirstChild("HumanoidRootPart") end
 
-    local function getPlayerList()
-        local list = {}
-        for _, p in ipairs(Players:GetPlayers()) do
-            if p ~= LocalPlayer then table.insert(list, p) end
-        end
-        return list
-    end
-
-    -- ============================================
-    -- 辅助瞄准
-    -- ============================================
-    local AA = {
-        Enabled = false,
-        Part = "Body",
-        SpeedX = 2.7,
-        SpeedY = 1,
-        PredictionX = 2.8,
-        PredictionY = 2.6,
-        Range = 300,
-    }
-    local originalAimStep = AimAssistModule and AimAssistModule.Step
-
-    local function setAssistSensitivity(v)
-        pcall(function()
-            local setting = SettingsData.settingDataByName and SettingsData.settingDataByName.assistSensitivity
-            if type(setting) == "table" then setting.defaultValue = v end
-            if type(ClientSettings.Set) == "function" then
-                ClientSettings.Set("assistSensitivity", v)
+        local function getPlayerList()
+            local list = {}
+            for _, p in ipairs(Players:GetPlayers()) do
+                if p ~= LocalPlayer then table.insert(list, p) end
             end
-        end)
-    end
-
-    local function getViewportCenter(cam)
-        if UserInputService.TouchEnabled then
-            return cam.ViewportSize.X * 0.5, cam.ViewportSize.Y * 0.5
-        end
-        local m = UserInputService:GetMouseLocation()
-        return m.X, m.Y
-    end
-
-    local function aimStep(self, dt)
-        local tool = self and self.tool
-        local ts = tool and tool.toolState
-        if not ts or (ts.ammo or 0) <= 0 then
-            return originalAimStep(self, dt)
-        end
-        local char, hrp, cam = getChar(), getHRP(), workspace.CurrentCamera
-        if not char or not hrp or not cam then
-            return originalAimStep(self, dt)
+            return list
         end
 
-        local cFrame = cam.CFrame
-        local vp = cam.ViewportSize
-        local sx, sy = getViewportCenter(cam)
-        local screenHalf = math.max(1, math.min(vp.X, vp.Y) * 0.5)
-        local bestScore, bestYaw, bestPitch = math.huge, nil, nil
+        -- ============================================
+        -- 阵营/队伍判定
+        -- ============================================
+        local function getCamp(plr)
+            if not plr then return nil end
+            local team = plr:GetAttribute("currentTeam")
+            if type(team) == "string" then return team end
+            if plr.Team then return plr.Team.Name end
+            return nil
+        end
 
-        for _, plr in ipairs(getPlayerList()) do
-            local pchar = plr.Character
-            local phum = pchar and pchar:FindFirstChildOfClass("Humanoid")
-            local phrp = pchar and pchar:FindFirstChild("HumanoidRootPart")
-            local phead = pchar and pchar:FindFirstChild("Head")
-            if pchar and phum and phum.Health > 0 and phrp then
-                local target
-                if AA.Part == "Head" then target = phead or phrp
-                else
-                    local ut = pchar:FindFirstChild("UpperTorso") or pchar:FindFirstChild("Torso") or phrp
-                    target = ut
+        local function getMyCamp() return getCamp(LocalPlayer) end
+
+        local function isTeammate(plr)
+            if plr == LocalPlayer then return true end
+            local myCamp = getMyCamp()
+            local pCamp  = getCamp(plr)
+            if myCamp == nil or pCamp == nil then
+                return plr.Team ~= nil and plr.Team == LocalPlayer.Team
+            end
+            return myCamp == pCamp
+        end
+
+        -- ============================================
+        -- 掩体检测
+        -- ============================================
+        local rayParams = RaycastParams.new()
+        rayParams.FilterType = Enum.RaycastFilterType.Exclude
+        rayParams.IgnoreWater = true
+
+        local function checkWall(targetPart)
+            if not targetPart or not targetPart.Parent then return true end
+            local char = getChar()
+            if not char then return true end
+
+            local origin    = workspace.CurrentCamera.CFrame.Position
+            local targetPos = targetPart.Position
+            local dir       = targetPos - origin
+            local dist      = dir.Magnitude
+            if dist < 0.1 then return false end
+
+            rayParams.FilterDescendantsInstances = { char, workspace.CurrentCamera }
+            local result = workspace:Raycast(origin, dir, rayParams)
+            if not result then return false end
+
+            if result.Instance and result.Instance:IsDescendantOf(targetPart.Parent) then
+                return false
+            end
+            if (result.Position - targetPos).Magnitude <= 0.6 then
+                return false
+            end
+            return true
+        end
+
+        -- ============================================
+        -- 辅助瞄准
+        -- ============================================
+        local AA = {
+            Enabled = false, Part = "Body",
+            SpeedX = 2.7, SpeedY = 1,
+            PredictionX = 2.8, PredictionY = 2.6,
+            Range = 300,
+            IgnoreTeammate = true, CampFilter = "全部",
+            WallCheck = true,
+        }
+        local originalAimStep = AimAssistModule.Step
+
+        local function setAssistSensitivity(v)
+            pcall(function()
+                local setting = SettingsData.settingDataByName and SettingsData.settingDataByName.assistSensitivity
+                if type(setting) == "table" then setting.defaultValue = v end
+                if type(ClientSettings.Set) == "function" then
+                    ClientSettings.Set("assistSensitivity", v)
                 end
+            end)
+        end
 
-                local dist = (hrp.Position - target.Position).Magnitude
-                if dist <= AA.Range then
-                    local predict = target.Position
-                        + (target.AssemblyLinearVelocity or Vector3.zero) * (AA.PredictionX * 0.01)
-                    local rel = cFrame:PointToObjectSpace(predict)
-                    local mag = rel.Magnitude
-                    if mag > 0.35 then
-                        local inv = 1 / mag
-                        local fwd = -rel.Z * inv
-                        if fwd > 0.02 then
-                            local sp = cam:WorldToViewportPoint(predict)
-                            local dx = sp.X - sx
-                            local dy = sp.Y - sy
-                            local pixDist = math.sqrt(dx * dx + dy * dy)
-                            local score = (pixDist / screenHalf) ^ 2 * 1.55
-                                + (dist / math.max(1, AA.Range)) ^ 2 * 0.35
-                            if score < bestScore then
-                                local yaw = math.atan2(rel.X * inv, fwd)
-                                local pitch = math.atan2(rel.Y * inv, fwd)
-                                bestYaw, bestPitch = math.deg(yaw), math.deg(pitch)
-                                bestScore = score
+        local function getViewportCenter(cam)
+            if UserInputService.TouchEnabled then
+                return cam.ViewportSize.X * 0.5, cam.ViewportSize.Y * 0.5
+            end
+            local m = UserInputService:GetMouseLocation()
+            return m.X, m.Y
+        end
+
+        -- 指定阵营时不再受"忽略队友"二次过滤
+        local function isAllowedTarget(plr)
+            if AA.CampFilter ~= "全部" then
+                local camp = getCamp(plr)
+                if AA.CampFilter == "仅警察" and camp ~= "police"    then return false end
+                if AA.CampFilter == "仅帮派" and camp ~= "syndicate" then return false end
+                if AA.CampFilter == "仅平民" and camp ~= "civilian"  then return false end
+                return true
+            else
+                if AA.IgnoreTeammate and isTeammate(plr) then return false end
+                return true
+            end
+        end
+
+        local function aimStep(self, dt)
+            local tool = self and self.tool
+            local ts = tool and tool.toolState
+            if not ts or (ts.ammo or 0) <= 0 then
+                return originalAimStep(self, dt)
+            end
+            local char, hrp, cam = getChar(), getHRP(), workspace.CurrentCamera
+            if not char or not hrp or not cam then
+                return originalAimStep(self, dt)
+            end
+
+            local cFrame = cam.CFrame
+            local vp = cam.ViewportSize
+            local sx, sy = getViewportCenter(cam)
+            local screenHalf = math.max(1, math.min(vp.X, vp.Y) * 0.5)
+            local bestScore, bestYaw, bestPitch = math.huge, nil, nil
+
+            for _, plr in ipairs(getPlayerList()) do
+                if isAllowedTarget(plr) then
+                    local pchar = plr.Character
+                    local phum = pchar and pchar:FindFirstChildOfClass("Humanoid")
+                    local phrp = pchar and pchar:FindFirstChild("HumanoidRootPart")
+                    local phead = pchar and pchar:FindFirstChild("Head")
+                    if pchar and phum and phum.Health > 0 and phrp then
+                        local target
+                        if AA.Part == "Head" then target = phead or phrp
+                        else
+                            local ut = pchar:FindFirstChild("UpperTorso") or pchar:FindFirstChild("Torso") or phrp
+                            target = ut
+                        end
+
+                        local blocked = AA.WallCheck and checkWall(target) or false
+                        if not blocked then
+                            local dist = (hrp.Position - target.Position).Magnitude
+                            if dist <= AA.Range then
+                                local predict = target.Position
+                                    + (target.AssemblyLinearVelocity or Vector3.zero) * (AA.PredictionX * 0.01)
+                                local rel = cFrame:PointToObjectSpace(predict)
+                                local mag = rel.Magnitude
+                                if mag > 0.35 then
+                                    local inv = 1 / mag
+                                    local fwd = -rel.Z * inv
+                                    if fwd > 0.02 then
+                                        local sp = cam:WorldToViewportPoint(predict)
+                                        local dx = sp.X - sx
+                                        local dy = sp.Y - sy
+                                        local pixDist = math.sqrt(dx * dx + dy * dy)
+                                        local score = (pixDist / screenHalf) ^ 2 * 1.55
+                                            + (dist / math.max(1, AA.Range)) ^ 2 * 0.35
+                                        if score < bestScore then
+                                            local yaw = math.atan2(rel.X * inv, fwd)
+                                            local pitch = math.atan2(rel.Y * inv, fwd)
+                                            bestYaw, bestPitch = math.deg(yaw), math.deg(pitch)
+                                            bestScore = score
+                                        end
+                                    end
+                                end
                             end
                         end
                     end
                 end
             end
-        end
 
-        if bestYaw then
-            local mod = 1
-            if tool and tool.GetData then
-                local ok, data = pcall(tool.GetData, tool)
-                if ok and data and data.aimAssistMod then mod = data.aimAssistMod end
+            if bestYaw then
+                local mod = 1
+                if tool and tool.GetData then
+                    local ok, data = pcall(tool.GetData, tool)
+                    if ok and data and data.aimAssistMod then mod = data.aimAssistMod end
+                end
+                local spX = AA.SpeedX * mod * dt * 10
+                local spY = AA.SpeedY * mod * dt * 10
+                local curX = LocalPlayer:GetAttribute("xAngle") or 0
+                local curY = LocalPlayer:GetAttribute("yAngle") or 0
+                LocalPlayer:SetAttribute("xAngle", (curX - bestYaw * spX) % 360)
+                LocalPlayer:SetAttribute("yAngle", math.clamp(curY + bestPitch * spY, -80, 80))
             end
-            local spX = AA.SpeedX * mod * dt * 10
-            local spY = AA.SpeedY * mod * dt * 10
-            local curX = LocalPlayer:GetAttribute("xAngle") or 0
-            local curY = LocalPlayer:GetAttribute("yAngle") or 0
-            LocalPlayer:SetAttribute("xAngle", (curX - bestYaw * spX) % 360)
-            LocalPlayer:SetAttribute("yAngle", math.clamp(curY + bestPitch * spY, -80, 80))
         end
+
+        -- ============================================
+        -- UI 控件（全部挂到 Tabs.fz）
+        -- ============================================
+        Tabs.fz:Section({ Title = "辅助瞄准" })
+
+        Tabs.fz:Toggle({
+            Title = "启用辅助瞄准",
+            Desc = "",
+            Default = false,
+            Callback = function(v)
+                AA.Enabled = v
+                if v then
+                    AimAssistModule.Step = aimStep
+                    WindUI:Notify({ Title = "辅助瞄准", Content = "已开启", Icon = "check", Duration = 2 })
+                else
+                    AimAssistModule.Step = originalAimStep
+                    WindUI:Notify({ Title = "辅助瞄准", Content = "已关闭", Icon = "x", Duration = 2 })
+                end
+            end,
+        })
+
+        Tabs.fz:Dropdown({
+            Title = "瞄准部位",
+            Values = {"Head", "Body"},
+            Default = "Body",
+            Callback = function(v) AA.Part = v end,
+        })
+
+        Tabs.fz:Slider({
+            Title = "水平速度",
+            Value = { Min = 0.1, Max = 5, Default = 2.7 },
+            Step = 0.1,
+            IsTextbox = true,
+            Callback = function(v)
+                AA.SpeedX = v
+                setAssistSensitivity(v)
+            end,
+        })
+
+        Tabs.fz:Slider({
+            Title = "垂直速度",
+            Value = { Min = 0.1, Max = 5, Default = 1 },
+            Step = 0.1,
+            IsTextbox = true,
+            Callback = function(v) AA.SpeedY = v end,
+        })
+
+        Tabs.fz:Slider({
+            Title = "水平预判",
+            Value = { Min = 0, Max = 7, Default = 2.8 },
+            Step = 0.01,
+            IsTextbox = true,
+            Callback = function(v) AA.PredictionX = v end,
+        })
+
+        Tabs.fz:Slider({
+            Title = "垂直预判",
+            Value = { Min = 0, Max = 7, Default = 2.6 },
+            Step = 0.01,
+            IsTextbox = true,
+            Callback = function(v) AA.PredictionY = v end,
+        })
+
+        Tabs.fz:Slider({
+            Title = "范围",
+            Value = { Min = 10, Max = 1000, Default = 300 },
+            Step = 1,
+            IsTextbox = true,
+            Callback = function(v) AA.Range = v end,
+        })
+
+        Tabs.fz:Section({ Title = "队伍阵营过滤" })
+
+        Tabs.fz:Toggle({
+            Title = "忽略队友仅全部阵营时生效",
+            Desc = "",
+            Default = true,
+            Callback = function(v) AA.IgnoreTeammate = v end,
+        })
+
+        Tabs.fz:Dropdown({
+            Title = "只吸附指定阵营",
+            Desc = "",
+            Values = {"全部", "仅警察", "仅帮派", "仅平民"},
+            Default = "全部",
+            Callback = function(v) AA.CampFilter = v end,
+        })
+
+        Tabs.fz:Divider()
+
+        Tabs.fz:Section({ Title = "掩体检测" })
+
+        Tabs.fz:Toggle({
+            Title = "启用掩体检测",
+            Default = true,
+            Callback = function(v)
+                AA.WallCheck = v
+                WindUI:Notify({
+                    Title = "掩体检测",
+                    Content = v and "已开启" or "已关闭",
+                    Icon = v and "check" or "x",
+                    Duration = 2,
+                })
+            end,
+        })
+
+        print("")
     end
-
-    Tabs.fz:Section({ Title = "辅助瞄准" })
-
-    Tabs.fz:Toggle({ Title = "启用辅助瞄准", Default = false, Callback = function(v)
-        AA.Enabled = v
-        if not AimAssistModule then return end
-        if v then
-            AimAssistModule.Step = aimStep
-        else
-            AimAssistModule.Step = originalAimStep
-        end
-    end })
-
-    Tabs.fz:Dropdown({ Title = "瞄准部位", Values = {"Head", "Body"}, Default = "Body", Callback = function(v) AA.Part = v end })
-
-    Tabs.fz:Slider({ Title = "水平速度", Value = { Min = 0.1, Max = 5, Default = 2.7 }, Step = 0.1, Callback = function(v)
-        AA.SpeedX = v
-        setAssistSensitivity(v)
-    end })
-
-    Tabs.fz:Slider({ Title = "垂直速度", Value = { Min = 0.1, Max = 5, Default = 1 }, Step = 0.1, Callback = function(v) AA.SpeedY = v end })
-
-    Tabs.fz:Slider({ Title = "水平预判", Value = { Min = 0, Max = 7, Default = 2.8 }, Step = 0.01, Callback = function(v) AA.PredictionX = v end })
-
-    Tabs.fz:Slider({ Title = "垂直预判", Value = { Min = 0, Max = 7, Default = 2.6 }, Step = 0.01, Callback = function(v) AA.PredictionY = v end })
-
-    Tabs.fz:Slider({ Title = "范围", Value = { Min = 10, Max = 1000, Default = 300 }, Step = 1, Callback = function(v) AA.Range = v end })
-
-    print("[辅助瞄准] 已搬到 fz 标签页")
-end
+end   
 -- ========== WindUI bot标签页UI控件 ==========
 Tabs.bot:Paragraph({
     Title = "🎯自瞄与子弹追踪",
@@ -3444,7 +3609,7 @@ local sa_FOVStroke = Instance.new("UIStroke", sa_FOVFrame)
 sa_FOVStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 sa_FOVStroke.Thickness = 1
 sa_FOVStroke.Transparency = 0.5
-sa_FOVStroke.Color = Color3.fromRGB(54, 57, 241)
+sa_FOVStroke.Color = Color3.fromRGB(255, 0, 0)
 
 local sa_FOVCorner = Instance.new("UICorner", sa_FOVFrame)
 sa_FOVCorner.CornerRadius = UDim.new(1, 0)
