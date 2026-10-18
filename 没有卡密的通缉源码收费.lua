@@ -168,13 +168,13 @@ WindUI:Notify({
 })
 WindUI:Notify({
     Title = "更新",
-    Content = "辅助瞄准/自动刷钱",
+    Content = "万圣节功能",
     Icon = "circle-user-round",
     Duration = 15,
 })
 local Popup = WindUI:Popup({
     Title = "hi你好👋",
-    Content = "关于新版本服务器更新：手动锤玻璃柜感谢汤姆猫赞助😘2026/10/16添加了准心设置功能还有很多我不知道",
+    Content = "2026.10.18通缉服务器更新了反作弊导致我们团队将脚本停止了一小段时间现已更新万圣节功能",
     Buttons = {
         {
             Title = "Get Started",
@@ -236,6 +236,7 @@ local Window = WindUI:CreateWindow({
 print("窗口标题应为绿色，控件标题应为白色")
 local Tabs = {
     wj = Window:Tab({ Title = "玩家", Icon = "users" }),
+    wsj = Window:Tab({ Title = "万圣节功能", Icon = "rbxassetid://7734058599" }),
     zx = Window:Tab({ Title = "准心设置", Icon = "rbxassetid://7733666258" }),    
     yy = Window:Tab({ Title = "音乐 Music", Icon = "rbxassetid://7734020554" }),    
     sf = Window:Tab({ Title = "甩飞", Icon = "rbxassetid://7733799371" }),
@@ -245,7 +246,7 @@ local Tabs = {
     jx = Window:Tab({ Title = "远程击杀", Icon = "crown" }), 
     gh = Window:Tab({ Title = "光环", Icon = "crown" }),
     fz = Window:Tab({ Title = "进阶辅助瞄准", Icon = "crosshair" }),    
-    bot = Window:Tab({ Title = "瞄准", Icon = "target" }),
+    bot = Window:Tab({ Title = "范围", Icon = "target" }),
     zj = Window:Tab({ Title = "子弹追踪", Icon = "target" }),
     ESP = Window:Tab({ Title = "ESP", Icon = "eye" }),
     ESPP = Window:Tab({ Title = "ESP2", Icon = "eye" }),
@@ -340,11 +341,23 @@ Tabs.wj:Slider({
         updateChar()
     end
 })
--- ==================== 玩家页：飞行（摇杆/键盘控制） ====================
+-- ==================== 玩家页：飞行（WindUI防检测版） ====================
 local FlyingEnabled = false
-local FlightSpeed = 180
+local FlightSpeed = 150
 local CurrentAO, CurrentLV, CurrentMoverAttachment, FlightConnection
 local flyHumanoid = nil
+
+-- ⭐ 核心防检测 Hook (拦截服务器读取你的速度)
+local mt_fly = getrawmetatable(game)
+local old_fly_index = mt_fly.__index
+setreadonly(mt_fly, false)
+mt_fly.__index = newcclosure(function(self, key)
+    if FlyingEnabled and (key == "AssemblyLinearVelocity" or key == "Velocity") and self:IsA("BasePart") then
+        return Vector3.new(0, 0, 0)
+    end
+    return old_fly_index(self, key)
+end)
+setreadonly(mt_fly, true)
 
 local function getFlyControlModule()
     local PlayerModule = LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule")
@@ -383,6 +396,8 @@ local function startFlying()
 
     CurrentAO, CurrentLV, CurrentMoverAttachment, flyHumanoid = setupFlyBodyMovers(character)
     FlyingEnabled = true
+
+    pcall(function() character.HumanoidRootPart:SetNetworkOwner(LocalPlayer) end)
 
     local controlModule = getFlyControlModule()
 
@@ -427,8 +442,6 @@ local function startFlying()
             character.Humanoid.PlatformStand = true
         end
     end)
-
-    print("飞行已开启，速度:", FlightSpeed)
 end
 
 local function stopFlying()
@@ -448,8 +461,6 @@ local function stopFlying()
     if CurrentAO then CurrentAO:Destroy() CurrentAO = nil end
     if CurrentLV then CurrentLV:Destroy() CurrentLV = nil end
     if CurrentMoverAttachment then CurrentMoverAttachment:Destroy() CurrentMoverAttachment = nil end
-
-    print("飞行已关闭")
 end
 
 -- ==================== WindUI 控件 ====================
@@ -460,8 +471,10 @@ Tabs.wj:Toggle({
     Callback = function(v)
         if v then
             startFlying()
+            WindUI:Notify({ Title = "飞行", Content = "已开启", Duration = 3 })
         else
             stopFlying()
+            WindUI:Notify({ Title = "飞行", Content = "已关闭", Duration = 3 })
         end
     end
 })
@@ -472,9 +485,10 @@ Tabs.wj:Slider({
     Value = {
         Min = 50,
         Max = 400,
-        Default = 180
+        Default = 150
     },
     Step = 10,
+    IsTextbox = true,
     Callback = function(val)
         FlightSpeed = val
     end
@@ -957,6 +971,396 @@ end)
 
     end
 })
+-- ==================== 万圣节：终极怪物光环 (WindUI 适配版) ====================
+do
+    local WSJ_Players = game:GetService("Players")
+    local WSJ_RunService = game:GetService("RunService")
+    local WSJ_Workspace = game:GetService("Workspace")
+    local WSJ_Camera = WSJ_Workspace.CurrentCamera
+    local WSJ_LocalPlayer = WSJ_Players.LocalPlayer
+    local WSJ_Debris = game:GetService("Debris")
+    local WSJ_SoundService = game:GetService("SoundService")
+    local WSJ_ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+    local DevvFolder = WSJ_ReplicatedStorage:FindFirstChild("Devv") or WSJ_ReplicatedStorage:FindFirstChild("devv")
+    if not DevvFolder then
+        WindUI:Notify({ Title = "万圣节功能", Content = "未找到 Devv 模块，请进入游戏后使用", Duration = 5 })
+        return
+    end
+
+    local DevvModule  = require(DevvFolder)
+    local Network     = DevvModule.load("Network")
+    local ClientTools = require(WSJ_ReplicatedStorage.Client.Wanted.Modules.ClientTools)
+    local MathUtil    = DevvModule.load("MathUtil")
+    local nuid        = DevvModule.load("NUID")
+    local fireServer  = Network.FireServer
+
+    -- ==================== 状态配置 ====================
+    local MobAuraConfig = {
+        Enabled  = false,
+        Range    = 300,
+        Interval = 0.01,     
+        UseFOV   = true,     
+        FOV      = 200,      
+        ShowTracer    = true,
+        TracerColor   = Color3.fromRGB(255, 80, 80),
+        TracerWidth   = 0.15,
+        TracerLife    = 0.2,
+        PlaySound     = true,
+        SoundId       = "rbxassetid://6607204501",
+        SoundVolume   = 0.4,
+    }
+
+    local MobChamsConfig = { 
+        Enabled = false,
+        TextSize = 10,
+        EspColor = Color3.fromRGB(0, 255, 0),
+    }
+
+    -- ==================== 音效与射线 ====================
+    local TracerFolder = WSJ_Workspace:FindFirstChild("__MobTracers") or Instance.new("Folder", WSJ_Workspace)
+    TracerFolder.Name = "__MobTracers"
+
+    local function createTracer(fromPos, toPos)
+        if not MobAuraConfig.ShowTracer then return end
+        pcall(function()
+            local a0 = Instance.new("Attachment", TracerFolder); a0.WorldPosition = fromPos
+            local a1 = Instance.new("Attachment", TracerFolder); a1.WorldPosition = toPos
+            local beam = Instance.new("Beam", TracerFolder)
+            beam.Attachment0, beam.Attachment1 = a0, a1
+            beam.Color = ColorSequence.new(MobAuraConfig.TracerColor)
+            beam.Width0, beam.Width1 = MobAuraConfig.TracerWidth, MobAuraConfig.TracerWidth
+            beam.LightEmission, beam.LightInfluence, beam.FaceCamera = 1, 0, true
+            beam.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0.1), NumberSequenceKeypoint.new(1, 0.9)})
+            WSJ_Debris:AddItem(beam, MobAuraConfig.TracerLife)
+            WSJ_Debris:AddItem(a0, MobAuraConfig.TracerLife)
+            WSJ_Debris:AddItem(a1, MobAuraConfig.TracerLife)
+        end)
+    end
+
+    local function playHitSound()
+        if not MobAuraConfig.PlaySound then return end
+        pcall(function()
+            local snd = Instance.new("Sound", WSJ_SoundService)
+            snd.SoundId, snd.Volume = MobAuraConfig.SoundId, MobAuraConfig.SoundVolume
+            snd:Play(); WSJ_Debris:AddItem(snd, 1)
+        end)
+    end
+
+    -- ==================== ⭐ 内透 + 底层精准血量 ====================
+    WSJ_RunService.RenderStepped:Connect(function()
+        local mobsFolder = WSJ_Workspace:FindFirstChild("Mobs")
+        if not mobsFolder then return end
+        
+        if not MobChamsConfig.Enabled then
+            for _, mob in ipairs(mobsFolder:GetChildren()) do
+                if mob:IsA("Model") then
+                    local hl = mob:FindFirstChild("__MobHighlight")
+                    if hl then hl:Destroy() end
+                    local head = mob:FindFirstChild("Head") or mob:FindFirstChild("HumanoidRootPart")
+                    if head then
+                        local bb = head:FindFirstChild("__MobNameTag")
+                        if bb then bb:Destroy() end
+                    end
+                end
+            end
+            return 
+        end
+
+        for _, mob in ipairs(mobsFolder:GetChildren()) do
+            if mob:IsA("Model") then
+                pcall(function()
+                    local head = mob:FindFirstChild("Head") or mob:FindFirstChild("HumanoidRootPart")
+                    local hum = mob:FindFirstChildOfClass("Humanoid")
+                    
+                    if head and hum then
+                        local hl = mob:FindFirstChild("__MobHighlight")
+                        if not hl then
+                            hl = Instance.new("Highlight")
+                            hl.Name = "__MobHighlight"
+                            hl.FillTransparency = 0.3 
+                            hl.OutlineTransparency = 0 
+                            hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                            hl.Parent = mob
+                        end
+                        hl.FillColor = MobChamsConfig.EspColor
+                        hl.OutlineColor = MobChamsConfig.EspColor
+
+                        local bb = head:FindFirstChild("__MobNameTag")
+                        if not bb then
+                            bb = Instance.new("BillboardGui")
+                            bb.Name = "__MobNameTag"
+                            bb.Size = UDim2.new(0, 100, 0, 25)
+                            bb.StudsOffset = Vector3.new(0, 1.5, 0) 
+                            bb.AlwaysOnTop = true
+                            bb.Parent = head
+
+                            local textName = Instance.new("TextLabel")
+                            textName.Name = "TagText"
+                            textName.Size = UDim2.new(1, 0, 0.5, 0)
+                            textName.BackgroundTransparency = 1
+                            textName.Font = Enum.Font.GothamBold
+                            textName.TextSize = MobChamsConfig.TextSize
+                            textName.TextStrokeTransparency = 0.2
+                            textName.TextColor3 = MobChamsConfig.EspColor
+                            textName.Text = "港猫的小弟"
+                            textName.Parent = bb
+
+                            local textHealth = Instance.new("TextLabel")
+                            textHealth.Name = "HealthText"
+                            textHealth.Size = UDim2.new(1, 0, 0.5, 0)
+                            textHealth.Position = UDim2.new(0, 0, 0.5, 0)
+                            textHealth.BackgroundTransparency = 1
+                            textHealth.Font = Enum.Font.GothamBold
+                            textHealth.TextSize = MobChamsConfig.TextSize
+                            textHealth.TextStrokeTransparency = 0.2
+                            textHealth.TextColor3 = Color3.new(1, 1, 1)
+                            textHealth.Parent = bb
+                        end
+                        
+                        local realHealth = mob:GetAttribute("health")
+                        local maxHealth = mob:GetAttribute("maxHealth")
+                        if not realHealth then realHealth = hum.Health end
+                        if not maxHealth then maxHealth = hum.MaxHealth end
+
+                        local tagText = bb:FindFirstChild("TagText")
+                        if tagText then 
+                            tagText.TextColor3 = MobChamsConfig.EspColor 
+                            tagText.TextSize = MobChamsConfig.TextSize
+                        end
+                        
+                        local healthText = bb:FindFirstChild("HealthText")
+                        if healthText then 
+                            healthText.Text = string.format("HP: %d/%d", math.floor(realHealth), math.floor(maxHealth))
+                            healthText.TextSize = MobChamsConfig.TextSize
+                            if realHealth < maxHealth * 0.3 then
+                                healthText.TextColor3 = Color3.fromRGB(255, 50, 50)
+                            else
+                                healthText.TextColor3 = Color3.new(1, 1, 1)
+                            end
+                        end
+                    end
+                end)
+            end
+        end
+    end)
+
+    -- ==================== FOV 圆圈 ====================
+    local fovCircle = Drawing.new("Circle")
+    fovCircle.Visible = false
+    fovCircle.Color = Color3.fromRGB(255, 50, 50)
+    fovCircle.Thickness = 1.5
+    fovCircle.Filled = false
+    fovCircle.Transparency = 0.5
+    fovCircle.NumSides = 60
+
+    WSJ_RunService.RenderStepped:Connect(function()
+        if MobAuraConfig.Enabled and MobAuraConfig.UseFOV then
+            fovCircle.Visible = true
+            fovCircle.Position = WSJ_Camera.ViewportSize / 2
+            fovCircle.Radius = MobAuraConfig.FOV
+        else
+            fovCircle.Visible = false
+        end
+    end)
+
+    -- ==================== 寻找怪物 ====================
+    local function getClosestMob()
+        local myChar = WSJ_LocalPlayer.Character
+        if not myChar then return nil end
+        local myHRP = myChar:FindFirstChild("HumanoidRootPart")
+        if not myHRP then return nil end
+
+        local center = WSJ_Camera.ViewportSize / 2
+        local closestMob = nil
+        local minDist = math.huge
+        local mobsFolder = WSJ_Workspace:FindFirstChild("Mobs")
+        
+        if not mobsFolder then return nil end
+
+        for _, mob in ipairs(mobsFolder:GetChildren()) do
+            local hum = mob:FindFirstChildOfClass("Humanoid")
+            local hrp = mob:FindFirstChild("HumanoidRootPart")
+            
+            if hum and hrp and hum.Health > 0 then
+                local dist = (myHRP.Position - hrp.Position).Magnitude
+                if dist <= MobAuraConfig.Range then
+                    if MobAuraConfig.UseFOV then
+                        local screenPos, onScreen = WSJ_Camera:WorldToViewportPoint(hrp.Position)
+                        if onScreen then
+                            local fovDist = (Vector2.new(screenPos.X, screenPos.Y) - center).Magnitude
+                            if fovDist <= MobAuraConfig.FOV and dist < minDist then
+                                minDist = dist; closestMob = hrp
+                            end
+                        end
+                    else
+                        if dist < minDist then
+                            minDist = dist; closestMob = hrp
+                        end
+                    end
+                end
+            end
+        end
+        return closestMob
+    end
+
+    -- ==================== 真实开枪 ====================
+    local function fireAtMob(targetPart)
+        local char = WSJ_LocalPlayer.Character
+        local myHead = char and char:FindFirstChild("Head")
+        if not myHead then return end
+
+        local ok, tool = pcall(ClientTools.GetLocalEquippedTool)
+        if not ok or not tool or not tool.toolId then return end
+        local ts = tool.toolState
+
+        if ts and ts.ammo and ts.ammo <= 0 then
+            pcall(fireServer, "reload", tool.toolId)
+            pcall(fireServer, "chamber", tool.toolId)
+            return
+        end
+
+        local targetPos = targetPart.Position
+        local originPos = myHead.Position
+        local dir = targetPos - originPos
+        local bulletId = nuid()
+        local shootCF = MathUtil.CompressCFrame(CFrame.new(originPos, targetPos))
+        
+        pcall(function() fireServer("shoot", tool.toolId, shootCF, { { bulletId, shootCF } }) end)
+        if ts and ts.ammo then ts.ammo = ts.ammo - 1 end
+
+        createTracer(originPos, targetPos)
+        playHitSound()
+
+        local unit = dir.Magnitude > 0.001 and dir.Unit or myHead.CFrame.LookVector
+        local args = {
+            {
+                massLimit = 5, hit = targetPart, position = targetPos, normal = -unit,
+                material = targetPart.Material or Enum.Material.Plastic,
+                distance = dir.Magnitude, collisionPoint = targetPos, direction = unit, speed = 1196.285, 
+                source = { sourceType = "Bullet", sourceId = bulletId, sourceToolId = tool.toolId, sourcePlayerId = WSJ_LocalPlayer.UserId },
+                hitName = "HumanoidRootPart", hitType = "mob", mobType = targetPart.Parent.Name
+            }
+        }
+        pcall(function() fireServer("registerProjectileHits", bulletId, tool.toolId, args) end)
+    end
+
+    -- ==================== 主循环 ====================
+    task.spawn(function()
+        while true do
+            if MobAuraConfig.Enabled then
+                pcall(function()
+                    local mobPart = getClosestMob()
+                    if mobPart then fireAtMob(mobPart) end
+                end)
+                task.wait(MobAuraConfig.Interval)
+            else
+                task.wait(0.5)
+            end
+        end
+    end)
+
+    -- ==================== WindUI 控件 ====================
+    Tabs.wsj:Section({ Title = "自动打怪" })
+
+    Tabs.wsj:Toggle({
+        Title = "启用怪物光环",
+        Desc = "自动锁头开枪，打得准",
+        Default = false,
+        Callback = function(v)
+            MobAuraConfig.Enabled = v
+            WindUI:Notify({ Title = "怪物光环", Content = v and "已开启" or "已关闭", Duration = 2 })
+        end,
+    })
+
+    Tabs.wsj:Toggle({
+        Title = "开启 FOV 圈限制",
+        Default = true,
+        Callback = function(v) MobAuraConfig.UseFOV = v end,
+    })
+
+    Tabs.wsj:Slider({
+        Title = "FOV 圈大小",
+        Value = { Min = 50, Max = 800, Default = 200 },
+        Step = 10,
+        Suffix = " px",
+        Callback = function(v) MobAuraConfig.FOV = v end,
+    })
+
+    Tabs.wsj:Slider({
+        Title = "极限射速 (秒)",
+        Value = { Min = 0.01, Max = 1, Default = 0.01 },
+        Step = 0.01,
+        Callback = function(v) MobAuraConfig.Interval = v end,
+    })
+
+    Tabs.wsj:Divider()
+
+    Tabs.wsj:Toggle({
+        Title = "显示弹道射线",
+        Default = true,
+        Callback = function(v) MobAuraConfig.ShowTracer = v end,
+    })
+
+    Tabs.wsj:Toggle({
+        Title = "播放命中音效",
+        Default = true,
+        Callback = function(v) MobAuraConfig.PlaySound = v end,
+    })
+
+    Tabs.wsj:Dropdown({
+        Title = "选择音效",
+        Values = { "Neverlose", "Gamesense", "Fatality", "Minecraft", "经典叮叮叮" },
+        Default = "Neverlose",
+        Callback = function(v)
+            local map = {
+                ["Neverlose"] = "rbxassetid://6607204501",
+                ["Gamesense"] = "rbxassetid://5633695679",
+                ["Fatality"] = "rbxassetid://6607142036",
+                ["Minecraft"] = "rbxassetid://7151570575",
+                ["经典叮叮叮"] = "rbxassetid://4590662766",
+            }
+            MobAuraConfig.SoundId = map[v] or "rbxassetid://6607204501"
+        end,
+    })
+
+    Tabs.wsj:Divider()
+    Tabs.wsj:Section({ Title = "透视与视觉" })
+
+    Tabs.wsj:Toggle({
+        Title = "启用怪物内透",
+        Desc = "底层精准血量，防崩溃",
+        Default = false,
+        Callback = function(v)
+            MobChamsConfig.Enabled = v
+            WindUI:Notify({ Title = "怪物内透", Content = v and "已开启" or "已关闭", Duration = 2 })
+        end,
+    })
+
+    Tabs.wsj:Slider({
+        Title = "字体大小",
+        Value = { Min = 8, Max = 18, Default = 10 },
+        Step = 1,
+        Callback = function(v) MobChamsConfig.TextSize = v end,
+    })
+
+    Tabs.wsj:Dropdown({
+        Title = "透视颜色",
+        Values = { "绿色", "红色", "蓝色", "紫色", "黄色", "白色" },
+        Default = "绿色",
+        Callback = function(v)
+            local map = {
+                ["绿色"] = Color3.fromRGB(0, 255, 0),
+                ["红色"] = Color3.fromRGB(255, 50, 50),
+                ["蓝色"] = Color3.fromRGB(50, 150, 255),
+                ["紫色"] = Color3.fromRGB(180, 50, 255),
+                ["黄色"] = Color3.fromRGB(255, 255, 50),
+                ["白色"] = Color3.fromRGB(255, 255, 255),
+            }
+            MobChamsConfig.EspColor = map[v] or Color3.fromRGB(0, 255, 0)
+        end,
+    })
+end
 -- ==================== 屏幕准星（挂载到 Tabs.zx） ====================
 do
     local UserInputService = game:GetService("UserInputService")
@@ -2027,7 +2431,7 @@ Tabs.fc:Button({
 Tabs.fc:Button({
     Title = "飞车脚本",
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ggsq1741-debug/BAL/refs/heads/main/GUI.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/GUI.lua"))()
     end
 })
 -- ═══════════════════════════════════════════════════
@@ -2045,10 +2449,10 @@ local LocalPlayer = Players.LocalPlayer
 local userId = LocalPlayer.UserId
 
 -- ═══════════ 全局状态 ═══════════
+-- 已移除 TeamCheck
 local State = {
     Ragebot     = false,
     Wallbang    = true,
-    TeamCheck   = true,
     IgnoreCrawl = true,
     IgnoreKnock = true,
     IgnoreGrab  = true,
@@ -2103,12 +2507,7 @@ local function isAlive(p)
     return h and h.Health > 0
 end
 
-local function isTeam(p)
-    if not State.TeamCheck then return false end
-    if p.Team and LocalPlayer.Team and p.Team == LocalPlayer.Team then return true end
-    if p.TeamColor and LocalPlayer.TeamColor and p.TeamColor == LocalPlayer.TeamColor then return true end
-    return false
-end
+-- ⚠️ 已彻底删除 isTeam 函数
 
 local function getProp(p, key)
     if not ClientPlayers then return false end
@@ -2204,13 +2603,13 @@ local function Resolve(fromPos, toPos, spread, radius)
     return nil, nil, false
 end
 
--- ═══════════ 找敌人 ═══════════
+-- ═══════════ 找敌人（已移除队伍判断，无差别攻击） ═══════════
 local function getClosestEnemy()
     local _, myHRP = getMyChar()
     if not myHRP then return nil, nil end
     local best, bestDist, bestHead = nil, math.huge, nil
     for _, p in ipairs(Players:GetPlayers()) do
-        if p ~= LocalPlayer and not isTeam(p) and isAlive(p) and not shouldIgnore(p) then
+        if p ~= LocalPlayer and isAlive(p) and not shouldIgnore(p) then
             local c = p.Character
             local hrp = c and c:FindFirstChild("HumanoidRootPart")
             local head = c and c:FindFirstChild("Head")
@@ -2327,10 +2726,9 @@ function _G.BuildRagebotUI(Tab)
         Title = "穿墙射击", Value = true,
         Callback = function(v) State.Wallbang = v end,
     })
-    Tabs.jq:Toggle({
-        Title = "忽略队友", Value = true,
-        Callback = function(v) State.TeamCheck = v end,
-    })
+    
+    -- ⚠️ 这里移除了“忽略队友”的开关
+
     Tabs.jq:Toggle({
         Title = "忽略倒地/被击倒/被抓", Value = true,
         Callback = function(v)
@@ -2410,7 +2808,6 @@ function _G.BuildRagebotUI(Tab)
 end
 
 print("[Ragebot] 功能模块已加载，等待挂载...")
-
 -- ============================================
 -- 农场光环 + 自动农场 + 自动远程打玻璃（WindUI 格式，挂在 Tabs.lc）
 -- ============================================
@@ -3691,62 +4088,12 @@ do
         print("[辅助瞄准-WindUI] 已挂载到 Tabs.fz，FOV 圈就绪，3D 距离限制已移除")
     end
 end  
--- ========== WindUI bot标签页UI控件 ==========
-Tabs.bot:Paragraph({
-    Title = "🎯自瞄与子弹追踪",
-    Desc = "Camera暴力自瞄 + 扩大碰撞箱实现子弹命中",
-})
-Tabs.bot:Toggle({
-    Title = "🎯 自瞄总开关",
-    Desc = "暴力Camera自瞄，直接控制视角锁定目标",
-    Default = false,
-    Callback = function(state)
-        AimConfig.Enabled = state
-        if state then
-            if not mainConn then
-                mainConn = RunService.RenderStepped:Connect(function()
-                    if not AimConfig.Enabled then
-                        aimTargetPart = nil
-                        aimFOVCircle.Visible = false
-                        aimTracer.Visible = false
-                        return
-                    end
-                    aimFOVCircle.Position = Camera.ViewportSize / 2
-                    aimFOVCircle.Radius = AimConfig.FOV
-                    aimFOVCircle.Visible = AimConfig.ShowFOV
-                    aimTargetPart = findClosestPlayer()
-                    doCameraAim()
-                    if aimTargetPart and aimTargetPart.Parent then
-                        local sp, vis = Camera:WorldToViewportPoint(aimTargetPart.Position)
-                        if vis then
-                            aimTracer.Visible = AimConfig.ShowTracer
-                            aimTracer.From = Camera.ViewportSize / 2
-                            aimTracer.To = Vector2.new(sp.X, sp.Y)
-                        else
-                            aimTracer.Visible = false
-                        end
-                    else
-                        aimTracer.Visible = false
-                    end
-                end)
-            end
-        else
-            if mainConn then
-                mainConn:Disconnect()
-                mainConn = nil
-            end
-            aimTargetPart = nil
-            aimFOVCircle.Visible = false
-            aimTracer.Visible = false
-        end
-    end
-})
--- ======子弹追踪：扩大HumanoidRootPart碰撞箱【已经修改上色】 =====
+-- ==================== 瞄准页（仅子弹追踪） ====================
 local btHbSize = 8
 local btHbConn = nil
+
 local function btExpandPlayer(player)
     if player == LocalPlayer then return end
-    if AimConfig.TeamCheck and player.Team and player.Team == LocalPlayer.Team then return end
     local char = player.Character
     if not char then return end
     local humanoid = char:FindFirstChildOfClass("Humanoid")
@@ -3755,14 +4102,14 @@ local function btExpandPlayer(player)
     if not hrp then return end
     local size = math.clamp(btHbSize, 0, 100)
     pcall(function()
-    hrp.Size = Vector3.new(size, size, size)
-    hrp.Transparency = 0.85
-    hrp.Color = Color3.fromRGB(190, 190, 190)
-    hrp.Material = Enum.Material.Neon
-    hrp.CanCollide = false
-end)
-
+        hrp.Size = Vector3.new(size, size, size)
+        hrp.Transparency = 0.85
+        hrp.Color = Color3.fromRGB(190, 190, 190)
+        hrp.Material = Enum.Material.Neon
+        hrp.CanCollide = false
+    end)
 end
+
 local function btResetPlayer(player)
     local char = player.Character
     if not char then return end
@@ -3771,36 +4118,31 @@ local function btResetPlayer(player)
     pcall(function()
         hrp.Size = Vector3.new(2, 2, 1)
         hrp.Transparency = 0
-        hrp.Color = Color3.fromRGB(163,162,165) --恢复原本灰色
-        hrp.Material = Enum.Material.Plastic    --恢复普通材质
+        hrp.Color = Color3.fromRGB(163, 162, 165)
+        hrp.Material = Enum.Material.Plastic
         hrp.CanCollide = true
     end)
 end
+
 Tabs.bot:Toggle({
-    Title = "💣 子弹追踪总开关",
+    Title = "范围",
     Desc = "扩大敌人碰撞箱",
     Default = false,
     Callback = function(state)
-        AimConfig.BulletTrack = state
         if state then
             if not btHbConn then
                 btHbConn = RunService.Heartbeat:Connect(function()
-                    if AimConfig.BulletTrack then
-                        for i = 1, #Players:GetPlayers() do
-                            btExpandPlayer(Players:GetPlayers()[i])
-                        end
+                    for i = 1, #Players:GetPlayers() do
+                        btExpandPlayer(Players:GetPlayers()[i])
                     end
                 end)
             end
-            -- 重生监听
             for i = 1, #Players:GetPlayers() do
                 local player = Players:GetPlayers()[i]
                 if player ~= LocalPlayer then
                     player.CharacterAdded:Connect(function()
                         task.wait(1)
-                        if AimConfig.BulletTrack then
-                            btExpandPlayer(player)
-                        end
+                        btExpandPlayer(player)
                     end)
                 end
             end
@@ -3815,107 +4157,14 @@ Tabs.bot:Toggle({
         end
     end
 })
+
 Tabs.bot:Slider({
-    Title = "📦 判定箱大小",
+    Title = "范围",
     Desc = "敌人碰撞箱扩大倍数 (0=关闭,100=巨大)",
     Value = { Min = 0, Max = 100, Default = 8 },
     Step = 1,
     Callback = function(value)
         btHbSize = value
-    end
-})
-Tabs.bot:Slider({
-    Title = "🎯 自瞄FOV范围",
-    Desc = "屏幕准星搜索范围(像素)",
-    Value = { Min = 20, Max = 1000, Default = 200 },
-    Step = 10,
-    Callback = function(value)
-        AimConfig.FOV = value
-        aimFOVCircle.Radius = value
-    end
-})
-Tabs.bot:Slider({
-    Title = "🔘 平滑系数",
-    Desc = "1=瞬间锁头，数值越小越丝滑",
-    Value = { Min = 0.01, Max = 1, Default = 0.15 },
-    Step = 0.01,
-    Callback = function(value)
-        AimConfig.Smoothness = value
-    end
-})
-Tabs.bot:Slider({
-    Title = "⚡ 预判强度",
-    Desc = "预判敌人移动速度",
-    Value = { Min = 0, Max = 1, Default = 0.12 },
-    Step = 0.01,
-    Callback = function(value)
-        AimConfig.Prediction = value
-    end
-})
-Tabs.bot:Slider({
-    Title = "🔫 子弹速度",
-    Desc = "用于弹道预判",
-    Value = { Min = 100, Max = 5000, Default = 1500 },
-    Step = 50,
-    Callback = function(value)
-        AimConfig.BulletSpeed = value
-    end
-})
-Tabs.bot:Slider({
-    Title = "📉 弹道下坠补偿",
-    Desc = "模拟子弹下坠",
-    Value = { Min = 0, Max = 200, Default = 0 },
-    Step = 1,
-    Callback = function(value)
-        AimConfig.BulletDrop = value
-    end
-})
-Tabs.bot:Dropdown({
-    Title = "🎯 瞄准部位",
-    Desc = "优先瞄准身体哪个部位",
-    Values = {"Head", "HumanoidRootPart", "UpperTorso", "LowerTorso"},
-    Callback = function(option)
-        AimConfig.AimPart = option
-    end
-})
-Tabs.bot:Toggle({
-    Title = "🧱 掩体判断",
-    Desc = "被墙挡住就不锁定敌人",
-    Default = true,
-    Callback = function(state)
-        AimConfig.WallCheck = state
-    end
-})
-Tabs.bot:Toggle({
-    Title = "⭕ 显示FOV圆圈",
-    Desc = "屏幕绘制自瞄搜索圈",
-    Default = false,
-    Callback = function(state)
-        AimConfig.ShowFOV = state
-    end
-})
-Tabs.bot:Toggle({
-    Title = "📏 显示自瞄射线",
-    Desc = "绘制从准星到目标红线",
-    Default = true,
-    Callback = function(state)
-        AimConfig.ShowTracer = state
-    end
-})
-Tabs.bot:Toggle({
-    Title = "👥 区分队友",
-    Desc = "不会锁定同队伍玩家",
-    Default = true,
-    Callback = function(state)
-        AimConfig.TeamCheck = state
-    end
-})
-Tabs.bot:Toggle({
-    Title = "🦘 跳跃预判",
-    Desc = "预判敌人向上跳跃位移",
-    Default = true,
-    Callback = function(state)
-        AimConfig.JumpPrediction = state
     end
 })
 -- ==================== zj 标签：子追静默瞄准（WindUI 格式） ====================
