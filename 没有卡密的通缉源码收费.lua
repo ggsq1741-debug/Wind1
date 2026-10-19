@@ -174,7 +174,7 @@ WindUI:Notify({
 })
 local Popup = WindUI:Popup({
     Title = "hi你好👋",
-    Content = "2026.10.18通缉服务器更新了反作弊导致我们团队将脚本停止了一小段时间现已更新万圣节功能",
+    Content = "2026.10.18通缉服务器更新了反作弊导致我们团队将脚本停止了一小段时间现已更新万圣节功能添加僵尸范围半自动刷钥匙",
     Buttons = {
         {
             Title = "Get Started",
@@ -237,6 +237,7 @@ print("窗口标题应为绿色，控件标题应为白色")
 local Tabs = {
     wj = Window:Tab({ Title = "玩家", Icon = "users" }),
     wsj = Window:Tab({ Title = "万圣节功能", Icon = "rbxassetid://7734058599" }),
+    key = Window:Tab({ Title = "万圣节刷钥匙", Icon = "rbxassetid://7733965118" }),
     zx = Window:Tab({ Title = "准心设置", Icon = "rbxassetid://7733666258" }),    
     yy = Window:Tab({ Title = "音乐 Music", Icon = "rbxassetid://7734020554" }),    
     sf = Window:Tab({ Title = "甩飞", Icon = "rbxassetid://7733799371" }),
@@ -250,12 +251,12 @@ local Tabs = {
     zj = Window:Tab({ Title = "子弹追踪", Icon = "target" }),
     ESP = Window:Tab({ Title = "ESP", Icon = "eye" }),
     ESPP = Window:Tab({ Title = "ESP2", Icon = "eye" }),
-    pg = Window:Tab({ Title = "苹果端ESP", Icon = "eye" }),
     wb = Window:Tab({ Title = "ESP物品", Icon = "box" }),
     qq = Window:Tab({ Title = "删除", Icon = "trash-2" }),
     rsao = Window:Tab({ Title = "娱乐+大肥鱼小宠物", Icon = "zap" }),
     gm = Window:Tab({ Title = "购买", Icon = "shopping-cart" }),
 }
+Window:SelectTab(1)
 -- ============================================================
 -- ==================== 工具函数 ====================
 local function getCharacter()
@@ -740,7 +741,7 @@ HeadScaler:Init()
 
 -- 🎛️ 开关控件
 Tabs.wj:Toggle({
-    Title = "修改别人头部大小(仅本地)",
+    Title = "修改别人头部大小",
     Default = false,
     Callback = function(value)
         HeadScaler:SetEnabled(value)
@@ -971,12 +972,11 @@ end)
 
     end
 })
--- ==================== 万圣节：终极怪物光环 (WindUI 适配版) ====================
+-- ==================== 万圣节：终极怪物光环 (WindUI 适配版 · 已移除 FOV 圈) ====================
 do
     local WSJ_Players = game:GetService("Players")
     local WSJ_RunService = game:GetService("RunService")
     local WSJ_Workspace = game:GetService("Workspace")
-    local WSJ_Camera = WSJ_Workspace.CurrentCamera
     local WSJ_LocalPlayer = WSJ_Players.LocalPlayer
     local WSJ_Debris = game:GetService("Debris")
     local WSJ_SoundService = game:GetService("SoundService")
@@ -984,7 +984,7 @@ do
 
     local DevvFolder = WSJ_ReplicatedStorage:FindFirstChild("Devv") or WSJ_ReplicatedStorage:FindFirstChild("devv")
     if not DevvFolder then
-        WindUI:Notify({ Title = "万圣节功能", Content = "未找到 Devv 模块，请进入游戏后使用", Duration = 5 })
+        WindUI:Notify("未找到 Devv 模块，请进入游戏后使用", 5)
         return
     end
 
@@ -999,9 +999,7 @@ do
     local MobAuraConfig = {
         Enabled  = false,
         Range    = 300,
-        Interval = 0.01,     
-        UseFOV   = true,     
-        FOV      = 200,      
+        Interval = 0.01,
         ShowTracer    = true,
         TracerColor   = Color3.fromRGB(255, 80, 80),
         TracerWidth   = 0.15,
@@ -1145,59 +1143,26 @@ do
         end
     end)
 
-    -- ==================== FOV 圆圈 ====================
-    local fovCircle = Drawing.new("Circle")
-    fovCircle.Visible = false
-    fovCircle.Color = Color3.fromRGB(255, 50, 50)
-    fovCircle.Thickness = 1.5
-    fovCircle.Filled = false
-    fovCircle.Transparency = 0.5
-    fovCircle.NumSides = 60
-
-    WSJ_RunService.RenderStepped:Connect(function()
-        if MobAuraConfig.Enabled and MobAuraConfig.UseFOV then
-            fovCircle.Visible = true
-            fovCircle.Position = WSJ_Camera.ViewportSize / 2
-            fovCircle.Radius = MobAuraConfig.FOV
-        else
-            fovCircle.Visible = false
-        end
-    end)
-
-    -- ==================== 寻找怪物 ====================
+    -- ==================== 寻找怪物（纯距离最近，无 FOV 限制） ====================
     local function getClosestMob()
         local myChar = WSJ_LocalPlayer.Character
         if not myChar then return nil end
         local myHRP = myChar:FindFirstChild("HumanoidRootPart")
         if not myHRP then return nil end
 
-        local center = WSJ_Camera.ViewportSize / 2
         local closestMob = nil
         local minDist = math.huge
         local mobsFolder = WSJ_Workspace:FindFirstChild("Mobs")
-        
         if not mobsFolder then return nil end
 
         for _, mob in ipairs(mobsFolder:GetChildren()) do
             local hum = mob:FindFirstChildOfClass("Humanoid")
             local hrp = mob:FindFirstChild("HumanoidRootPart")
-            
             if hum and hrp and hum.Health > 0 then
                 local dist = (myHRP.Position - hrp.Position).Magnitude
-                if dist <= MobAuraConfig.Range then
-                    if MobAuraConfig.UseFOV then
-                        local screenPos, onScreen = WSJ_Camera:WorldToViewportPoint(hrp.Position)
-                        if onScreen then
-                            local fovDist = (Vector2.new(screenPos.X, screenPos.Y) - center).Magnitude
-                            if fovDist <= MobAuraConfig.FOV and dist < minDist then
-                                minDist = dist; closestMob = hrp
-                            end
-                        end
-                    else
-                        if dist < minDist then
-                            minDist = dist; closestMob = hrp
-                        end
-                    end
+                if dist <= MobAuraConfig.Range and dist < minDist then
+                    minDist = dist
+                    closestMob = hrp
                 end
             end
         end
@@ -1265,30 +1230,24 @@ do
 
     Tabs.wsj:Toggle({
         Title = "启用怪物光环",
-        Desc = "自动锁头开枪，打得准",
+        Desc = "",
         Default = false,
         Callback = function(v)
             MobAuraConfig.Enabled = v
-            WindUI:Notify({ Title = "怪物光环", Content = v and "已开启" or "已关闭", Duration = 2 })
+            WindUI:Notify(v and "怪物光环已开启" or "怪物光环已关闭", 2)
         end,
     })
 
-    Tabs.wsj:Toggle({
-        Title = "开启 FOV 圈限制",
-        Default = true,
-        Callback = function(v) MobAuraConfig.UseFOV = v end,
-    })
-
     Tabs.wsj:Slider({
-        Title = "FOV 圈大小",
-        Value = { Min = 50, Max = 800, Default = 200 },
+        Title = "最大攻击距离",
+        Value = { Min = 50, Max = 2000, Default = 300 },
         Step = 10,
-        Suffix = " px",
-        Callback = function(v) MobAuraConfig.FOV = v end,
+        Suffix = " studs",
+        Callback = function(v) MobAuraConfig.Range = v end,
     })
 
     Tabs.wsj:Slider({
-        Title = "极限射速 (秒)",
+        Title = "极限射速",
         Value = { Min = 0.01, Max = 1, Default = 0.01 },
         Step = 0.01,
         Callback = function(v) MobAuraConfig.Interval = v end,
@@ -1333,7 +1292,7 @@ do
         Default = false,
         Callback = function(v)
             MobChamsConfig.Enabled = v
-            WindUI:Notify({ Title = "怪物内透", Content = v and "已开启" or "已关闭", Duration = 2 })
+            WindUI:Notify(v and "怪物内透已开启" or "怪物内透已关闭", 2)
         end,
     })
 
@@ -1359,6 +1318,258 @@ do
             }
             MobChamsConfig.EspColor = map[v] or Color3.fromRGB(0, 255, 0)
         end,
+    })
+end
+-- ==================== 万圣节刷钥匙（自动路径点 + 节点ESP · WindUI版） ====================
+do
+    local TweenService = game:GetService("TweenService")
+    local LocalPlayer  = game:GetService("Players").LocalPlayer
+
+    -- 预设路径点（按顺序，共 10 个）
+    local SPOTS = {
+        CFrame.new(1141.173095703125, 104.87025451660156, 1807.316162109375), 
+        CFrame.new(-6994.158203125,  53.224830627441406, 3111.651611328125),   
+        CFrame.new(-4890.5517578125, 20.991640090942383, 3725.601806640625),   
+        CFrame.new(-4436.419921875,  559.4906005859375,  2352.015380859375),   
+        CFrame.new(-6338.59765625,   397.233154296875,   -846.17724609375),    
+        CFrame.new(-3472.481201171875, 345.2247619628906, 114.20946502685547), 
+        CFrame.new(-135.06695556640625, 40.05835723876953, -1750.7685546875), 
+        CFrame.new(-1114.73388671875, 181.20816040039062, 3286.400146484375),  
+        CFrame.new(702.323486328125,  69.32481384277344,  2820.0419921875),    
+        CFrame.new(-6718.154296875, 43.31953048706055, 728.074462890625) 
+    }
+
+    local Config = {
+        Enabled     = false,
+        Loop        = true,
+        Speed       = 80,
+        WaitAtPoint = 0,
+    }
+
+    local running = false
+    local index   = 1
+
+    -- ==================== 节点 ESP 标记系统 ====================
+    local nodeESPEnabled = false
+    local nodeMarkers = {}
+
+    local function updateNodeESP()
+        if nodeESPEnabled then
+            if #nodeMarkers > 0 then return end -- 已经创建过了
+            for i, cf in ipairs(SPOTS) do
+                -- 1. 透明锚点 (用来挂载文字)
+                local anchor = Instance.new("Part")
+                anchor.Name = "NodeAnchor_" .. i
+                anchor.Size = Vector3.new(1, 1, 1)
+                anchor.Position = cf.Position
+                anchor.Anchored = true
+                anchor.CanCollide = false
+                anchor.Transparency = 1
+                anchor.Parent = workspace
+
+                -- 2. 垂直光柱 (醒目)
+                local beamPart = Instance.new("Part")
+                beamPart.Name = "NodeBeam_" .. i
+                beamPart.Size = Vector3.new(1, 200, 1) -- 高200的光柱
+                beamPart.CFrame = cf * CFrame.new(0, 100, 0)
+                beamPart.Anchored = true
+                beamPart.CanCollide = false
+                beamPart.Material = Enum.Material.Neon
+                beamPart.Color = Color3.fromRGB(0, 255, 160)
+                beamPart.Transparency = 0.6
+                beamPart.Parent = workspace
+
+                -- 3. 悬浮文字
+                local billboard = Instance.new("BillboardGui")
+                billboard.Name = "NodeTag_" .. i
+                billboard.Size = UDim2.new(0, 100, 0, 50)
+                billboard.StudsOffset = Vector3.new(0, 3, 0)
+                billboard.AlwaysOnTop = true
+                billboard.Adornee = anchor
+                billboard.Parent = anchor
+
+                local text = Instance.new("TextLabel")
+                text.Size = UDim2.new(1, 0, 1, 0)
+                text.BackgroundTransparency = 1
+                text.Text = "节点 " .. i
+                text.TextColor3 = Color3.fromRGB(0, 255, 160)
+                text.TextStrokeTransparency = 0
+                text.TextStrokeColor3 = Color3.new(0, 0, 0)
+                text.Font = Enum.Font.GothamBold
+                text.TextSize = 20
+                text.Parent = billboard
+
+                table.insert(nodeMarkers, anchor)
+                table.insert(nodeMarkers, beamPart)
+            end
+        else
+            -- 关闭时清理所有标记
+            for _, obj in ipairs(nodeMarkers) do
+                if obj and obj.Parent then
+                    obj:Destroy()
+                end
+            end
+            table.clear(nodeMarkers)
+        end
+    end
+    -- ==========================================================
+
+    local function getHRP()
+        local c = LocalPlayer.Character
+        return c and c:FindFirstChild("HumanoidRootPart")
+    end
+
+    local function tweenTo(hrp, targetCF)
+        if not hrp or not hrp.Parent then return false end
+        if not Config.Enabled then return false end
+
+        local dist = (hrp.Position - targetCF.Position).Magnitude
+        local dur  = math.max(dist / math.max(Config.Speed, 1), 0.1)
+
+        local oldCanCollide = hrp.CanCollide
+        hrp.CanCollide = false 
+
+        local tw = TweenService:Create(
+            hrp,
+            TweenInfo.new(dur, Enum.EasingStyle.Linear),
+            { CFrame = targetCF }
+        )
+        tw:Play()
+
+        while tw.PlaybackState == Enum.PlaybackState.Playing do
+            if not Config.Enabled then
+                tw:Cancel()
+                hrp.CanCollide = oldCanCollide
+                return false
+            end
+            task.wait(0.05)
+        end
+        
+        hrp.CanCollide = oldCanCollide
+        return true
+    end
+
+    local function waitAtPoint(sec)
+        if sec <= 0 then return true end
+        local t0 = tick()
+        while tick() - t0 < sec do
+            if not Config.Enabled then return false end
+            task.wait(0.05)
+        end
+        return true
+    end
+
+    local function startRun()
+        if running then return end
+        if #SPOTS == 0 then
+            WindUI:Notify("路径点为空", 3)
+            Config.Enabled = false
+            return
+        end
+        running = true
+        index = 1
+
+        task.spawn(function()
+            while Config.Enabled do
+                local hrp = getHRP()
+                if not hrp then
+                    task.wait(0.5)
+                    continue
+                end
+
+                local spot = SPOTS[index]
+                if not spot then break end
+
+                local ok = tweenTo(hrp, spot)
+                if not ok then break end
+
+                if not waitAtPoint(Config.WaitAtPoint) then break end
+                if not Config.Enabled then break end
+
+                index = index + 1
+                if index > #SPOTS then
+                    if Config.Loop then
+                        index = 1
+                    else
+                        Config.Enabled = false
+                        WindUI:Notify("路径点已全部跑完", 3)
+                        break
+                    end
+                end
+
+                task.wait(0.05)
+            end
+            running = false
+        end)
+    end
+
+    local function stopRun()
+        Config.Enabled = false
+    end
+
+    -- ==================== WindUI 控件（Tabs.key） ====================
+    Tabs.key:Section({ Title = "自动刷钥匙" })
+
+    -- 添加公告提示
+    Tabs.key:Paragraph({
+        Title = "公告",
+        Desc = "开取消坠落状态和穿墙"
+    })
+
+    Tabs.key:Toggle({
+        Title = "开启自动刷钥匙",
+        Desc = "",
+        Default = false,
+        Callback = function(v)
+            Config.Enabled = v
+            if v then
+                startRun()
+                WindUI:Notify("自动刷钥匙已开启", 2)
+            else
+                stopRun()
+                WindUI:Notify("自动刷钥匙已关闭", 2)
+            end
+        end,
+    })
+
+    Tabs.key:Toggle({
+        Title = "循环跑图",
+        Desc = "",
+        Default = true,
+        Callback = function(v) Config.Loop = v end,
+    })
+
+    Tabs.key:Divider()
+
+    -- 节点透视开关
+    Tabs.key:Toggle({
+        Title = "显示节点位置标记",
+        Desc = "",
+        Default = false,
+        Callback = function(v)
+            nodeESPEnabled = v
+            updateNodeESP()
+        end,
+    })
+
+    Tabs.key:Section({ Title = "参数设置" })
+
+    Tabs.key:Slider({
+        Title = "移动速度",
+        Desc = "",
+        Value = { Min = 10, Max = 80, Default = 80 },
+        Step = 5,
+        Suffix = " studs/s",
+        Callback = function(v) Config.Speed = v end,
+    })
+
+    Tabs.key:Slider({
+        Title = "每个节点等待时间",
+        Desc = "",
+        Value = { Min = 0, Max = 10, Default = 0 },
+        Step = 0.1,
+        Suffix = " 秒",
+        Callback = function(v) Config.WaitAtPoint = v end,
     })
 end
 -- ==================== 屏幕准星（挂载到 Tabs.zx） ====================
@@ -1572,6 +1783,145 @@ do
         end
     end)
 
+    -- ==================== 万圣节：僵尸范围（NPC 批量标记 + 实体放大） ====================
+do
+    local RunService = game:GetService("RunService")
+
+    -- 状态
+    local ZM_Enabled        = false
+    local ZM_ScaleMultiplier = 2.0
+    local ZM_HighlightColor  = Color3.fromRGB(255, 50, 50)
+    local ZM_OrigData        = {}   -- [mob] = { Scale = number }
+    local ZM_Conn            = nil
+
+    -- 清理：删高亮 + 还原尺寸
+    local function ZM_Cleanup()
+        local mobsFolder = workspace:FindFirstChild("Mobs")
+        if mobsFolder then
+            for _, mob in ipairs(mobsFolder:GetChildren()) do
+                if mob:IsA("Model") then
+                    local hl = mob:FindFirstChild("NPC_Marker")
+                    if hl then hl:Destroy() end
+                    if ZM_OrigData[mob] then
+                        pcall(function() mob:ScaleTo(ZM_OrigData[mob].Scale) end)
+                    end
+                end
+            end
+        end
+        table.clear(ZM_OrigData)
+    end
+
+    -- 每帧处理
+    local function ZM_Tick()
+        local mobsFolder = workspace:FindFirstChild("Mobs")
+        if not mobsFolder then return end
+
+        for _, mob in ipairs(mobsFolder:GetChildren()) do
+            if mob:IsA("Model") then
+                local hum = mob:FindFirstChildOfClass("Humanoid")
+                if hum and hum.Health > 0 then
+                    -- 1. 高亮标记
+                    local hl = mob:FindFirstChild("NPC_Marker")
+                    if not hl then
+                        hl = Instance.new("Highlight")
+                        hl.Name                = "NPC_Marker"
+                        hl.DepthMode           = Enum.HighlightDepthMode.AlwaysOnTop
+                        hl.FillTransparency    = 0.5
+                        hl.OutlineTransparency = 0
+                        hl.Parent              = mob
+                    end
+                    hl.FillColor    = ZM_HighlightColor
+                    hl.OutlineColor = ZM_HighlightColor
+
+                    -- 2. 记录原始尺寸
+                    if not ZM_OrigData[mob] then
+                        local origScale = 1
+                        pcall(function() origScale = mob:GetScale() end)
+                        ZM_OrigData[mob] = { Scale = origScale }
+                    end
+
+                    -- 3. 按倍数缩放
+                    local targetScale  = ZM_OrigData[mob].Scale * ZM_ScaleMultiplier
+                    local currentScale = 1
+                    pcall(function() currentScale = mob:GetScale() end)
+
+                    if math.abs(currentScale - targetScale) > 0.01 then
+                        pcall(function()
+                            mob:ScaleTo(targetScale)
+                            -- 强制实体不透明 + 碰撞 + 免质量，防子弹穿透 / 变大后飞天
+                            for _, part in ipairs(mob:GetDescendants()) do
+                                if part:IsA("BasePart") then
+                                    part.Transparency = 0
+                                    part.CanCollide   = true
+                                    part.Massless     = true
+                                end
+                            end
+                        end)
+                    end
+                end
+            end
+        end
+    end
+
+    local function ZM_Start()
+        if ZM_Conn then return end
+        ZM_Conn = RunService.RenderStepped:Connect(ZM_Tick)
+    end
+
+    local function ZM_Stop()
+        if ZM_Conn then
+            ZM_Conn:Disconnect()
+            ZM_Conn = nil
+        end
+        ZM_Cleanup()
+    end
+
+    -- ==================== UI 控件（挂 Tabs.wsj） ====================
+    Tabs.wsj:Section({ Title = "僵尸范围" })
+
+    Tabs.wsj:Toggle({
+        Title   = "开启",
+        Desc    = "",
+        Default = false,
+        Callback = function(v)
+            ZM_Enabled = v
+            if v then
+                ZM_Start()
+                WindUI:Notify({ Title = "僵尸范围", Content = "已开启", Icon = "check", Duration = 2 })
+            else
+                ZM_Stop()
+                WindUI:Notify({ Title = "僵尸范围", Content = "已关闭并恢复原样", Icon = "x", Duration = 2 })
+            end
+        end,
+    })
+
+    Tabs.wsj:Slider({
+        Title   = "实体放大倍数",
+        Desc    = "",
+        Value   = { Min = 1.0, Max = 5.0, Default = 2.0 },
+        Step    = 0.5,
+        Callback = function(v) ZM_ScaleMultiplier = v end,
+    })
+
+    Tabs.wsj:Dropdown({
+        Title   = "高亮颜色",
+        Desc    = "",
+        Values  = { "红色", "绿色", "蓝色", "黄色", "紫色", "白色", "青色" },
+        Default = "红色",
+        Callback = function(v)
+            local map = {
+                ["红色"] = Color3.fromRGB(255, 50, 50),
+                ["绿色"] = Color3.fromRGB(50, 255, 50),
+                ["蓝色"] = Color3.fromRGB(50, 150, 255),
+                ["黄色"] = Color3.fromRGB(255, 255, 50),
+                ["紫色"] = Color3.fromRGB(180, 50, 255),
+                ["白色"] = Color3.fromRGB(255, 255, 255),
+                ["青色"] = Color3.fromRGB(50, 255, 255),
+            }
+            ZM_HighlightColor = map[v] or Color3.fromRGB(255, 50, 50)
+        end,
+    })
+end
     -- ==================== WindUI 控件（挂 Tabs.zx） ====================
     Tabs.zx:Section({ Title = "准星控制" })
 
@@ -5362,157 +5712,6 @@ Tabs.ESPP:Slider({
         BOX_THICKNESS = value
     end
 })
--------苹果ESP-----
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LP = Players.LocalPlayer
-
-local espEnabled = false -- 开关状态，用于配置保存
-local COLOR = Color3.fromRGB(255, 50, 50)
-local MAX_DIST = 1000
-local TEAM_CHECK = true
-local ESP = {}
-local espLoop = nil -- 渲染循环句柄
-
-local function createESP(player)
-    if player == LP then return end
-    local hl = Instance.new("Highlight")
-    hl.FillTransparency = 1
-    hl.OutlineColor = COLOR
-    hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-    hl.Enabled = false
-    local bb = Instance.new("BillboardGui")
-    bb.Size = UDim2.fromOffset(120, 30)
-    bb.StudsOffset = Vector3.new(0, 3, 0)
-    bb.AlwaysOnTop = true
-    bb.ResetOnSpawn = false
-    bb.Enabled = false
-    local name = Instance.new("TextLabel")
-    name.Size = UDim2.new(1, 0, 0, 16)
-    name.BackgroundTransparency = 1
-    name.TextColor3 = Color3.new(1, 1, 1)
-    name.TextSize = 14
-    name.Font = Enum.Font.GothamBold
-    name.TextStrokeTransparency = 0.3
-    name.Text = player.Name
-    name.Parent = bb
-    local bg = Instance.new("Frame")
-    bg.Size = UDim2.new(0, 50, 0, 3)
-    bg.Position = UDim2.new(0.5, -25, 0, 18)
-    bg.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    bg.BorderSizePixel = 0
-    bg.Parent = bb
-    local fill = Instance.new("Frame")
-    fill.Size = UDim2.new(1, 0, 1, 0)
-    fill.BackgroundColor3 = Color3.fromRGB(0, 255, 80)
-    fill.BorderSizePixel = 0
-    fill.Parent = bg
-    ESP[player] = { hl = hl, bb = bb, fill = fill }
-end
-
-local function setup(player)
-    if ESP[player] then
-        ESP[player].hl:Destroy()
-        ESP[player].bb:Destroy()
-        ESP[player] = nil
-    end
-    local char = player.Character
-    if not char then return end
-    createESP(player)
-    local e = ESP[player]
-    if not e then return end
-    local head = char:WaitForChild("Head", 5)
-    if head then
-        e.hl.Adornee = char
-        e.hl.Parent = char
-        e.bb.Adornee = head
-        e.bb.Parent = head
-    end
-end
-
-local function startESP()
-    if espEnabled then return end
-    espEnabled = true
-
-    -- 初始化现有玩家
-    for _, p in ipairs(Players:GetPlayers()) do
-        if p ~= LP then
-            if p.Character then setup(p) end
-            p.CharacterAdded:Connect(function()
-                if espEnabled then setup(p) end
-            end)
-        end
-    end
-
-    -- 新玩家加入
-    Players.PlayerAdded:Connect(function(p)
-        if p ~= LP then
-            p.CharacterAdded:Connect(function()
-                if espEnabled then setup(p) end
-            end)
-            if p.Character and espEnabled then setup(p) end
-        end
-    end)
-
-    -- 玩家离开清理
-    Players.PlayerRemoving:Connect(function(p)
-        if ESP[p] then
-            ESP[p].hl:Destroy()
-            ESP[p].bb:Destroy()
-            ESP[p] = nil
-        end
-    end)
-
-    -- 渲染循环
-    espLoop = RunService.RenderStepped:Connect(function()
-        if not espEnabled then return end
-        local myChar = LP.Character
-        local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
-        for player, e in pairs(ESP) do
-            local char = player.Character
-            local hum = char and char:FindFirstChildOfClass("Humanoid")
-            local hrp = char and char:FindFirstChild("HumanoidRootPart")
-            local show = hum and hrp and hum.Health > 0
-            if show and TEAM_CHECK and player.Team and player.Team == LP.Team then show = false end
-            if show and myHRP and (myHRP.Position - hrp.Position).Magnitude > MAX_DIST then show = false end
-            e.hl.Enabled = show
-            e.bb.Enabled = show
-            if show then
-                local r = math.clamp(hum.Health / math.max(hum.MaxHealth, 1), 0, 1)
-                e.fill.Size = UDim2.new(r, 0, 1, 0)
-                e.fill.BackgroundColor3 = Color3.fromHSV(r * 0.33, 1, 1)
-            end
-        end
-    end)
-end
-
-local function stopESP()
-    espEnabled = false
-    if espLoop then
-        espLoop:Disconnect()
-        espLoop = nil
-    end
-    -- 销毁全部ESP实例
-    for p, e in pairs(ESP) do
-        e.hl:Destroy()
-        e.bb:Destroy()
-    end
-    table.clear(ESP)
-end
-
--- WindUI 开关控件，把 Tabs.pg 替换成你自己的页面对象
-Tabs.pg:Toggle({
-    Title = "ESP内透",
-    Default = false,
-    Callback = function(state)
-        if state then
-            startESP()
-        else
-            stopESP()
-        end
-    end
-})
-
 ------esp-------
 Tabs.wb:Button({
     Title = "检查全局看有人偷吃印钞机没有",
@@ -8380,8 +8579,6 @@ Tabs.gm:Button({
         end)
     end,
 })
-
-Window:SelectTab(1)
 
 if _G.BuildRagebotUI then _G.BuildRagebotUI(Tabs.jq) end
 
