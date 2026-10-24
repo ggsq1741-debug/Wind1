@@ -234,38 +234,83 @@ local Window = WindUI:CreateWindow({
 })
 
 print("窗口标题应为绿色，控件标题应为白色")
+-- ==================== 标签页彩色图标辅助函数（兼容版） ====================
+local function createTab(config)
+    local success, tab = pcall(function()
+        return Window:Tab({
+            Title     = config.Title,
+            Icon      = config.Icon,
+            Desc      = config.Desc,
+            IconColor = config.IconColor,
+            IconShape = "Square", -- 强制图标变成正方形框
+            Border    = true      -- 给图标加个边框
+        })
+    end)
+    if success and tab then
+        return tab
+    end
+    -- 降级处理（老版本如果不支持这些参数）
+    return Window:Tab({
+        Title = config.Title,
+        Icon  = config.Icon,
+        Desc  = config.Desc,
+    })
+end
+
+local COLORS = {
+    Players   = Color3.fromRGB(120, 180, 255),
+    Spooky    = Color3.fromRGB(255, 140,  60),
+    Key       = Color3.fromRGB(255, 210,  80),
+    Crosshair = Color3.fromRGB(80,  220, 255),
+    Music     = Color3.fromRGB(255, 120, 200),
+    Swing     = Color3.fromRGB(200,  90, 255),
+    CarKing   = Color3.fromRGB(255, 180,  40),
+    Ragebot   = Color3.fromRGB(255,  70,  70),
+    Farm      = Color3.fromRGB(60,  220, 120),
+    RemoteK   = Color3.fromRGB(255,  90, 120),
+    Aura      = Color3.fromRGB(170, 120, 255),
+    AimAssist = Color3.fromRGB(90,  200, 255),
+    Hitbox    = Color3.fromRGB(0,   230, 200),
+    SilentAim = Color3.fromRGB(255, 120,  60),
+    ESP1      = Color3.fromRGB(50,  255, 160),
+    ESP2      = Color3.fromRGB(120, 255, 200),
+    ESPItem   = Color3.fromRGB(200, 230,  80),
+    Delete    = Color3.fromRGB(160, 160, 160),
+    Fun       = Color3.fromRGB(255, 100, 180),
+    Shop      = Color3.fromRGB(255, 200,  60),
+}
+
 local Tabs = {
-    wj = Window:Tab({ Title = "玩家", Icon = "users" }),
-    wsj = Window:Tab({ Title = "万圣节功能", Icon = "rbxassetid://7734058599" }),
-    key = Window:Tab({ Title = "万圣节刷钥匙", Icon = "rbxassetid://7733965118" }),
-    zx = Window:Tab({ Title = "准心设置", Icon = "rbxassetid://7733666258" }),    
-    yy = Window:Tab({ Title = "音乐 Music", Icon = "rbxassetid://7734020554" }),    
-    sf = Window:Tab({ Title = "甩飞", Icon = "rbxassetid://7733799371" }),
-    fc = Window:Tab({ Title = "亚洲车王", Icon = "rbxassetid://7733708835" }),
-    jq = Window:Tab({ Title = "愤怒BOT", Icon = "rbxassetid://7733916988" }),
-    lc = Window:Tab({ Title = "自动农场", Icon = "rbxassetid://7733920117" }),
-    jx = Window:Tab({ Title = "远程击杀", Icon = "crown" }), 
-    gh = Window:Tab({ Title = "光环", Icon = "crown" }),
-    fz = Window:Tab({ Title = "进阶辅助瞄准", Icon = "crosshair" }),    
-    bot = Window:Tab({ Title = "范围", Icon = "target" }),
-    zj = Window:Tab({ Title = "子弹追踪", Icon = "target" }),
-    ESP = Window:Tab({ Title = "ESP", Icon = "eye" }),
-    ESPP = Window:Tab({ Title = "ESP2", Icon = "eye" }),
-    wb = Window:Tab({ Title = "ESP物品", Icon = "box" }),
-    qq = Window:Tab({ Title = "删除", Icon = "trash-2" }),
-    rsao = Window:Tab({ Title = "娱乐+大肥鱼小宠物", Icon = "zap" }),
-    gm = Window:Tab({ Title = "购买", Icon = "shopping-cart" }),
+    wj    = createTab({ Title = "玩家",             Icon = "users",                    IconColor = COLORS.Players   }),
+    wsj   = createTab({ Title = "万圣节功能",        Icon = "rbxassetid://7734058599",   IconColor = COLORS.Spooky    }),
+    key   = createTab({ Title = "万圣节刷钥匙",      Icon = "rbxassetid://7733965118",   IconColor = COLORS.Key       }),
+    zx    = createTab({ Title = "准心设置",          Icon = "rbxassetid://7733666258",   IconColor = COLORS.Crosshair }),
+    yy    = createTab({ Title = "音乐 Music",        Icon = "rbxassetid://7734020554",   IconColor = COLORS.Music     }),
+    sf    = createTab({ Title = "甩飞",             Icon = "rbxassetid://7733799371",   IconColor = COLORS.Swing     }),
+    fc    = createTab({ Title = "亚洲车王",          Icon = "rbxassetid://7733708835",   IconColor = COLORS.CarKing   }),
+    jq    = createTab({ Title = "愤怒BOT",          Icon = "rbxassetid://7733916988",   IconColor = COLORS.Ragebot   }),
+    lc    = createTab({ Title = "自动农场",          Icon = "rbxassetid://7733920117",   IconColor = COLORS.Farm      }),
+    jx    = createTab({ Title = "远程击杀",          Icon = "crown",                     IconColor = COLORS.RemoteK   }),
+    gh    = createTab({ Title = "光环",             Icon = "crown",                     IconColor = COLORS.Aura      }),
+    fz    = createTab({ Title = "进阶辅助瞄准",       Icon = "crosshair",                 IconColor = COLORS.AimAssist }),
+    bot   = createTab({ Title = "范围",             Icon = "target",                    IconColor = COLORS.Hitbox    }),
+    zj    = createTab({ Title = "子弹追踪",          Icon = "target",                    IconColor = COLORS.SilentAim }),
+    ESP   = createTab({ Title = "ESP",              Icon = "eye",                       IconColor = COLORS.ESP1      }),
+    ESPP  = createTab({ Title = "ESP2",             Icon = "eye",                       IconColor = COLORS.ESP2      }),
+    wb    = createTab({ Title = "ESP物品",          Icon = "box",                       IconColor = COLORS.ESPItem   }),
+    qq    = createTab({ Title = "删除",             Icon = "trash-2",                   IconColor = COLORS.Delete    }),
+    rsao  = createTab({ Title = "娱乐+大肥鱼小宠物",   Icon = "zap",                       IconColor = COLORS.Fun       }),
+    gm    = createTab({ Title = "购买",             Icon = "shopping-cart",             IconColor = COLORS.Shop      }),
 }
 Window:SelectTab(1)
--- ============================================================
--- ==================== 工具函数 ====================
+
 local function getCharacter()
     if LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
         return LocalPlayer.Character
     end
     return nil
 end
--- ==================== 无限跳（JumpRequest 事件） ====================
+
 local isInfiniteJumpEnabled = false
 UserInputService.JumpRequest:Connect(function()
     if isInfiniteJumpEnabled then
