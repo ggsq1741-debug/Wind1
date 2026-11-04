@@ -227,7 +227,7 @@ local Window = WindUI:CreateWindow({
     SideBarWidth = 130,
     HideSearchBar = false,
     ScrollBarEnabled = true,
-    Background = "https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/33490c2c-02d8-4dc8-b24a-0e0478a45b8f.png",
+    Background = "https://raw.githubusercontent.com/ggsq1741-debug/cQ/refs/heads/main/6979f443-2573-4441-a216-64c1eb2ee5df.png",
     BackgroundImageTransparency = 0.4,
     User = { Enabled = true },
     ToggleKey = Enum.KeyCode.F,
