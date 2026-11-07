@@ -174,7 +174,7 @@ WindUI:Notify({
 })
 local Popup = WindUI:Popup({
     Title = "hi你好👋",
-    Content = "我们完整的优化了许多功能、音乐等其他",
+    Content = "我们完整的优化了许多功能、音乐等其他添加了高跳",
     Buttons = {
         {
             Title = "Get Started",
@@ -543,6 +543,56 @@ Tabs.wj:Slider({
         FlightSpeed = val
     end
 })
+-- ==================== 玩家页：高跳（防检测·无下压） ====================
+do
+    local JumpState = {
+        JumpOn = false,
+        JumpVel = 300,
+    }
+    local jumpConn
+
+    local function highJump()
+        local char = LocalPlayer.Character
+        local hum = char and char:FindFirstChildOfClass("Humanoid")
+        local hrp = char and char:FindFirstChild("HumanoidRootPart")
+        if not hum or not hrp or hum.Health <= 0 then return end
+
+        -- 核心：修改垂直速度，不碰 JumpPower 和 WalkSpeed
+        hum:ChangeState(Enum.HumanoidStateType.Jumping)
+        hrp.AssemblyLinearVelocity = Vector3.new(
+            hrp.AssemblyLinearVelocity.X,
+            JumpState.JumpVel,
+            hrp.AssemblyLinearVelocity.Z
+        )
+    end
+
+    local function startJump()
+        if jumpConn then jumpConn:Disconnect() end
+        jumpConn = UserInputService.JumpRequest:Connect(function()
+            if JumpState.JumpOn then highJump() end
+        end)
+    end
+
+    Tabs.wj:Toggle({
+        Title = "高跳",
+        Desc = "",
+        Default = false,
+        Callback = function(v)
+            JumpState.JumpOn = v
+            if v then startJump() else
+                if jumpConn then jumpConn:Disconnect(); jumpConn = nil end
+            end
+        end,
+    })
+
+    Tabs.wj:Slider({
+        Title = "跳跃力度",
+        Desc = "",
+        Value = { Min = 40, Max = 400, Default = 300 },
+        Step = 5,
+        Callback = function(v) JumpState.JumpVel = v end,
+    })
+end
 -- =================== 旋转模块（完全修复版） ===================
 
 local SpinEnabled = false
@@ -834,21 +884,18 @@ _G.HeadScalerStatus = function()
 end
 
 print("💡 输入 HeadScalerStatus() 查看状态")
-Tabs.wj:Button({
+Tabs.wj:Toggle({
     Title = "取消坠落状态",
-    Callback = function()
-        local mt = getrawmetatable(game)
-local old = mt.__index
-setreadonly(mt, false)
-
-mt.__index = newcclosure(function(self, key)
-    if (key == "AssemblyLinearVelocity" or key == "Velocity") and self:IsA("BasePart") then
-        return Vector3.new(0, 0, 0)
-    end
-    return old(self, key)
-end)
-
-setreadonly(mt, true)
+    Desc = "",
+    Default = false,
+    Callback = function(state)
+        hookVelocity = state 
+        
+        if state then
+            print("防检测：已开启")
+        else
+            print("防检测：已关闭")
+        end
     end
 })
 Tabs.wj:Toggle({
